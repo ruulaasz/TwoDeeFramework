@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Module.h"
 
 namespace TDF
 {
@@ -12,7 +13,7 @@ namespace TDF
 	/*!
 	Used to initialize and use the SDL 2.0 modules.
 	*/
-	class SDL_Manager
+	class SDL_Manager : public Module<SDL_Manager>
 	{
 	public:
 		//! Default constructor.

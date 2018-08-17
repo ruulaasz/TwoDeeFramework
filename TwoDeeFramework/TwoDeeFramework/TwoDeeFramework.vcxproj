@@ -149,13 +149,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Module.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SDL_Manager.h" />
+    <ClInclude Include="StringTools.h" />
     <ClInclude Include="TDF.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
