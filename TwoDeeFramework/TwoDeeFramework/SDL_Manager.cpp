@@ -7,6 +7,8 @@ namespace TDF
 	{
 		m_renderer = nullptr;
 		m_window = nullptr;
+		m_windowHeight = 0;
+		m_windowWidth = 0;
 	}
 
 	SDL_Manager::~SDL_Manager()
@@ -17,7 +19,7 @@ namespace TDF
 	void SDL_Manager::init()
 	{
 		initSubSystems();
-		createWindow();
+		createWindowAndRenderer();
 	}
 
 	void SDL_Manager::release()
@@ -46,7 +48,7 @@ namespace TDF
 		}
 	}
 
-	void SDL_Manager::createWindow(const char * _name, int _windowWidth, int _windowHeight)
+	void SDL_Manager::createWindowAndRenderer(const char * _name, int _windowWidth, int _windowHeight)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 		
@@ -60,7 +62,5 @@ namespace TDF
 		m_windowWidth = _windowWidth;
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-		SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	}
 }

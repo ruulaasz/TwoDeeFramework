@@ -11,6 +11,12 @@ bool g_quit;
 bool g_lAlt;
 bool g_resize;
 
+void initSDL()
+{
+	g_SDLManager.init();
+	SDL_SetWindowTitle(g_SDLManager.m_window, "Test");
+}
+
 void render()
 {
 	SDL_SetRenderDrawColor(g_SDLManager.m_renderer, 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
@@ -73,9 +79,7 @@ void handleInputs()
 
 int main()
 {
-	g_SDLManager.init();
-
-	SDL_SetRenderDrawColor(g_SDLManager.m_renderer, 0xFF, 0, 0, 0xFF);
+	initSDL();
 
 	while (!g_quit)
 	{
