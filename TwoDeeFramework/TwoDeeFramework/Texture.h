@@ -20,7 +20,7 @@ namespace TDF
 
 		//! A virtual function used to load the texture.
 		/*!
-		\param a string with the file path.
+		\param _path a string with the file path.
 		*/
 		virtual void load(std::string _path);
 
@@ -28,10 +28,23 @@ namespace TDF
 		virtual void free();
 
 		//! Returns the texture width.
+		/*!
+		\sa getHeight()
+		*/
 		int getWidth() { return m_width; };
 
 		//! Returns the texture height.
+		/*!
+		\sa getWidth()
+		*/
 		int getHeight() { return m_height; };
+
+		//! Render the texture in a given position.
+		/*!
+		\param _x an integer for the X position.
+		\param _y an integer for the Y position.
+		*/
+		void render(int _x, int _y);
 
 	public:
 		//! A SDL 2.0 texture.

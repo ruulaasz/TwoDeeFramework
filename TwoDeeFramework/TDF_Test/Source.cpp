@@ -2,16 +2,18 @@
 #include <TDF.h>
 
 TDF::SDL_Manager* g_SDLManager;
+TDF::ResourceManager* g_ResourceManager;
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
-double g_deltaTime = 0;
+float g_deltaTime = 0;
 
 bool g_quit;
 bool g_lAlt;
 bool g_resize;
 
-TDF::Texture testTexture;
+TDF::Texture* testTexture;
+TDF::Texture* testTexture2;
 
 void initSDL()
 {
@@ -19,11 +21,15 @@ void initSDL()
 	g_SDLManager = TDF::SDL_Manager::GetPointerInstance();
 	g_SDLManager->init();
 	SDL_SetWindowTitle(g_SDLManager->m_window, "Test");
+
+	TDF::ResourceManager::StartModule();
+	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
 }
 
 void loadContent()
 {
-	testTexture.load("resources\\Untitled.png");
+	testTexture = reinterpret_cast<TDF::Texture*>(g_ResourceManager->load("Untitled", TDF::RT_TEXTURE));
+	testTexture2 = reinterpret_cast<TDF::Texture*>(g_ResourceManager->load("Untitled", TDF::RT_TEXTURE));
 }
 
 void render()
@@ -31,10 +37,15 @@ void render()
 	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
-	SDL_Rect renderQuad = { 0, 0, testTexture.m_width, testTexture.m_height };
-	SDL_RenderCopy(g_SDLManager->m_renderer, testTexture.m_sdlTexture, &renderQuad, &renderQuad);
+	testTexture->render(50, 50);
+	testTexture2->render(350, 50);
 
 	SDL_RenderPresent(g_SDLManager->m_renderer);
+}
+
+void update(float _deltaTime)
+{
+	g_ResourceManager->update(_deltaTime);
 }
 
 void handleInputs()
@@ -97,10 +108,11 @@ int main()
 		g_lastTime = g_time;
 		g_time = SDL_GetPerformanceCounter();
 
-		g_deltaTime = (double)((g_time - g_lastTime) * 1000 / SDL_GetPerformanceFrequency());
+		g_deltaTime = (float)((g_time - g_lastTime) * 1000 / SDL_GetPerformanceFrequency());
 		g_deltaTime /= 1000.f;
 
 		handleInputs();
+		update(g_deltaTime);
 		render();
 	}
 

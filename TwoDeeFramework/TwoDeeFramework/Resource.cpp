@@ -11,4 +11,19 @@ namespace TDF
 	{
 
 	}
+
+	void Resource::deleteReference()
+	{
+		m_referenceCount--;
+		
+		if (m_referenceCount <= 0)
+		{
+			m_referenceCount = 0;
+		}
+	}
+
+	void Resource::addReference()
+	{
+		m_referenceCount++;
+	}
 }

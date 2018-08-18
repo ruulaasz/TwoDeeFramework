@@ -49,7 +49,7 @@ namespace TDF
 
 		//! Creates the window and renderer.
 		/*!
-		\param _name a constant character pointer, window name.
+		\param _name a constant character pointer, the window name.
 		\param _windowWidth an integer, the width of the window.
 		\param _windowHeight an integer, the height of the window.
 		\sa init()

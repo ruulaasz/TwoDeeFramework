@@ -12,7 +12,7 @@ namespace TDF
 	{
 		std::string name;
 
-		int i = _path.length();
+		size_t i = _path.length();
 		i--;
 
 		for (i; i >= 0; i--)

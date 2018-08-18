@@ -4,6 +4,14 @@
 
 namespace TDF
 {
+	//! An enum.
+	/*! The types of resources available. */
+	enum ResourceType
+	{
+		RT_DEFAULT = 0,
+		RT_TEXTURE
+	};
+
 	//!  A base class for a resource.
 	class Resource
 	{
@@ -19,15 +27,37 @@ namespace TDF
 
 		//! A virtual function used to load the resource.
 		/*!
-		\param a string with the file path.
+		\param _path a string with the file path.
 		*/
-		virtual void load(std::string _path) = 0;
+		virtual void load(std::string _path) {};
 
 		//! A virtual function used to free the resource memory.
-		virtual void free() = 0;
+		virtual void free() {};
 
 		//! Returns the resource name.
 		std::string getName() { return m_name; };
+
+		//! Returns the number of references of this resource.
+		/*!
+		\sa deleteReference(), addReference()
+		*/
+		unsigned int getReferenceCount() { return m_referenceCount; };
+
+		//! Deletes 1 reference of the resource.
+		/*!
+		\sa getReferenceCount(), addReference()
+		*/
+		void deleteReference();
+
+		//! Increase 1 reference of the resource.
+		/*!
+		\sa getReferenceCount(), deleteReference()
+		*/
+		void addReference();
+
+	public:
+		//! The type of the resource.
+		ResourceType m_type;
 
 	protected:
 		//! The name of the resource.

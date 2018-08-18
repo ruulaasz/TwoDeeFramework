@@ -5,12 +5,12 @@ namespace TDF
 {
 	Texture::Texture()
 	{
-
+		
 	}
 
 	Texture::~Texture()
 	{
-
+		
 	}
 
 	void Texture::load(std::string _path)
@@ -53,10 +53,18 @@ namespace TDF
 	{
 		if (m_sdlTexture != nullptr)
 		{
-			SDL_DestroyTexture(m_sdlTexture);
-			m_sdlTexture = nullptr;
 			m_width = 0;
 			m_height = 0;
+			deleteReference();
+			SDL_DestroyTexture(m_sdlTexture);
+			m_sdlTexture = nullptr;
 		}
+	}
+
+	void Texture::render(int _x, int _y)
+	{
+		SDL_Rect quadSrc = { 0, 0, m_width, m_height };
+		SDL_Rect quadDst = { _x, _y, m_width, m_height };
+		SDL_RenderCopy(SDL_Manager::GetInstance().m_renderer, m_sdlTexture, &quadSrc, &quadDst);
 	}
 }
