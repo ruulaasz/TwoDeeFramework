@@ -6,7 +6,12 @@
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
+
+#ifdef _WIN64
+
+#else
 TDF::AnttweakbarManager* g_AnttweakbarManager;
+#endif
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
@@ -17,9 +22,15 @@ bool g_lAlt;
 bool g_resize;
 int g_mousePosX;
 int g_mousePosY;
-
+int g_guiHandled;
 Player g_player;
+
+#ifdef _WIN64
+
+#else
 TwBar *g_myBar;
+#endif
+
 
 void initSDL()
 {
@@ -32,18 +43,27 @@ void initSDL()
 	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
 }
 
+#ifdef _WIN64
+
+#else
 void initTw()
 {
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
 	g_AnttweakbarManager->init();
 }
+#endif
 
+
+#ifdef _WIN64
+
+#else
 void GUIinit()
 {
 	g_myBar = g_AnttweakbarManager->createBar(TEXT("Mouse_position"));
 	g_AnttweakbarManager->addBar(g_myBar, TEXT("mouse posX:"), TW_TYPE_INT32, &g_AnttweakbarManager->m_handled, TEXT(" label='Mouse posX' "));
 }
+#endif
 
 void loadContent()
 {
@@ -56,7 +76,12 @@ void render()
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
 	g_player.render();
+
+#ifdef _WIN64
+
+#else
 	g_AnttweakbarManager->render();
+#endif
 
 	SDL_RenderPresent(g_SDLManager->m_renderer);
 }
@@ -71,9 +96,14 @@ void handleInputs()
 {
 	while (SDL_PollEvent(&g_SDLManager->m_events))
 	{
+#ifdef _WIN64
+		g_guiHandled = 0;
+#else
 		g_AnttweakbarManager->m_handled = TwEventSDL(&g_SDLManager->m_events, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
-;
-		if (!g_AnttweakbarManager->m_handled)
+		g_guiHandled = g_AnttweakbarManager->m_handled;
+#endif
+		
+		if (!g_guiHandled)
 		{
 			if (g_SDLManager->m_events.type == SDL_QUIT)
 			{
@@ -125,10 +155,16 @@ void handleInputs()
 int main()
 {
 	initSDL();
-	initTw();
-	loadContent();
-	GUIinit();
 
+#ifdef _WIN64
+
+#else
+	initTw();
+	GUIinit();
+#endif
+
+	loadContent();
+	
 	while (!g_quit)
 	{
 		g_lastTime = g_time;
@@ -142,7 +178,12 @@ int main()
 		render();
 	}
 
+#ifdef _WIN64
+
+#else
 	g_AnttweakbarManager->release();
+#endif
+	
 	g_SDLManager->release();
 
 	return 0;

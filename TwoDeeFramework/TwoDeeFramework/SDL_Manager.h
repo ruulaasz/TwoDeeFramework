@@ -25,6 +25,7 @@ namespace TDF
 		//! Default destructor.
 		/*!
 		Does nothing use the release() function instead.
+		\sa release()
 		*/
 		~SDL_Manager();
 
