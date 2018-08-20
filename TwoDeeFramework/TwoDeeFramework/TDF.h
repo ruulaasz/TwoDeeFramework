@@ -6,3 +6,4 @@
 #include "Resource.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include "Actor.h"

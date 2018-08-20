@@ -55,7 +55,6 @@ namespace TDF
 		{
 			m_width = 0;
 			m_height = 0;
-			deleteReference();
 			SDL_DestroyTexture(m_sdlTexture);
 			m_sdlTexture = nullptr;
 		}

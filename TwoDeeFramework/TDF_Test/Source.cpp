@@ -1,5 +1,10 @@
+#pragma comment(lib, "AntTweakBar.lib")
+
 #include <cstdio>
+#include <windows.h>
 #include <TDF.h>
+#include <AntTweakBar.h>
+#include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
@@ -11,9 +16,13 @@ float g_deltaTime = 0;
 bool g_quit;
 bool g_lAlt;
 bool g_resize;
+int g_mousePosX;
+int g_mousePosY;
 
-TDF::Texture* testTexture;
-TDF::Texture* testTexture2;
+Player g_player;
+
+int g_iTwhandled;
+TwBar *g_myBar;
 
 void initSDL()
 {
@@ -26,10 +35,27 @@ void initSDL()
 	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
 }
 
+void initTw()
+{
+	TwInit(TW_DIRECT3D9, SDL_RenderGetD3D9Device(g_SDLManager->m_renderer));
+	TwWindowSize(g_SDLManager->m_windowWidth, g_SDLManager->m_windowWidth);
+
+	g_myBar = TwNewBar(TEXT("Mouse_position"));
+
+	TwDefine(TEXT("Mouse_position color='255 128 255' alpha=180 "));
+	TwDefine(TEXT("Mouse_position text=light "));
+	TwDefine(TEXT("Mouse_position position='50 33' "));
+	TwDefine(TEXT("Mouse_position size='250 290' "));
+	TwDefine(TEXT("Mouse_position valueswidth=90 "));
+	TwDefine(TEXT("Mouse_position refresh=0.01 "));
+	TwDefine(" GLOBAL contained=true ");
+}
+
 void loadContent()
 {
-	testTexture = reinterpret_cast<TDF::Texture*>(g_ResourceManager->load("Untitled", TDF::RT_TEXTURE));
-	testTexture2 = reinterpret_cast<TDF::Texture*>(g_ResourceManager->load("Untitled", TDF::RT_TEXTURE));
+	g_player.init();
+
+	TwAddVarRO(g_myBar, TEXT("mouse posX:"), TW_TYPE_INT32, &g_iTwhandled, TEXT(" label='Mouse posX' "));
 }
 
 void render()
@@ -37,14 +63,15 @@ void render()
 	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
-	testTexture->render(50, 50);
-	testTexture2->render(350, 50);
+	g_player.render();
+	TwDraw();
 
 	SDL_RenderPresent(g_SDLManager->m_renderer);
 }
 
 void update(float _deltaTime)
 {
+	SDL_GetMouseState(&g_mousePosX, &g_mousePosY);
 	g_ResourceManager->update(_deltaTime);
 }
 
@@ -52,47 +79,52 @@ void handleInputs()
 {
 	while (SDL_PollEvent(&g_SDLManager->m_events))
 	{
-		if (g_SDLManager->m_events.type == SDL_QUIT)
+		g_iTwhandled = TwEventSDL(&g_SDLManager->m_events, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+;
+		if (!g_iTwhandled) 
 		{
-			g_quit = true;
-		}
-
-		if (g_SDLManager->m_events.type == SDL_KEYDOWN)
-		{
-			switch (g_SDLManager->m_events.key.keysym.sym)
+			if (g_SDLManager->m_events.type == SDL_QUIT)
 			{
-			case SDLK_ESCAPE:
 				g_quit = true;
-				break;
-
-			case SDLK_LALT:
-				g_lAlt = true;
-				break;
-
-			case SDLK_RETURN:
-				if (g_lAlt)
-				{
-					g_resize ^= 1;
-					if (g_resize)
-					{
-						SDL_SetWindowFullscreen(g_SDLManager->m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-					}
-					else
-					{
-						SDL_SetWindowFullscreen(g_SDLManager->m_window, 0);
-					}
-				}
-				break;
 			}
-		}
 
-		if (g_SDLManager->m_events.type == SDL_KEYUP)
-		{
-			switch (g_SDLManager->m_events.key.keysym.sym)
+			if (g_SDLManager->m_events.type == SDL_KEYDOWN)
 			{
-			case SDLK_LALT:
-				g_lAlt = false;
-				break;
+				switch (g_SDLManager->m_events.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					g_quit = true;
+					break;
+
+				case SDLK_LALT:
+					g_lAlt = true;
+					break;
+
+				case SDLK_RETURN:
+					if (g_lAlt)
+					{
+						g_resize ^= 1;
+						if (g_resize)
+						{
+							SDL_SetWindowFullscreen(g_SDLManager->m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+						}
+						else
+						{
+							SDL_SetWindowFullscreen(g_SDLManager->m_window, 0);
+						}
+					}
+					break;
+				}
+			}
+
+			if (g_SDLManager->m_events.type == SDL_KEYUP)
+			{
+				switch (g_SDLManager->m_events.key.keysym.sym)
+				{
+				case SDLK_LALT:
+					g_lAlt = false;
+					break;
+				}
 			}
 		}
 	}
@@ -101,6 +133,7 @@ void handleInputs()
 int main()
 {
 	initSDL();
+	initTw();
 	loadContent();
 
 	while (!g_quit)
@@ -116,6 +149,7 @@ int main()
 		render();
 	}
 
+	TwTerminate();
 	g_SDLManager->release();
 
 	return 0;
