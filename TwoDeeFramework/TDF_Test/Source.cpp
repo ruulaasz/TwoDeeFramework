@@ -1,13 +1,12 @@
-#pragma comment(lib, "AntTweakBar.lib")
-
 #include <cstdio>
 #include <windows.h>
+
 #include <TDF.h>
-#include <AntTweakBar.h>
 #include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
+TDF::AnttweakbarManager* g_AnttweakbarManager;
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
@@ -20,8 +19,6 @@ int g_mousePosX;
 int g_mousePosY;
 
 Player g_player;
-
-int g_iTwhandled;
 TwBar *g_myBar;
 
 void initSDL()
@@ -37,25 +34,20 @@ void initSDL()
 
 void initTw()
 {
-	TwInit(TW_DIRECT3D9, SDL_RenderGetD3D9Device(g_SDLManager->m_renderer));
-	TwWindowSize(g_SDLManager->m_windowWidth, g_SDLManager->m_windowWidth);
+	TDF::AnttweakbarManager::StartModule();
+	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
+	g_AnttweakbarManager->init();
+}
 
-	g_myBar = TwNewBar(TEXT("Mouse_position"));
-
-	TwDefine(TEXT("Mouse_position color='255 128 255' alpha=180 "));
-	TwDefine(TEXT("Mouse_position text=light "));
-	TwDefine(TEXT("Mouse_position position='50 33' "));
-	TwDefine(TEXT("Mouse_position size='250 290' "));
-	TwDefine(TEXT("Mouse_position valueswidth=90 "));
-	TwDefine(TEXT("Mouse_position refresh=0.01 "));
-	TwDefine(" GLOBAL contained=true ");
+void GUIinit()
+{
+	g_myBar = g_AnttweakbarManager->createBar(TEXT("Mouse_position"));
+	g_AnttweakbarManager->addBar(g_myBar, TEXT("mouse posX:"), TW_TYPE_INT32, &g_AnttweakbarManager->m_handled, TEXT(" label='Mouse posX' "));
 }
 
 void loadContent()
 {
 	g_player.init();
-
-	TwAddVarRO(g_myBar, TEXT("mouse posX:"), TW_TYPE_INT32, &g_iTwhandled, TEXT(" label='Mouse posX' "));
 }
 
 void render()
@@ -64,7 +56,7 @@ void render()
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
 	g_player.render();
-	TwDraw();
+	g_AnttweakbarManager->render();
 
 	SDL_RenderPresent(g_SDLManager->m_renderer);
 }
@@ -79,9 +71,9 @@ void handleInputs()
 {
 	while (SDL_PollEvent(&g_SDLManager->m_events))
 	{
-		g_iTwhandled = TwEventSDL(&g_SDLManager->m_events, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+		g_AnttweakbarManager->m_handled = TwEventSDL(&g_SDLManager->m_events, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
 ;
-		if (!g_iTwhandled) 
+		if (!g_AnttweakbarManager->m_handled)
 		{
 			if (g_SDLManager->m_events.type == SDL_QUIT)
 			{
@@ -135,6 +127,7 @@ int main()
 	initSDL();
 	initTw();
 	loadContent();
+	GUIinit();
 
 	while (!g_quit)
 	{
@@ -149,7 +142,7 @@ int main()
 		render();
 	}
 
-	TwTerminate();
+	g_AnttweakbarManager->release();
 	g_SDLManager->release();
 
 	return 0;

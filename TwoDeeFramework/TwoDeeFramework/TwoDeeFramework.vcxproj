@@ -73,32 +73,32 @@
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AnttweakbarManager.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="AnttweakbarManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />

@@ -78,19 +78,19 @@
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformName)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformName)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformName)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
