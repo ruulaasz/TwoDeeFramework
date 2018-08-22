@@ -46,6 +46,12 @@ namespace TDF
 		*/
 		void render(int _x, int _y);
 
+		//! Set this texture alpha.
+		/*!
+		\param _a an integer for the new alpha.
+		*/
+		void setAlpha(int _a);
+
 	public:
 		//! A SDL 2.0 texture.
 		SDL_Texture* m_sdlTexture;

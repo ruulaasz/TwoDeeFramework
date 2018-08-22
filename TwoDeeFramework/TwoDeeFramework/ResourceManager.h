@@ -22,7 +22,7 @@ namespace TDF
 		//! Default destructor.
 		~ResourceManager();
 
-		//! Updates the timer for the resource cleanup.
+		//! Updates the manager.
 		/*!
 		\param _deltaTime a float, the change of time.
 		*/
@@ -48,7 +48,7 @@ namespace TDF
 		//! Delete the unreferenced resources every X time.
 		void cleanResources();
 
-	private:
+	public:
 		//! A map containing a resource and its name.
 		std::map<std::string, Resource*> m_allResources;
 
@@ -57,5 +57,8 @@ namespace TDF
 
 		//! Time passed since last cleanup.
 		float m_currentTime;
+
+		//! The number of resources loaded.
+		int m_resourceCount;
 	};
 }

@@ -2,11 +2,23 @@
 
 #pragma comment(lib, "AntTweakBar.lib")
 
-#include "SDL_Manager.h"
 #include <AntTweakBar.h>
+#include "Module.h"
+#include <windows.h>
 
 namespace TDF
 {
+	//!  A data struct used to create a custom bar. 
+	struct AntTweakBarInfo
+	{
+		const char* color = " color='0 0 255' alpha=120 ";
+		const char* text = " text=light  ";
+		const char* position = " position='0 0' ";
+		const char* size = " size='250 290' ";
+		const char* valuesWidth = " valueswidth=90 ";
+		const char* refresh = " refresh=0.01 ";
+	};
+
 	//!  A manager class for AntTweakBar. 
 	/*!
 	Used to initialize and use the AntTweakBar modules.
@@ -30,22 +42,19 @@ namespace TDF
 		//! Initialize AntTweakBar subsystems.
 		void init();
 
-		//! Creates a new Bar.
+		//! Creates a new default Bar.
 		/*!
 		\param _barName a constant character pointer, the bar name.
 		\sa addBar()
 		*/
-		TwBar* createBar(const char *_barName);
+		TwBar* createDefaultBar(const char *_barName);
 
-		//! Add a new parameter to a Bar.
+		//! Creates a new custom Bar.
 		/*!
-		\param _bar a pointer to the Bar.
-		\param _name a constant character pointer, the param name.
-		\param _var a pointer to the info to display.
-		\param _label a constant character pointer, the param name to display.
-		\sa createBar()
+		\param _barName a constant character pointer, the bar name.
+		\sa addBar()
 		*/
-		void addBar(TwBar* _bar, const char *_name, ETwType _type, void* _var, const char *_label);
+		TwBar* createCustomBar(const char *_barName, AntTweakBarInfo _info);
 
 		//! Renders the bars.
 		void render();
@@ -62,5 +71,20 @@ namespace TDF
 	public:
 		//! If the manager already handled any input.
 		int m_handled;
+
+		//! the number of created bars, the manager always starts with 1 bar.
+		int m_barCount;
+
+		//! A bar holding the antweakbar manager info.
+		TwBar *m_antwBar;
+
+		//! A bar holding the SDL manager info.
+		TwBar *m_sdlBar;
+
+		//! A bar holding the recource manager info.
+		TwBar *m_rscBar;
+
+		//! A bar holding the hide gui button.
+		TwBar *m_guiBar;
 	};
 }

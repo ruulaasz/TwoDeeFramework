@@ -41,6 +41,33 @@ namespace TDF
 		*/
 		void release();
 
+		//! Update the manager.
+		/*!
+		\param _deltaTime a float, the change of time.
+		*/
+		void update(float _deltaTime);
+
+		//! Creates the window and renderer.
+		/*!
+		\param _fullscreen an integer, 0 for windowed 1 for fullscreen.
+		*/
+		void setFullscreen(int _fullscreen);
+
+		//! Change the size of the window.
+		/*!
+		\param _w an integer, the new width of the window.
+		\param _h an integer, the new height of the window.
+		*/
+		void resizeWindow(int _w, int _h);
+
+		//! Render a circle
+		/*!
+		\param _r an integer, the radius of the circle.
+		\param _cx an integer, the X position.
+		\param _cy an integer, the Y position.
+		*/
+		void renderCircle(int _r, int _cx, int _cy);
+
 	private:
 		//! Initialize SDL 2.0 subsystems.
 		/*!
@@ -55,7 +82,7 @@ namespace TDF
 		\param _windowHeight an integer, the height of the window.
 		\sa init()
 		*/
-		void createWindowAndRenderer(const char* _name = "New Window", int _windowWidth = 1280, int _windowHeight = 920);
+		void createWindowAndRenderer(const char* _name = "New Window", int _windowWidth = 1920, int _windowHeight = 1000);
 
 	public:
 		//! A pointer to a SDL renderer.
@@ -72,5 +99,14 @@ namespace TDF
 
 		//! The height of the window.
 		int m_windowHeight;
+
+		//! If the window is fullscreen.
+		bool m_fullscreen;
+
+		//! The X position of the mouse.
+		int m_mousePosX;
+
+		//! The Y position of the mouse.
+		int m_mousePosY;
 	};
 }

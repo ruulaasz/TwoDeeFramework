@@ -6,7 +6,7 @@ namespace TDF
 	ResourceManager::ResourceManager()
 	{
 		m_currentTime = 0.0f;
-		m_timeLimit = 2.0f;
+		m_timeLimit = 10.0f;
 	}
 
 	ResourceManager::~ResourceManager()
@@ -36,6 +36,7 @@ namespace TDF
 				reinterpret_cast<Texture*>(newResource)->load(path);
 				newResource->m_type = RT_TEXTURE;
 				m_allResources[_name] = newResource;
+				m_resourceCount = m_allResources.size();
 				break;
 			}
 		}
@@ -78,6 +79,7 @@ namespace TDF
 				{
 					resource->free();
 					m_allResources.erase(it);
+					m_resourceCount = m_allResources.size();
 					return;
 				}
 			}

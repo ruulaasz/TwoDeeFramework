@@ -9,6 +9,9 @@ namespace TDF
 		m_window = nullptr;
 		m_windowHeight = 0;
 		m_windowWidth = 0;
+		m_fullscreen = false;
+		m_mousePosX = 0;
+		m_mousePosY = 0;
 	}
 
 	SDL_Manager::~SDL_Manager()
@@ -33,6 +36,11 @@ namespace TDF
 		SDL_Quit();
 	}
 
+	void SDL_Manager::update(float _deltaTime)
+	{
+		SDL_GetMouseState(&m_mousePosX, &m_mousePosY);
+	}
+
 	void SDL_Manager::initSubSystems()
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -52,7 +60,7 @@ namespace TDF
 	{
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 		
-		m_window = SDL_CreateWindow(_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _windowWidth, _windowHeight, SDL_WINDOW_RESIZABLE);
+		m_window = SDL_CreateWindow(_name, 0, 30, _windowWidth, _windowHeight, SDL_WINDOW_SHOWN);
 		if (!m_window)
 		{
 			printf("SDL_CreateWindow failed: %s\n", SDL_GetError());
@@ -62,5 +70,66 @@ namespace TDF
 		m_windowWidth = _windowWidth;
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	}
+
+	void SDL_Manager::setFullscreen(int _fullscreen)
+	{
+		if (_fullscreen)
+		{
+			SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+		else
+		{
+			SDL_SetWindowFullscreen(m_window, 0);
+		}
+	}
+
+	void SDL_Manager::resizeWindow(int _w, int _h)
+	{
+		SDL_SetWindowSize(m_window, _w, _h);
+	}
+
+	void SDL_Manager::renderCircle(int _r, int _cx, int _cy)
+	{
+		double error = (double)-_r;
+		double x = (double)_r - 0.5;
+		double y = (double)0.5;
+		double cx = _cx - 0.5;
+		double cy = _cy - 0.5;
+
+		while (x >= y)
+		{
+			SDL_RenderDrawPoint(m_renderer, (int)(cx + x), (int)(cy + y));
+			SDL_RenderDrawPoint(m_renderer, (int)(cx + y), (int)(cy + x));
+
+			if (x != 0)
+			{
+				SDL_RenderDrawPoint(m_renderer, (int)(cx - x), (int)(cy + y));
+				SDL_RenderDrawPoint(m_renderer, (int)(cx + y), (int)(cy - x));
+			}
+
+			if (y != 0)
+			{
+				SDL_RenderDrawPoint(m_renderer, (int)(cx + x), (int)(cy - y));
+				SDL_RenderDrawPoint(m_renderer, (int)(cx - y), (int)(cy + x));
+			}
+
+			if (x != 0 && y != 0)
+			{
+				SDL_RenderDrawPoint(m_renderer, (int)(cx - x), (int)(cy - y));
+				SDL_RenderDrawPoint(m_renderer, (int)(cx - y), (int)(cy - x));
+			}
+
+			error += y;
+			++y;
+			error += y;
+
+			if (error >= 0)
+			{
+				--x;
+				error -= x;
+				error -= x;
+			}
+		}
 	}
 }

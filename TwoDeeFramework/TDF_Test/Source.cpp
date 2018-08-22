@@ -2,6 +2,7 @@
 #include <windows.h>
 
 #include <TDF.h>
+#include <SB.h>
 #include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
@@ -19,18 +20,9 @@ float g_deltaTime = 0;
 
 bool g_quit;
 bool g_lAlt;
-bool g_resize;
-int g_mousePosX;
-int g_mousePosY;
 int g_guiHandled;
+
 Player g_player;
-
-#ifdef _WIN64
-
-#else
-TwBar *g_myBar;
-#endif
-
 
 void initSDL()
 {
@@ -54,17 +46,6 @@ void initTw()
 }
 #endif
 
-
-#ifdef _WIN64
-
-#else
-void GUIinit()
-{
-	g_myBar = g_AnttweakbarManager->createBar(TEXT("Mouse_position"));
-	g_AnttweakbarManager->addBar(g_myBar, TEXT("mouse posX:"), TW_TYPE_INT32, &g_AnttweakbarManager->m_handled, TEXT(" label='Mouse posX' "));
-}
-#endif
-
 void loadContent()
 {
 	g_player.init();
@@ -72,7 +53,7 @@ void loadContent()
 
 void render()
 {
-	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
 	g_player.render();
@@ -88,23 +69,40 @@ void render()
 
 void update(float _deltaTime)
 {
-	SDL_GetMouseState(&g_mousePosX, &g_mousePosY);
+	g_SDLManager->update(_deltaTime);
 	g_ResourceManager->update(_deltaTime);
+	g_player.update(_deltaTime);
 }
 
 void handleInputs()
 {
 	while (SDL_PollEvent(&g_SDLManager->m_events))
 	{
+
 #ifdef _WIN64
 		g_guiHandled = 0;
 #else
-		g_AnttweakbarManager->m_handled = TwEventSDL(&g_SDLManager->m_events, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+		g_AnttweakbarManager->handleEvent(&g_SDLManager->m_events);
 		g_guiHandled = g_AnttweakbarManager->m_handled;
 #endif
 		
 		if (!g_guiHandled)
 		{
+			if (g_SDLManager->m_events.type == SDL_WINDOWEVENT)
+			{
+				switch (g_SDLManager->m_events.window.event)
+				{
+				case SDL_WINDOWEVENT_RESIZED:
+					SDL_GetWindowSize(g_SDLManager->m_window, &g_SDLManager->m_windowWidth, &g_SDLManager->m_windowHeight);
+#ifdef _WIN64
+
+#else
+					TwWindowSize(g_SDLManager->m_windowWidth, g_SDLManager->m_windowHeight);
+#endif
+					break;
+				}
+			}
+
 			if (g_SDLManager->m_events.type == SDL_QUIT)
 			{
 				g_quit = true;
@@ -125,15 +123,8 @@ void handleInputs()
 				case SDLK_RETURN:
 					if (g_lAlt)
 					{
-						g_resize ^= 1;
-						if (g_resize)
-						{
-							SDL_SetWindowFullscreen(g_SDLManager->m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-						}
-						else
-						{
-							SDL_SetWindowFullscreen(g_SDLManager->m_window, 0);
-						}
+						g_SDLManager->m_fullscreen ^= 1;
+						g_SDLManager->setFullscreen(g_SDLManager->m_fullscreen);
 					}
 					break;
 				}
@@ -160,11 +151,10 @@ int main()
 
 #else
 	initTw();
-	GUIinit();
 #endif
 
 	loadContent();
-	
+
 	while (!g_quit)
 	{
 		g_lastTime = g_time;

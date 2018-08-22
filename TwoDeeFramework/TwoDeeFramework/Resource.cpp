@@ -5,6 +5,7 @@ namespace TDF
 	Resource::Resource()
 	{
 		m_referenceCount = 0;
+		m_type = RT_DEFAULT;
 	}
 
 	Resource::~Resource()
@@ -14,11 +15,9 @@ namespace TDF
 
 	void Resource::deleteReference()
 	{
-		m_referenceCount--;
-		
-		if (m_referenceCount <= 0)
+		if (m_referenceCount > 0)
 		{
-			m_referenceCount = 0;
+			m_referenceCount--;
 		}
 	}
 

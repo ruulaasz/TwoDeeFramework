@@ -5,7 +5,9 @@ namespace TDF
 {
 	Texture::Texture()
 	{
-		
+		m_sdlTexture = nullptr;
+		m_width = 0;
+		m_height = 0;
 	}
 
 	Texture::~Texture()
@@ -65,5 +67,10 @@ namespace TDF
 		SDL_Rect quadSrc = { 0, 0, m_width, m_height };
 		SDL_Rect quadDst = { _x, _y, m_width, m_height };
 		SDL_RenderCopy(SDL_Manager::GetInstance().m_renderer, m_sdlTexture, &quadSrc, &quadDst);
+	}
+
+	void Texture::setAlpha(int _a)
+	{
+		SDL_SetTextureAlphaMod(m_sdlTexture, _a);
 	}
 }
