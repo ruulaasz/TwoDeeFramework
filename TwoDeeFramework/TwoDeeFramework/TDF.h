@@ -13,4 +13,8 @@
 #include "Resource.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include "Vector2D.h"
+#include "CircleObstacle.h"
 #include "Actor.h"
+#include "Boid.h"
+#include "BoidManager.h"

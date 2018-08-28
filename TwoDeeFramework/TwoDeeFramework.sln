@@ -8,10 +8,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TDF_Test", "TDF_Test\TDF_Test.vcxproj", "{5E84B647-74A6-4262-A843-790AD367B424}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F5973EBF-27C0-49A4-BF05-D19C8123C901} = {F5973EBF-27C0-49A4-BF05-D19C8123C901}
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1} = {2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SteeringBehaviors", "SteeringBehaviors\SteeringBehaviors.vcxproj", "{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +34,6 @@ Global
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x64.Build.0 = Release|x64
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x86.ActiveCfg = Release|Win32
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x86.Build.0 = Release|Win32
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Debug|x64.ActiveCfg = Debug|x64
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Debug|x64.Build.0 = Debug|x64
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Debug|x86.ActiveCfg = Debug|Win32
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Debug|x86.Build.0 = Debug|Win32
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Release|x64.ActiveCfg = Release|x64
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Release|x64.Build.0 = Release|x64
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Release|x86.ActiveCfg = Release|Win32
-		{2D45CEC9-EB97-4A27-8C23-6ECBC6B649E1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -75,6 +75,7 @@ namespace TDF
 		//! the number of created bars, the manager always starts with 1 bar.
 		int m_barCount;
 
+	private:
 		//! A bar holding the antweakbar manager info.
 		TwBar *m_antwBar;
 

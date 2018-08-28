@@ -151,6 +151,9 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnttweakbarManager.h" />
+    <ClInclude Include="Boid.h" />
+    <ClInclude Include="BoidManager.h" />
+    <ClInclude Include="CircleObstacle.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -158,14 +161,19 @@
     <ClInclude Include="StringTools.h" />
     <ClInclude Include="TDF.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnttweakbarManager.cpp" />
+    <ClCompile Include="Boid.cpp" />
+    <ClCompile Include="BoidManager.cpp" />
+    <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

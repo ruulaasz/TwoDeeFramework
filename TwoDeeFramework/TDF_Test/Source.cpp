@@ -2,11 +2,11 @@
 #include <windows.h>
 
 #include <TDF.h>
-#include <SB.h>
 #include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
+TDF::BoidManager* g_BoidManager;
 
 #ifdef _WIN64
 
@@ -24,6 +24,9 @@ int g_guiHandled;
 
 Player g_player;
 
+TDF::Boid* Seeker;
+TDF::Boid* Prey;
+
 void initSDL()
 {
 	TDF::SDL_Manager::StartModule();
@@ -33,6 +36,9 @@ void initSDL()
 
 	TDF::ResourceManager::StartModule();
 	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
+
+	TDF::BoidManager::StartModule();
+	g_BoidManager = TDF::BoidManager::GetPointerInstance();
 }
 
 #ifdef _WIN64
@@ -48,7 +54,19 @@ void initTw()
 
 void loadContent()
 {
+	Seeker = new TDF::Boid();
+	Prey = new TDF::Boid();
+
 	g_player.init();
+
+	Seeker->m_target = Prey;
+	Seeker->m_position = TDF::Vector2D(0, 500);
+
+	g_BoidManager->m_allBoids.push_back(Seeker);
+
+	g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(1000, 500), 100));
+	g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(500, 500), 200));
+	g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(1000, 800), 75));
 }
 
 void render()
@@ -56,7 +74,20 @@ void render()
 	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
+	g_player.m_posX = Prey->m_position.x;
+	g_player.m_posY = Prey->m_position.y;
 	g_player.render();
+
+	g_player.m_posX = Seeker->m_position.x;
+	g_player.m_posY = Seeker->m_position.y;
+	g_player.render();
+
+	g_BoidManager->render();
+
+	for (size_t i = 0; i < g_BoidManager->m_obstacles.size(); i++)
+	{
+		g_BoidManager->m_obstacles.at(i)->render();
+	}
 
 #ifdef _WIN64
 
@@ -71,7 +102,9 @@ void update(float _deltaTime)
 {
 	g_SDLManager->update(_deltaTime);
 	g_ResourceManager->update(_deltaTime);
-	g_player.update(_deltaTime);
+	g_BoidManager->update(_deltaTime);
+	Prey->m_position.x = g_SDLManager->m_mousePosX;
+	Prey->m_position.y = g_SDLManager->m_mousePosY;
 }
 
 void handleInputs()
@@ -175,6 +208,5 @@ int main()
 #endif
 	
 	g_SDLManager->release();
-
 	return 0;
 }

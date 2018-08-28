@@ -1,7 +1,6 @@
 #pragma once
 
 #include <TDF.h>
-#include <SB.h>
 
 class Player : public TDF::Actor
 {
@@ -17,15 +16,15 @@ public:
 public:
 	TDF::Texture* m_texture;
 	bool m_enable;
-	SB::Vector2D m_position;
-	SB::Vector2D m_velocity;
-	float m_maxVelocity;
+	int m_posX;
+	int m_posY;
 
-private:
-	SB::SteeringBody m_body;
+#ifdef _WIN64
+
+#else
 	TwBar* m_steerBar;
-	SB::Target* m_target;
 	double vel[3];
 	double des[3];
 	double steer[3];
+#endif
 };

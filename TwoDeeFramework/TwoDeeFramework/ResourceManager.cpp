@@ -7,6 +7,7 @@ namespace TDF
 	{
 		m_currentTime = 0.0f;
 		m_timeLimit = 10.0f;
+		m_resourceCount = 0;
 	}
 
 	ResourceManager::~ResourceManager()

@@ -71,26 +71,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(SolutionDir)SteeringBehaviors;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(SolutionDir)lib\SteeringBehaviors\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(SolutionDir)SteeringBehaviors;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(SolutionDir)lib\SteeringBehaviors\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(SolutionDir)SteeringBehaviors;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(SolutionDir)lib\SteeringBehaviors\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(SolutionDir)SteeringBehaviors;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(SolutionDir)lib\SteeringBehaviors\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +101,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;SteeringBehaviors_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -114,7 +114,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;SteeringBehaviors_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -131,7 +131,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;SteeringBehaviors_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;SteeringBehaviors_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

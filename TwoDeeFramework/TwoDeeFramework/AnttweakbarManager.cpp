@@ -9,9 +9,12 @@ namespace TDF
 	AnttweakbarManager::AnttweakbarManager()
 	{
 		m_handled = 0;
+		m_barCount = 0;
+
 		m_antwBar = nullptr;
 		m_sdlBar = nullptr;
 		m_rscBar = nullptr;
+		m_guiBar = nullptr;
 	}
 
 	AnttweakbarManager::~AnttweakbarManager()
