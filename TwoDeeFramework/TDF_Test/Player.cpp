@@ -63,11 +63,11 @@ void Player::init()
 	
 }
 
-void Player::render()
+void Player::render(float _angle)
 {
 	if (m_enable)
 	{
-		m_texture->render(static_cast<int>(m_posX - m_texture->getWidth() / 2) , static_cast<int>(m_posY - m_texture->getHeight() / 2));
+		m_texture->render(static_cast<int>(m_posX - m_texture->getWidth() / 2) , static_cast<int>(m_posY - m_texture->getHeight() / 2), _angle);
 		/*SDL_SetRenderDrawColor(TDF::SDL_Manager::GetInstance().m_renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 		TDF::SDL_Manager::GetInstance().renderCircle(m_target->m_arrivalRadius, static_cast<int>(m_target->m_position.x), static_cast<int>(m_target->m_position.y));
 		TDF::SDL_Manager::GetInstance().renderCircle(m_body.m_stopRadius, static_cast<int>(m_target->m_position.x), static_cast<int>(m_target->m_position.y));

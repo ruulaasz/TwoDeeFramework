@@ -63,6 +63,9 @@ namespace TDF
 
 			seekForce.x = 0;
 			seekForce.y = 0;
+
+			arrivalForce.x = 0;
+			arrivalForce.y = 0;
 		}
 
 		return arrivalForce + seekForce;
@@ -127,10 +130,138 @@ namespace TDF
 		}
 		else 
 		{
-			escalate(avoidance, 0); // nullify the avoidance force
+			escalate(avoidance, 0);
 		}
 
 		return avoidance;
+	}
+
+	Vector2D BoidManager::followPath(Boid * _me, std::vector<PathNode*> _path)
+	{
+		float distanceToTarget;
+		Vector2D arrivalForce;
+
+		for (size_t i = 0; i < _path.size(); i++)
+		{
+			if (_path.at(i)->m_active)
+			{
+				if (i == _path.size() - 1 && !_me->m_loopPath)
+				{
+					arrivalForce = arrival(_me, _path.at(_path.size() - 1)->m_position, _path.at(_path.size() - 1)->m_radius);
+
+					if (getLength(arrivalForce) <= 0)
+					{
+						_path.at(i)->m_active = false;
+					}
+
+					return arrivalForce;
+				}
+
+				_me->m_desiredVelocity = _path.at(i)->m_position - _me->m_position;
+				distanceToTarget = getLength(_me->m_desiredVelocity);
+
+				if (distanceToTarget > _path.at(i)->m_radius)
+				{
+					return seek(_me, _path.at(i)->m_position);
+				}
+				else
+				{
+					_path.at(i)->m_active = false;
+				}
+			}
+		}
+
+		if (_me->m_loopPath)
+		{
+			for (size_t i = 0; i < _path.size(); i++)
+			{
+				_path.at(i)->m_active = true;
+			}
+
+			return seek(_me, _path.at(0)->m_position);
+		}
+
+		return Vector2D();
+	}
+
+	Vector2D BoidManager::followTheLeader(Boid * _me, Boid * _leader)
+	{
+		Vector2D force;
+
+		Vector2D tv = normalize(_leader->m_velocity);
+		tv = tv * _me->m_trailDistance;
+
+		Vector2D ahead = _leader->m_position + tv;
+
+		tv = tv * -1;
+		Vector2D behind = _leader->m_position + tv;
+
+		if (isLeaderOnSight(_me, _leader, ahead)) 
+		{
+			force += evade(_me, _leader->m_position, _leader->m_velocity);
+		}
+
+		force += arrival(_me, behind, _leader->m_arrivalRadius);
+
+		force += separation(_me, m_allBoids);
+
+		return force;
+	}
+
+	Vector2D BoidManager::separation(Boid * _me, std::vector<Boid*> _allBoids)
+	{
+		int neighborCount = 0;
+		Boid* boid;
+		Vector2D force;
+		Vector2D alligment;
+		Vector2D cohesion;
+
+		for (size_t i = 0; i < _allBoids.size(); i++)
+		{
+			boid = _allBoids.at(i);
+
+			if (boid != _me && distanceBetween2Points(boid->m_position, _me->m_position) <= _me->m_separationRadius)
+			{
+				//Alignment
+				alligment.x += boid->m_velocity.x;
+				alligment.y += boid->m_velocity.y;
+
+				//cohesion
+				cohesion.x += boid->m_position.x;
+				cohesion.y += boid->m_position.y;
+				cohesion = Vector2D(cohesion.x - boid->m_position.x, cohesion.y - boid->m_position.y);
+
+				force += (boid->m_position - _me->m_position);
+				neighborCount++;
+			}
+		}
+
+		if (neighborCount != 0) 
+		{
+			//Alignment
+			alligment.x /= neighborCount;
+			alligment.y /= neighborCount;
+			normalize(alligment);
+
+			//cohesion
+			cohesion.x /= neighborCount;
+			cohesion.y /= neighborCount;
+			normalize(cohesion);
+
+			force.x /= neighborCount;
+			force.y /= neighborCount;
+
+			force.x *= -1;
+			force.y *= -1;
+		}
+
+		escalate(force, _me->m_maxSeparation);
+
+		//alligmentcoheison
+		_me->m_velocity += alligment;
+		_me->m_velocity += cohesion;
+
+		return force;
 	}
 
 	CircleObstacle* BoidManager::findMostThreateningObstacle(Vector2D _position, Vector2D _ahead, Vector2D _ahead2)
@@ -142,7 +273,6 @@ namespace TDF
 			CircleObstacle* Obstacle = m_obstacles.at(i);
 			bool collision = lineIntersectCircle(_ahead, _ahead2, Obstacle);
 
-			// "position" is the character's current position
 			if (collision && (mostThreatening == nullptr || distanceBetween2Points(_position, Obstacle->m_center) < distanceBetween2Points(_position, mostThreatening->m_center))) 
 			{
 				mostThreatening = Obstacle;
@@ -161,13 +291,72 @@ namespace TDF
 		return std::sqrt((_a.x - _b.x) * (_a.x - _b.x) + (_a.y - _b.y) * (_a.y - _b.y));
 	}
 
+	bool BoidManager::isLeaderOnSight(Boid* _me, Boid * _leader, Vector2D _ahead)
+	{
+		return distanceBetween2Points(_ahead, _me->m_position) <= _leader->m_leaderSightRadius || distanceBetween2Points(_leader->m_position, _me->m_position) <= _leader->m_leaderSightRadius;
+	}
+
+	Vector2D BoidManager::alligmentCohesion()
+	{
+		return Vector2D();
+	}
+
 	void BoidManager::update(float _deltaTime)
 	{
 		for (size_t i = 0; i < m_allBoids.size(); i++)
 		{
 			Boid* boid = m_allBoids.at(i);
+			boid->m_steeringForce.reset();
 
-			boid->m_steeringForce = arrival(boid, boid->m_target->m_position, boid->m_target->m_arrivalRadius) + obstacleAvoidance(boid);
+			if (boid->m_behaviors & BT_SEEK)
+			{
+				boid->m_steeringForce += seek(boid, boid->m_target->m_position);
+			}
+
+			if (boid->m_behaviors & BT_FLEE)
+			{
+				boid->m_steeringForce += flee(boid, boid->m_target->m_position);
+			}
+
+			if (boid->m_behaviors & BT_ARRIVAL)
+			{
+				boid->m_steeringForce += arrival(boid, boid->m_target->m_position, boid->m_target->m_arrivalRadius);
+			}
+
+			if (boid->m_behaviors & BT_WANDER)
+			{
+				boid->m_steeringForce += wander(boid);
+			}
+
+			if (boid->m_behaviors & BT_PURSUIT)
+			{
+				boid->m_steeringForce += pursuit(boid, boid->m_target->m_position, boid->m_target->m_velocity);
+			}
+
+			if (boid->m_behaviors & BT_EVADE)
+			{
+				boid->m_steeringForce += evade(boid, boid->m_target->m_position, boid->m_target->m_velocity);
+			}
+
+			if (boid->m_behaviors & BT_OBSTACLE)
+			{
+				boid->m_steeringForce += obstacleAvoidance(boid);
+			}
+
+			if (boid->m_behaviors & BT_FOLLOWPATH)
+			{
+				boid->m_steeringForce += followPath(boid, boid->m_path);
+			}
+
+			if (boid->m_behaviors & BT_FOLLOWLEADER)
+			{
+				boid->m_steeringForce += followTheLeader(boid, boid->m_target);
+			}
+
+			if (boid->m_behaviors & BT_SEPARATION)
+			{
+				boid->m_steeringForce += separation(boid, m_allBoids);
+			}
 
 			boid->m_steeringForce = truncate(boid->m_steeringForce, m_maxTotalForce);
 			boid->m_steeringForce = boid->m_steeringForce / boid->m_mass;

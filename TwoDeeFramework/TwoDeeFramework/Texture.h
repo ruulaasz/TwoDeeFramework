@@ -44,7 +44,7 @@ namespace TDF
 		\param _x an integer for the X position.
 		\param _y an integer for the Y position.
 		*/
-		void render(int _x, int _y);
+		void render(int _x, int _y, float _angle = 0);
 
 		//! Set this texture alpha.
 		/*!

@@ -62,11 +62,11 @@ namespace TDF
 		}
 	}
 
-	void Texture::render(int _x, int _y)
+	void Texture::render(int _x, int _y, float _angle)
 	{
 		SDL_Rect quadSrc = { 0, 0, m_width, m_height };
 		SDL_Rect quadDst = { _x, _y, m_width, m_height };
-		SDL_RenderCopy(SDL_Manager::GetInstance().m_renderer, m_sdlTexture, &quadSrc, &quadDst);
+		SDL_RenderCopyEx(SDL_Manager::GetInstance().m_renderer, m_sdlTexture, &quadSrc, &quadDst,(_angle * 57.2958)-90, nullptr, SDL_FLIP_NONE);
 	}
 
 	void Texture::setAlpha(int _a)

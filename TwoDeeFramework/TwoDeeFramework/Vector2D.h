@@ -16,6 +16,8 @@ namespace TDF
 		Vector2D operator* (const float& _value);
 		Vector2D operator/ (const float& _value);
 
+		void reset();
+
 	public:
 		float x;
 		float y;

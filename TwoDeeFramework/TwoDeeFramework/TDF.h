@@ -16,5 +16,6 @@
 #include "Vector2D.h"
 #include "CircleObstacle.h"
 #include "Actor.h"
+#include "PathNode.h"
 #include "Boid.h"
 #include "BoidManager.h"

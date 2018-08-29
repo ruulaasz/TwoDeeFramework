@@ -2,6 +2,8 @@
 
 #include "Actor.h"
 #include "Vector2D.h"
+#include "PathNode.h"
+#include <vector>
 
 namespace TDF
 {
@@ -13,6 +15,7 @@ namespace TDF
 
 		Vector2D m_position;
 		Vector2D m_velocity;
+		Vector2D m_renderDirection;
 		float m_mass;
 		float m_maxVelocity;
 		Boid* m_target;
@@ -44,6 +47,16 @@ namespace TDF
 
 		float m_maxSeeAhead;
 		float m_maxAvoidForce;
+
+		bool m_loopPath;
+		std::vector<PathNode*> m_path;
+
+		float m_trailDistance;
+		float m_separationRadius;
+		float m_maxSeparation;
+		float m_leaderSightRadius;
+
+		int m_behaviors;
 
 		void render();
 	};

@@ -66,6 +66,12 @@ namespace TDF
 		return Vector2D(x / _value, y / _value);
 	}
 
+	void Vector2D::reset()
+	{
+		x = 0;
+		y = 0;
+	}
+
 	float getLength(Vector2D _vector)
 	{
 		return std::sqrt(std::pow(_vector.x, 2) + std::pow(_vector.y, 2));

@@ -10,7 +10,7 @@ public:
 
 	void update(float _deltaTime);
 	void init();
-	void render();
+	void render(float _angle = 0);
 	void destroy();
 
 public:
