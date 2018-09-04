@@ -1,5 +1,5 @@
 #include "CircleObstacle.h"
-#include "SDL_Manager.h"
+#include "RenderManager.h"
 
 namespace TDF
 {
@@ -22,6 +22,6 @@ namespace TDF
 	void TDF::CircleObstacle::render()
 	{
 		SDL_SetRenderDrawColor(TDF::SDL_Manager::GetInstance().m_renderer, 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
-		TDF::SDL_Manager::GetInstance().renderCircle(m_radius, m_center.x, m_center.y);
+		TDF::RenderManager::GetInstance().renderCircle(m_radius, m_center.x, m_center.y);
 	}
 }

@@ -1,5 +1,6 @@
 #include "SDL_Manager.h"
 #include <cstdio>
+#include "Texture.h"
 
 namespace TDF
 {
@@ -69,7 +70,7 @@ namespace TDF
 		m_windowHeight = _windowHeight;
 		m_windowWidth = _windowWidth;
 
-		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);// SDL_RENDERER_PRESENTVSYNC);
 	}
 
 	void SDL_Manager::setFullscreen(int _fullscreen)
@@ -87,49 +88,5 @@ namespace TDF
 	void SDL_Manager::resizeWindow(int _w, int _h)
 	{
 		SDL_SetWindowSize(m_window, _w, _h);
-	}
-
-	void SDL_Manager::renderCircle(int _r, int _cx, int _cy)
-	{
-		double error = (double)-_r;
-		double x = (double)_r - 0.5;
-		double y = (double)0.5;
-		double cx = _cx - 0.5;
-		double cy = _cy - 0.5;
-
-		while (x >= y)
-		{
-			SDL_RenderDrawPoint(m_renderer, (int)(cx + x), (int)(cy + y));
-			SDL_RenderDrawPoint(m_renderer, (int)(cx + y), (int)(cy + x));
-
-			if (x != 0)
-			{
-				SDL_RenderDrawPoint(m_renderer, (int)(cx - x), (int)(cy + y));
-				SDL_RenderDrawPoint(m_renderer, (int)(cx + y), (int)(cy - x));
-			}
-
-			if (y != 0)
-			{
-				SDL_RenderDrawPoint(m_renderer, (int)(cx + x), (int)(cy - y));
-				SDL_RenderDrawPoint(m_renderer, (int)(cx - y), (int)(cy + x));
-			}
-
-			if (x != 0 && y != 0)
-			{
-				SDL_RenderDrawPoint(m_renderer, (int)(cx - x), (int)(cy - y));
-				SDL_RenderDrawPoint(m_renderer, (int)(cx - y), (int)(cy - x));
-			}
-
-			error += y;
-			++y;
-			error += y;
-
-			if (error >= 0)
-			{
-				--x;
-				error -= x;
-				error -= x;
-			}
-		}
 	}
 }

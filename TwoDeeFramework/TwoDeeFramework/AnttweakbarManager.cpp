@@ -13,19 +13,12 @@ namespace TDF
 
 		m_antwBar = nullptr;
 		m_sdlBar = nullptr;
-		m_rscBar = nullptr;
 		m_guiBar = nullptr;
 	}
 
 	AnttweakbarManager::~AnttweakbarManager()
 	{
 
-	}
-
-	void TW_CALL resizeWindow(void *)
-	{
-		SDL_Manager::GetInstance().resizeWindow(SDL_Manager::GetInstance().m_windowWidth, SDL_Manager::GetInstance().m_windowHeight);
-		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, SDL_Manager::GetInstance().m_windowWidth);
 	}
 
 	void TW_CALL hideGUI(void *)
@@ -60,7 +53,7 @@ namespace TDF
 		std::string name;
 		if (m_hideGUI)
 		{
-			for (size_t i = 2; i < 5; i++)
+			for (size_t i = 2; i < 4; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=false";
@@ -69,7 +62,7 @@ namespace TDF
 		}
 		else
 		{
-			for (size_t i = 2; i < 5; i++)
+			for (size_t i = 2; i < 4; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=true";
@@ -101,19 +94,11 @@ namespace TDF
 		m_sdlBar = createCustomBar(TEXT("SDLManager_Info"), info);
 		TwAddVarRW(m_sdlBar, TEXT("Window width:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_windowWidth, TEXT(" group=Window label='Window width:' min=100 max=1920 "));
 		TwAddVarRW(m_sdlBar, TEXT("Window height:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_windowHeight, TEXT(" group=Window label='Window height:' min=300 max=1080 "));
-		TwAddButton(m_sdlBar, TEXT("Resize window"), resizeWindow, NULL, TEXT(" group=Window label='Resize window:' "));
 		TwAddVarRO(m_sdlBar, TEXT("Fullscreen:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_fullscreen, TEXT(" group=Window label='Fullscreen:' "));
 
 		TwAddVarRO(m_sdlBar, TEXT("Mouse posX:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_mousePosX, TEXT(" group=Mouse label='Mouse posX:' "));
 		TwAddVarRO(m_sdlBar, TEXT("Mouse posY:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_mousePosY, TEXT(" group=Mouse label='Mouse posY:' "));
-
-		info.size = " size='250 90' ";
-		info.position = " position='0 72' ";
-		m_rscBar = createCustomBar(TEXT("ResourceManager_Info"), info);
-		TwAddVarRO(m_rscBar, TEXT("Loaded:"), TW_TYPE_INT32, &ResourceManager::GetInstance().m_resourceCount, TEXT(" label='Loaded:' "));
-		TwAddVarRO(m_rscBar, TEXT("Clean timer:"), TW_TYPE_FLOAT, &ResourceManager::GetInstance().m_currentTime, TEXT(" label='Clean timer:' precision=3 "));
-		TwAddVarRW(m_rscBar, TEXT("Clean timelimit:"), TW_TYPE_FLOAT, &ResourceManager::GetInstance().m_timeLimit, TEXT(" label='Clean time limit:' precision=1 "));
-
+		
 		TwDefine(" GLOBAL contained=true ");
 		TwDefine(" TW_HELP visible=false ");
 	}

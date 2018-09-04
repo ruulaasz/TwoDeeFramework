@@ -1,5 +1,5 @@
 #include "PathNode.h"
-#include "SDL_Manager.h"
+#include "RenderManager.h"
 
 namespace TDF
 {
@@ -22,6 +22,6 @@ namespace TDF
 
 	void PathNode::render()
 	{
-		SDL_Manager::GetInstance().renderCircle(m_radius, m_position.x, m_position.y);
+		RenderManager::GetInstance().renderCircle(m_radius, m_position.x, m_position.y);
 	}
 }

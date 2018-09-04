@@ -374,6 +374,26 @@ namespace TDF
 		{
 			Boid* boid = m_allBoids.at(i);
 			boid->render();
+
+			if (boid->m_behaviors & BT_ARRIVAL)
+			{
+				boid->renderArrival();
+			}
+
+			if (boid->m_behaviors & BT_WANDER)
+			{
+				boid->renderWander();
+			}
+
+			if (boid->m_behaviors & BT_PURSUIT)
+			{
+				boid->renderPursuit();
+			}
+
+			if (boid->m_behaviors & BT_EVADE)
+			{
+				boid->renderPursuit();
+			}
 		}
 	}
 }

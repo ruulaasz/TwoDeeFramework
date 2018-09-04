@@ -22,34 +22,13 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void load(std::string _path);
+		virtual void loadFromFile(std::string _path);
 
 		//! A virtual function used to free the texture memory.
 		virtual void free();
 
-		//! Returns the texture width.
-		/*!
-		\sa getHeight()
-		*/
-		int getWidth() { return m_width; };
+		void createAsRenderTarget();
 
-		//! Returns the texture height.
-		/*!
-		\sa getWidth()
-		*/
-		int getHeight() { return m_height; };
-
-		//! Render the texture in a given position.
-		/*!
-		\param _x an integer for the X position.
-		\param _y an integer for the Y position.
-		*/
-		void render(int _x, int _y, float _angle = 0);
-
-		//! Set this texture alpha.
-		/*!
-		\param _a an integer for the new alpha.
-		*/
 		void setAlpha(int _a);
 
 	public:

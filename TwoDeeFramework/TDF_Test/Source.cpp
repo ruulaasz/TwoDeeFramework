@@ -7,6 +7,7 @@
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
 TDF::BoidManager* g_BoidManager;
+TDF::RenderManager* g_RenderManager;
 
 #ifdef _WIN64
 
@@ -25,9 +26,6 @@ int g_guiHandled;
 Player g_player;
 
 TDF::Boid* Seeker;
-TDF::Boid* Seeker2;
-TDF::Boid* Seeker3;
-
 TDF::Boid* Prey;
 TDF::Boid* Mouse;
 
@@ -43,6 +41,10 @@ void initSDL()
 
 	TDF::BoidManager::StartModule();
 	g_BoidManager = TDF::BoidManager::GetPointerInstance();
+
+	TDF::RenderManager::StartModule();
+	g_RenderManager = TDF::RenderManager::GetPointerInstance();
+	g_RenderManager->init();
 }
 
 #ifdef _WIN64
@@ -59,81 +61,38 @@ void initTw()
 void loadContent()
 {
 	Seeker = new TDF::Boid();
-	Seeker2 = new TDF::Boid();
-	Seeker3 = new TDF::Boid();
-
 	Prey = new TDF::Boid();
 	Mouse = new TDF::Boid();
 
 	g_player.init();
 
 	Seeker->m_target = Prey;
-	Seeker->m_position = TDF::Vector2D(0, 0);
-	Seeker->m_behaviors = TDF::BT_FOLLOWLEADER;
+	Seeker->m_position = TDF::Vector2D(1000, 500);
+	Seeker->m_behaviors = TDF::BT_EVADE;
 
-	Seeker2->m_target = Prey;
-	Seeker2->m_position = TDF::Vector2D(0, 1000);
-	Seeker2->m_behaviors = TDF::BT_FOLLOWLEADER;
-
-	Seeker3->m_target = Prey;
-	Seeker3->m_position = TDF::Vector2D(200, 500);
-	Seeker3->m_behaviors = TDF::BT_FOLLOWLEADER;
-
-	//Seeker->m_path.push_back(new TDF::PathNode(TDF::Vector2D(1000, 500), 50));
-	//Seeker->m_path.push_back(new TDF::PathNode(TDF::Vector2D(1000, 900), 50));
-	//Seeker->m_path.push_back(new TDF::PathNode(TDF::Vector2D(1500, 500), 50));
 	g_BoidManager->m_allBoids.push_back(Seeker);
-	g_BoidManager->m_allBoids.push_back(Seeker2);
-	g_BoidManager->m_allBoids.push_back(Seeker3);
 
 	Prey->m_position = TDF::Vector2D(1000, 300);
 	Prey->m_target = Mouse;
-	Prey->m_seekScalar = 5;
-	//Prey->m_maxVelocity = 6;
+	Prey->m_maxVelocity = 4;
 	Prey->m_behaviors = TDF::BT_SEEK;
 	g_BoidManager->m_allBoids.push_back(Prey);
-
-	//g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(1000, 500), 100));
-	//g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(500, 500), 200));
-	//g_BoidManager->m_obstacles.push_back(new TDF::CircleObstacle(TDF::Vector2D(1000, 800), 75));
 }
 
 void renderBoids()
 {
 	g_player.m_posX = Prey->m_position.x;
 	g_player.m_posY = Prey->m_position.y;
-	g_player.render();
+	g_player.render(Prey->m_renderAngle);
 
 	g_player.m_posX = Seeker->m_position.x;
 	g_player.m_posY = Seeker->m_position.y;
-
-	if (TDF::getLength(Seeker->m_velocity) > 0)
-	{
-		Seeker->m_renderDirection = Seeker->m_velocity;
-	}
-	g_player.render((float)std::atan2(Seeker->m_renderDirection.x, -Seeker->m_renderDirection.y));
-
-	g_player.m_posX = Seeker2->m_position.x;
-	g_player.m_posY = Seeker2->m_position.y;
-
-	if (TDF::getLength(Seeker2->m_velocity) > 0)
-	{
-		Seeker2->m_renderDirection = Seeker2->m_velocity;
-	}
-	g_player.render((float)std::atan2(Seeker2->m_renderDirection.x, -Seeker2->m_renderDirection.y));
-
-	g_player.m_posX = Seeker3->m_position.x;
-	g_player.m_posY = Seeker3->m_position.y;
-
-	if (TDF::getLength(Seeker3->m_velocity) > 0)
-	{
-		Seeker3->m_renderDirection = Seeker3->m_velocity;
-	}
-	g_player.render((float)std::atan2(Seeker3->m_renderDirection.x, -Seeker3->m_renderDirection.y));
+	g_player.render(Seeker->m_renderAngle);
 }
 
 void render()
 {
+	SDL_SetRenderTarget(g_SDLManager->m_renderer, g_RenderManager->m_renderTargets[TDF::GBUFFER]->m_sdlTexture);
 	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(g_SDLManager->m_renderer);
 
@@ -141,16 +100,18 @@ void render()
 
 	g_BoidManager->render();
 
-	for (size_t i = 0; i < g_BoidManager->m_obstacles.size(); i++)
-	{
-		g_BoidManager->m_obstacles.at(i)->render();
-	}
-
 #ifdef _WIN64
 
 #else
 	g_AnttweakbarManager->render();
 #endif
+
+	SDL_SetRenderTarget(g_SDLManager->m_renderer, NULL);
+	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(g_SDLManager->m_renderer);
+
+	//g_RenderManager->saveTextureAsPNG("test", g_RenderManager->m_renderTargets[TDF::GBUFFER]);
+	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER], 0, 0);
 
 	SDL_RenderPresent(g_SDLManager->m_renderer);
 }
@@ -158,7 +119,6 @@ void render()
 void update(float _deltaTime)
 {
 	g_SDLManager->update(_deltaTime);
-	g_ResourceManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
 	Mouse->m_position.x = g_SDLManager->m_mousePosX;
 	Mouse->m_position.y = g_SDLManager->m_mousePosY;

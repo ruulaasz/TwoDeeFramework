@@ -9,6 +9,8 @@
 
 namespace TDF
 {
+	class Texture;
+
 	//!  A manager class for SDL 2.0. 
 	/*!
 	Used to initialize and use the SDL 2.0 modules.
@@ -59,14 +61,6 @@ namespace TDF
 		\param _h an integer, the new height of the window.
 		*/
 		void resizeWindow(int _w, int _h);
-
-		//! Render a circle
-		/*!
-		\param _r an integer, the radius of the circle.
-		\param _cx an integer, the X position.
-		\param _cy an integer, the Y position.
-		*/
-		void renderCircle(int _r, int _cx, int _cy);
 
 	private:
 		//! Initialize SDL 2.0 subsystems.

@@ -15,7 +15,7 @@ namespace TDF
 		
 	}
 
-	void Texture::load(std::string _path)
+	void Texture::loadFromFile(std::string _path)
 	{
 		free();
 
@@ -62,11 +62,16 @@ namespace TDF
 		}
 	}
 
-	void Texture::render(int _x, int _y, float _angle)
+	void Texture::createAsRenderTarget()
 	{
-		SDL_Rect quadSrc = { 0, 0, m_width, m_height };
-		SDL_Rect quadDst = { _x, _y, m_width, m_height };
-		SDL_RenderCopyEx(SDL_Manager::GetInstance().m_renderer, m_sdlTexture, &quadSrc, &quadDst,(_angle * 57.2958)-90, nullptr, SDL_FLIP_NONE);
+		int w = SDL_Manager::GetInstance().m_windowWidth;
+		int h = SDL_Manager::GetInstance().m_windowHeight;
+
+		m_sdlTexture = SDL_CreateTexture(SDL_Manager::GetInstance().m_renderer, SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_TARGET, w, h);
+
+		m_width = w;
+		m_height = h;
 	}
 
 	void Texture::setAlpha(int _a)

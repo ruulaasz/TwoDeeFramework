@@ -1,8 +1,11 @@
 #pragma once
 
+#include <memory>
+#include <unordered_map>
+
 #include "Module.h"
 #include "Resource.h"
-#include <map>
+#include "StringTools.h"
 
 namespace TDF
 {
@@ -22,43 +25,67 @@ namespace TDF
 		//! Default destructor.
 		~ResourceManager();
 
-		//! Updates the manager.
-		/*!
-		\param _deltaTime a float, the change of time.
-		*/
-		void update(float _deltaTime);
+		template <class T>
+		T* loadFromFile(std::string _path)
+		{
+			if (_path.empty())
+			{
+				///ERROR: direccion vacia o invalida
+				return nullptr;
+			}
 
-		//! Loads a new resource of give you an already loaded resource.
-		/*!
-		\param _name a string, the name of the resource.
-		\param _type the type of the resource.
-		\sa search()
-		*/
-		Resource* load(std::string _name, ResourceType _type);
+			std::string name = getNameFromPath(_path);
 
-		//! Gives you the reference to a resource without adding a reference.
-		/*!
-		\param _name a string, the name of the resource.
-		\param _type the type of the resource.
-		\sa load()
-		*/
-		Resource* search(std::string _name, ResourceType _type);
+			T* newResource = searchInLoaded<T>(name);
+				
+			if (!newResource)
+			{
+				newResource = new T();
+				newResource->loadFromFile(_path);
+			}
 
-	private:
-		//! Delete the unreferenced resources every X time.
-		void cleanResources();
+			if (!newResource)
+			{
+				///ERROR: no se pudo cargar el archivo
+				return nullptr;
+			}
+
+			m_allResources[name] = newResource;
+			return reinterpret_cast<T*>(newResource);
+		}
+
+		template <class T>
+		T* createEmpty(std::string _name)
+		{
+			T* newResource = newResource = new T();
+			newResource->setName(_name);
+			return reinterpret_cast<T*>(newResource);
+		}
+
+		template <class T>
+		T* searchInLoaded(std::string _name)
+		{
+			auto it = m_allResources.find(_name);
+
+			if (it != m_allResources.end())
+			{
+				if (dynamic_cast<T*>(it->second))
+				{
+					return reinterpret_cast<T*>(it->second);
+				}
+				else
+				{
+					return nullptr;
+				}
+			}
+			else
+			{
+				return nullptr;
+			}
+		}
 
 	public:
 		//! A map containing a resource and its name.
-		std::map<std::string, Resource*> m_allResources;
-
-		//! Every time this time pass the cleanResources() function will be called.
-		float m_timeLimit;
-
-		//! Time passed since last cleanup.
-		float m_currentTime;
-
-		//! The number of resources loaded.
-		int m_resourceCount;
+		std::unordered_map<std::string, Resource*> m_allResources;
 	};
 }

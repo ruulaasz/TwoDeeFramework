@@ -82,9 +82,6 @@ namespace TDF
 		//! A bar holding the SDL manager info.
 		TwBar *m_sdlBar;
 
-		//! A bar holding the recource manager info.
-		TwBar *m_rscBar;
-
 		//! A bar holding the hide gui button.
 		TwBar *m_guiBar;
 	};

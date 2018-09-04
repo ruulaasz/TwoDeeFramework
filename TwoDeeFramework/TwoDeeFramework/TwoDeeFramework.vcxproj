@@ -156,6 +156,7 @@
     <ClInclude Include="CircleObstacle.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="PathNode.h" />
+    <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDL_Manager.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="BoidManager.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="PathNode.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
