@@ -4,7 +4,7 @@ namespace TDF
 {
 	RenderManager::RenderManager()
 	{
-
+		m_renderer = nullptr;
 	}
 
 	RenderManager::~RenderManager()
@@ -23,7 +23,7 @@ namespace TDF
 		}
 	}
 
-	void RenderManager::renderCircle(int _r, int _cx, int _cy)
+	void RenderManager::renderCircle(float _r, float _cx, float _cy)
 	{
 		double error = (double)-_r;
 		double x = (double)_r - 0.5;
@@ -71,7 +71,14 @@ namespace TDF
 	{
 		SDL_Rect quadSrc = { 0, 0, _texture->m_width, _texture->m_height };
 		SDL_Rect quadDst = { _x , _y , _texture->m_width, _texture->m_height };
-		SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, &quadSrc, &quadDst, (_angle), nullptr, _flip);
+
+		SDL_RenderCopyEx(m_renderer, 
+						 _texture->m_sdlTexture, 
+						 &quadSrc, 
+						 &quadDst, 
+						 (_angle), 
+						 nullptr, 
+						 _flip);
 	}
 
 	void RenderManager::saveTextureAsPNG(const char * _name, Texture * _texture)
@@ -81,7 +88,13 @@ namespace TDF
 		int width, height;
 		SDL_QueryTexture(_texture->m_sdlTexture, NULL, NULL, &width, &height);
 		SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-		SDL_RenderReadPixels(m_renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
+
+		SDL_RenderReadPixels(m_renderer, 
+							 NULL, 
+							 surface->format->format, 
+							 surface->pixels, 
+							 surface->pitch);
+
 		IMG_SavePNG(surface, _name);
 		SDL_FreeSurface(surface);
 		SDL_SetRenderTarget(m_renderer, target);

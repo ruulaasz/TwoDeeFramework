@@ -25,6 +25,11 @@ namespace TDF
 		//! Default destructor.
 		~ResourceManager();
 
+		//! a template function, loads a resource from a file.
+		/*!
+		\param _path the path of the file.
+		\return the loaded resource.
+		*/
 		template <class T>
 		T* loadFromFile(std::string _path)
 		{
@@ -54,6 +59,11 @@ namespace TDF
 			return reinterpret_cast<T*>(newResource);
 		}
 
+		//! a template function, creates an empty resource.
+		/*!
+		\param _name the name of the resource.
+		\return the created resource.
+		*/
 		template <class T>
 		T* createEmpty(std::string _name)
 		{
@@ -62,6 +72,11 @@ namespace TDF
 			return reinterpret_cast<T*>(newResource);
 		}
 
+		//! a template function, search for a resource.
+		/*!
+		\param _name the name of the resource.
+		\return the found resource.
+		*/
 		template <class T>
 		T* searchInLoaded(std::string _name)
 		{
@@ -85,7 +100,7 @@ namespace TDF
 		}
 
 	public:
-		//! A map containing a resource and its name.
+		//! An unordered map containing a resource and its name.
 		std::unordered_map<std::string, Resource*> m_allResources;
 	};
 }

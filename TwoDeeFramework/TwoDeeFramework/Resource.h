@@ -30,7 +30,7 @@ namespace TDF
 		std::string getName() { return m_name; };
 
 		//! Returns the resource name.
-		void setName(std::string _name) { m_name = _name; };
+		void setName(const std::string& _name) { m_name = _name; };
 
 	protected:
 		//! The name of the resource.

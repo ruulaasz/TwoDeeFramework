@@ -6,9 +6,10 @@ namespace TDF
 	PathNode::PathNode()
 	{
 		m_active = true;
+		m_radius = 0;
 	}
 
-	PathNode::PathNode(Vector2D _position, float _radius)
+	PathNode::PathNode(const Vector2D& _position, float _radius)
 	{
 		m_radius = _radius;
 		m_position = _position;

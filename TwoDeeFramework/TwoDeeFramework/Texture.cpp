@@ -29,9 +29,12 @@ namespace TDF
 		}
 		else
 		{
-			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+			SDL_SetColorKey(loadedSurface, 
+							SDL_TRUE, 
+							SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
-			newTexture = SDL_CreateTextureFromSurface(TDF::SDL_Manager::GetInstance().m_renderer, loadedSurface);
+			newTexture = SDL_CreateTextureFromSurface(TDF::SDL_Manager::GetInstance().m_renderer, 
+													  loadedSurface);
 
 			if (newTexture == nullptr)
 			{
@@ -67,14 +70,17 @@ namespace TDF
 		int w = SDL_Manager::GetInstance().m_windowWidth;
 		int h = SDL_Manager::GetInstance().m_windowHeight;
 
-		m_sdlTexture = SDL_CreateTexture(SDL_Manager::GetInstance().m_renderer, SDL_PIXELFORMAT_RGBA8888,
-			SDL_TEXTUREACCESS_TARGET, w, h);
+		m_sdlTexture = SDL_CreateTexture(SDL_Manager::GetInstance().m_renderer, 
+										 SDL_PIXELFORMAT_RGBA8888,
+										 SDL_TEXTUREACCESS_TARGET, 
+										 w, 
+										 h);
 
 		m_width = w;
 		m_height = h;
 	}
 
-	void Texture::setAlpha(int _a)
+	void Texture::setAlpha(uint8_t _a)
 	{
 		SDL_SetTextureAlphaMod(m_sdlTexture, _a);
 	}

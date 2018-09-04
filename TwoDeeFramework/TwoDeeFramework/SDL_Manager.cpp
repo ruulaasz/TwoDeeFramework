@@ -39,6 +39,7 @@ namespace TDF
 
 	void SDL_Manager::update(float _deltaTime)
 	{
+		_deltaTime;
 		SDL_GetMouseState(&m_mousePosX, &m_mousePosY);
 	}
 
@@ -62,6 +63,7 @@ namespace TDF
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 		
 		m_window = SDL_CreateWindow(_name, 0, 30, _windowWidth, _windowHeight, SDL_WINDOW_SHOWN);
+
 		if (!m_window)
 		{
 			printf("SDL_CreateWindow failed: %s\n", SDL_GetError());
@@ -70,7 +72,10 @@ namespace TDF
 		m_windowHeight = _windowHeight;
 		m_windowWidth = _windowWidth;
 
-		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);// SDL_RENDERER_PRESENTVSYNC);
+		m_renderer = SDL_CreateRenderer(m_window, -1, 
+									    SDL_RENDERER_ACCELERATED | 
+									    SDL_RENDERER_TARGETTEXTURE | 
+									    SDL_RENDERER_PRESENTVSYNC);// SDL_RENDERER_PRESENTVSYNC);
 	}
 
 	void SDL_Manager::setFullscreen(int _fullscreen)

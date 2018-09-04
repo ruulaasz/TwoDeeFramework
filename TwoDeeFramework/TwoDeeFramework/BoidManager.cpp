@@ -36,9 +36,7 @@ namespace TDF
 
 	Vector2D BoidManager::arrival(Boid * _me, Vector2D _targetPosition, float _radius)
 	{
-		_me->m_desiredVelocity = normalize(_targetPosition - _me->m_position) * _me->m_maxVelocity;
-		Vector2D seekForce = (_me->m_desiredVelocity - _me->m_velocity) * _me->m_seekScalar;
-		seekForce = truncate(seekForce, _me->m_maxSeekForce);
+		Vector2D seekForce = seek(_me, _targetPosition);
 
 		_me->m_desiredVelocity = _targetPosition - _me->m_position;
 		float distanceToTarget = getLength(_me->m_desiredVelocity);
@@ -46,7 +44,9 @@ namespace TDF
 
 		if (distanceToTarget < _radius)
 		{
-			_me->m_desiredVelocity = normalize(_me->m_desiredVelocity) * _me->m_maxVelocity * (distanceToTarget / _radius);
+			_me->m_desiredVelocity = normalize(_me->m_desiredVelocity) * 
+											   _me->m_maxVelocity * 
+											   (distanceToTarget / _radius);
 		}
 		else
 		{
@@ -94,7 +94,10 @@ namespace TDF
 	Vector2D BoidManager::pursuit(Boid * _me, Vector2D _targetPosition, Vector2D _targetVelocity)
 	{
 		Vector2D distanceToTarget = _targetPosition - _me->m_position;
-		_me->m_futureProjection = (getLength(distanceToTarget) / _me->m_maxVelocity) * _me->m_futureScale;
+
+		_me->m_futureProjection = (getLength(distanceToTarget) / _me->m_maxVelocity) * 
+								   _me->m_futureScale;
+
 		_me->m_futurePosition = _targetPosition + _targetVelocity * _me->m_futureProjection;
 
 		return seek(_me, _me->m_futurePosition);
@@ -103,7 +106,10 @@ namespace TDF
 	Vector2D BoidManager::evade(Boid * _me, Vector2D _targetPosition, Vector2D _targetVelocity)
 	{
 		Vector2D distanceToTarget = _targetPosition - _me->m_position;
-		_me->m_futureProjection = (getLength(distanceToTarget) / _me->m_maxVelocity) * _me->m_futureScale;
+
+		_me->m_futureProjection = (getLength(distanceToTarget) / _me->m_maxVelocity) * 
+								   _me->m_futureScale;
+
 		_me->m_futurePosition = _targetPosition + _targetVelocity * _me->m_futureProjection;
 
 		return flee(_me, _me->m_futurePosition);
@@ -111,12 +117,14 @@ namespace TDF
 
 	Vector2D BoidManager::obstacleAvoidance(Boid* _me)
 	{
-		float dynamicLength = getLength(_me->m_velocity) / _me->m_maxVelocity;
+		//float dynamicLength = getLength(_me->m_velocity) / _me->m_maxVelocity;
 
 		Vector2D ahead = _me->m_position + normalize(_me->m_velocity) * _me->m_maxSeeAhead;
 		Vector2D ahead2 = _me->m_position + normalize(_me->m_velocity) * _me->m_maxSeeAhead * 0.5;
 
-		CircleObstacle* mostThreatening = findMostThreateningObstacle(_me->m_position, ahead, ahead2);
+		CircleObstacle* mostThreatening = findMostThreateningObstacle(_me->m_position, 
+																	   ahead, 
+																	   ahead2);
 
 		Vector2D avoidance;
 
@@ -147,7 +155,9 @@ namespace TDF
 			{
 				if (i == _path.size() - 1 && !_me->m_loopPath)
 				{
-					arrivalForce = arrival(_me, _path.at(_path.size() - 1)->m_position, _path.at(_path.size() - 1)->m_radius);
+					arrivalForce = arrival(_me, 
+										   _path.at(_path.size() - 1)->m_position, 
+										   _path.at(_path.size() - 1)->m_radius);
 
 					if (getLength(arrivalForce) <= 0)
 					{
@@ -220,7 +230,9 @@ namespace TDF
 		{
 			boid = _allBoids.at(i);
 
-			if (boid != _me && distanceBetween2Points(boid->m_position, _me->m_position) <= _me->m_separationRadius)
+			if (boid != _me && 
+				distanceBetween2Points(boid->m_position, _me->m_position) <= 
+				_me->m_separationRadius)
 			{
 				//Alignment
 				alligment.x += boid->m_velocity.x;
@@ -273,7 +285,10 @@ namespace TDF
 			CircleObstacle* Obstacle = m_obstacles.at(i);
 			bool collision = lineIntersectCircle(_ahead, _ahead2, Obstacle);
 
-			if (collision && (mostThreatening == nullptr || distanceBetween2Points(_position, Obstacle->m_center) < distanceBetween2Points(_position, mostThreatening->m_center))) 
+			if (collision && 
+				(mostThreatening == nullptr || 
+				 distanceBetween2Points(_position, Obstacle->m_center) < 
+				 distanceBetween2Points(_position, mostThreatening->m_center))) 
 			{
 				mostThreatening = Obstacle;
 			}
@@ -283,7 +298,10 @@ namespace TDF
 
 	bool BoidManager::lineIntersectCircle(Vector2D _ahead, Vector2D _ahead2, CircleObstacle* _circle)
 	{
-		return distanceBetween2Points(_circle->m_center, _ahead) <= _circle->m_radius || distanceBetween2Points(_circle->m_center, _ahead2) <= _circle->m_radius;
+		return distanceBetween2Points(_circle->m_center, _ahead) <= 
+									  _circle->m_radius || 
+									  distanceBetween2Points(_circle->m_center, _ahead2) <= 
+									  _circle->m_radius;
 	}
 
 	float BoidManager::distanceBetween2Points(Vector2D _a, Vector2D _b)
@@ -293,16 +311,16 @@ namespace TDF
 
 	bool BoidManager::isLeaderOnSight(Boid* _me, Boid * _leader, Vector2D _ahead)
 	{
-		return distanceBetween2Points(_ahead, _me->m_position) <= _leader->m_leaderSightRadius || distanceBetween2Points(_leader->m_position, _me->m_position) <= _leader->m_leaderSightRadius;
-	}
-
-	Vector2D BoidManager::alligmentCohesion()
-	{
-		return Vector2D();
+		return distanceBetween2Points(_ahead, _me->m_position) <= 
+									  _leader->m_leaderSightRadius ||
+									  distanceBetween2Points(_leader->m_position, _me->m_position) <= 
+									 _leader->m_leaderSightRadius;
 	}
 
 	void BoidManager::update(float _deltaTime)
 	{
+		_deltaTime;
+
 		for (size_t i = 0; i < m_allBoids.size(); i++)
 		{
 			Boid* boid = m_allBoids.at(i);
@@ -320,7 +338,9 @@ namespace TDF
 
 			if (boid->m_behaviors & BT_ARRIVAL)
 			{
-				boid->m_steeringForce += arrival(boid, boid->m_target->m_position, boid->m_target->m_arrivalRadius);
+				boid->m_steeringForce += arrival(boid, 
+												 boid->m_target->m_position, 
+												 boid->m_target->m_arrivalRadius);
 			}
 
 			if (boid->m_behaviors & BT_WANDER)
@@ -330,12 +350,16 @@ namespace TDF
 
 			if (boid->m_behaviors & BT_PURSUIT)
 			{
-				boid->m_steeringForce += pursuit(boid, boid->m_target->m_position, boid->m_target->m_velocity);
+				boid->m_steeringForce += pursuit(boid, 
+												 boid->m_target->m_position, 
+												 boid->m_target->m_velocity);
 			}
 
 			if (boid->m_behaviors & BT_EVADE)
 			{
-				boid->m_steeringForce += evade(boid, boid->m_target->m_position, boid->m_target->m_velocity);
+				boid->m_steeringForce += evade(boid, 
+											   boid->m_target->m_position, 
+											   boid->m_target->m_velocity);
 			}
 
 			if (boid->m_behaviors & BT_OBSTACLE)
@@ -373,7 +397,7 @@ namespace TDF
 		for (size_t i = 0; i < m_allBoids.size(); i++)
 		{
 			Boid* boid = m_allBoids.at(i);
-			boid->render();
+			boid->renderVectors();
 
 			if (boid->m_behaviors & BT_ARRIVAL)
 			{

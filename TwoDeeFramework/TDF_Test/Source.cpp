@@ -68,25 +68,23 @@ void loadContent()
 
 	Seeker->m_target = Prey;
 	Seeker->m_position = TDF::Vector2D(1000, 500);
-	Seeker->m_behaviors = TDF::BT_EVADE;
+	Seeker->m_behaviors = TDF::BT_WANDER;
 
 	g_BoidManager->m_allBoids.push_back(Seeker);
 
 	Prey->m_position = TDF::Vector2D(1000, 300);
 	Prey->m_target = Mouse;
 	Prey->m_maxVelocity = 4;
-	Prey->m_behaviors = TDF::BT_SEEK;
+	Prey->m_behaviors = TDF::BT_ARRIVAL;
 	g_BoidManager->m_allBoids.push_back(Prey);
 }
 
 void renderBoids()
 {
-	g_player.m_posX = Prey->m_position.x;
-	g_player.m_posY = Prey->m_position.y;
+	g_player.m_position = Prey->m_position;
 	g_player.render(Prey->m_renderAngle);
 
-	g_player.m_posX = Seeker->m_position.x;
-	g_player.m_posY = Seeker->m_position.y;
+	g_player.m_position = Seeker->m_position;
 	g_player.render(Seeker->m_renderAngle);
 }
 
@@ -120,8 +118,8 @@ void update(float _deltaTime)
 {
 	g_SDLManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
-	Mouse->m_position.x = g_SDLManager->m_mousePosX;
-	Mouse->m_position.y = g_SDLManager->m_mousePosY;
+	Mouse->m_position.x = static_cast<float>(g_SDLManager->m_mousePosX);
+	Mouse->m_position.y = static_cast<float>(g_SDLManager->m_mousePosY);
 }
 
 void handleInputs()

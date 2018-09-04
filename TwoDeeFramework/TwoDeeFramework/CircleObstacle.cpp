@@ -8,7 +8,7 @@ namespace TDF
 
 	}
 
-	CircleObstacle::CircleObstacle(Vector2D _center, float _radius)
+	CircleObstacle::CircleObstacle(const Vector2D& _center, float _radius)
 	{
 		m_center = _center;
 		m_radius = _radius;

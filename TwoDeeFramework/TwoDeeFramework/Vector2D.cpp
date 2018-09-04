@@ -72,49 +72,61 @@ namespace TDF
 		y = 0;
 	}
 
-	float getLength(Vector2D _vector)
+	float getLength(const Vector2D& _vector)
 	{
 		return std::sqrt(std::pow(_vector.x, 2) + std::pow(_vector.y, 2));
 	}
 
-	Vector2D normalize(Vector2D _vector)
+	Vector2D normalize(const Vector2D& _vector)
 	{
+		Vector2D result;
+
 		float length = getLength(_vector);
 
 		if (length != 0)
-			_vector.x /= length, _vector.y /= length;
-
+		{
+			result.x = _vector.x / length;
+			result.y = _vector.y / length;
+			return result;
+		}
+			
 		return _vector;
 	}
 
-	Vector2D truncate(Vector2D _vector, float _max)
+	Vector2D truncate(const Vector2D& _vector, float _max)
 	{
+		Vector2D result;
+
 		if (getLength(_vector) > _max)
 		{
-			_vector = normalize(_vector);
-
-			_vector = escalate(_vector, _max);
+			result = normalize(_vector);
+			result = escalate(_vector, _max);
+			return result;
 		}
 
 		return _vector;
 	}
 
-	Vector2D escalate(Vector2D _vector, float _scalar)
+	Vector2D escalate(const Vector2D& _vector, float _scalar)
 	{
-		normalize(_vector);
+		Vector2D result;
 
-		_vector.x *= _scalar, _vector.y *= _scalar;
+		result = normalize(_vector);
 
-		return _vector;
+		result.x *= _scalar, result.y *= _scalar;
+
+		return result;
 	}
 
-	Vector2D setAngle(Vector2D _vector, float _scalar)
+	Vector2D setAngle(const Vector2D& _vector, float _angle)
 	{
 		float length = getLength(_vector);
 
-		_vector.x = std::cos(_scalar) * length;
-		_vector.y = std::sin(_scalar) * length;
+		Vector2D result;
 
-		return _vector;
+		result.x = std::cos(_angle) * length;
+		result.y = std::sin(_angle) * length;
+
+		return result;
 	}
 }

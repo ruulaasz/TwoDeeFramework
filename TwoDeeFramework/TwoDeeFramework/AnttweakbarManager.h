@@ -2,9 +2,9 @@
 
 #pragma comment(lib, "AntTweakBar.lib")
 
+#include <windows.h>
 #include <AntTweakBar.h>
 #include "Module.h"
-#include <windows.h>
 
 namespace TDF
 {

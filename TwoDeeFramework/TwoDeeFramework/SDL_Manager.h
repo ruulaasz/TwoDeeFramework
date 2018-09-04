@@ -76,7 +76,9 @@ namespace TDF
 		\param _windowHeight an integer, the height of the window.
 		\sa init()
 		*/
-		void createWindowAndRenderer(const char* _name = "New Window", int _windowWidth = 1920, int _windowHeight = 1000);
+		void createWindowAndRenderer(const char* _name = "New Window", 
+									 int _windowWidth = 1920, 
+									 int _windowHeight = 1000);
 
 	public:
 		//! A pointer to a SDL renderer.

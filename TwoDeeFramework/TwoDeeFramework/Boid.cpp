@@ -1,6 +1,8 @@
 #include "Boid.h"
 #include "RenderManager.h"
 
+#define DEBUGLINE_LENGTH 15
+
 namespace TDF
 {
 	Boid::Boid()
@@ -25,7 +27,7 @@ namespace TDF
 	  m_circleRadius = 100;
 	  m_wanderAngle = 0;
 	  
-	  m_futureScale = 0.7;
+	  m_futureScale = 0.7f;
 	  
 	  m_maxSeeAhead = 20;
 	  m_maxAvoidForce = 20;
@@ -38,6 +40,10 @@ namespace TDF
 	  m_leaderSightRadius =100;
 	  
 	  m_target = nullptr;
+
+	  m_renderAngle = 0;
+	  m_behaviors = 0;
+	  m_futureProjection = 0;
 	}
 
 	Boid::~Boid()
@@ -45,24 +51,41 @@ namespace TDF
 
 	}
 
-	void Boid::render()
+	void Boid::renderVectors()
 	{
-	  Vector2D draw;
+	  Vector2D lineEnd;
 
 	  if (getLength(m_velocity) > 0)
 	  {
 		  m_renderDirection = m_velocity;
 	  }
 
-	  m_renderAngle = (float)std::atan2(m_renderDirection.x, -m_renderDirection.y);
+	  m_renderAngle = static_cast<float>(std::atan2(m_renderDirection.x,
+													-m_renderDirection.y));
 	  
-	  draw = m_position + m_velocity * 15;
-	  SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
-	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, m_position.x, m_position.y, draw.x , draw.y );
+	  lineEnd = m_position + m_velocity * DEBUGLINE_LENGTH;
+
+	  SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 
+							 0xFF,
+							 0, 
+							 0, 
+							 SDL_ALPHA_OPAQUE);
+
+	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
+						 static_cast<int>(m_position.x),
+						 static_cast<int>(m_position.y),
+						 static_cast<int>(lineEnd.x),
+						 static_cast<int>(lineEnd.y));
 	  
-	  draw = m_position + m_desiredVelocity * 15;
+	  lineEnd = m_position + m_desiredVelocity * DEBUGLINE_LENGTH;
+
 	  SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, m_position.x, m_position.y, draw.x, draw.y);
+
+	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
+						 static_cast<int>(m_position.x), 
+						 static_cast<int>(m_position.y),
+						 static_cast<int>(lineEnd.x),
+						 static_cast<int>(lineEnd.y));
 	  
 	  for (size_t i = 0; i < m_path.size(); i++)
 	  {
@@ -80,7 +103,10 @@ namespace TDF
 	void Boid::renderWander()
 	{
 		SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
-		RenderManager::GetInstance().renderCircle(m_circleRadius, m_circleCenter.x + m_position.x, m_circleCenter.y + m_position.y);
+
+		RenderManager::GetInstance().renderCircle(m_circleRadius,
+												  m_circleCenter.x + m_position.x, 
+												  m_circleCenter.y + m_position.y);
 	}
 
 	void Boid::renderPursuit()

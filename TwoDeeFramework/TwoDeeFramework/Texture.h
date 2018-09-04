@@ -27,9 +27,11 @@ namespace TDF
 		//! A virtual function used to free the texture memory.
 		virtual void free();
 
+		//! Creates the texture as a render target.
 		void createAsRenderTarget();
 
-		void setAlpha(int _a);
+		//! Changes the texture alpha channel.
+		void setAlpha(uint8_t _a);
 
 	public:
 		//! A SDL 2.0 texture.

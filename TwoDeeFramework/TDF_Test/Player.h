@@ -16,8 +16,7 @@ public:
 public:
 	TDF::Texture* m_texture;
 	bool m_enable;
-	int m_posX;
-	int m_posY;
+	TDF::Vector2D m_position;
 
 #ifdef _WIN64
 

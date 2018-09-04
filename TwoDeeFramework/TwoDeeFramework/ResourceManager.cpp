@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include "Texture.h"
 
 namespace TDF
 {

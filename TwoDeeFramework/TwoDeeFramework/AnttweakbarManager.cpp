@@ -1,6 +1,8 @@
 #include "AnttweakbarManager.h"
 #include "SDL_Manager.h"
-#include "ResourceManager.h"
+
+#define DEFAULT_BARS 2
+#define GUI_BARS 4
 
 namespace TDF
 {
@@ -24,11 +26,11 @@ namespace TDF
 	void TW_CALL hideGUI(void *)
 	{
 		m_hideGUI ^= 1;
-
 		std::string name;
+
 		if (m_hideGUI)
 		{
-			for (size_t i = 2; i < TwGetBarCount(); i++)
+			for (int i = DEFAULT_BARS; i < TwGetBarCount(); i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=false";
@@ -37,7 +39,7 @@ namespace TDF
 		}
 		else
 		{
-			for (size_t i = 2; i < TwGetBarCount(); i++)
+			for (int i = DEFAULT_BARS; i < TwGetBarCount(); i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=true";
@@ -49,11 +51,11 @@ namespace TDF
 	void TW_CALL hideFGUI(void *)
 	{
 		m_hideGUI ^= 1;
-
 		std::string name;
+
 		if (m_hideGUI)
 		{
-			for (size_t i = 2; i < 4; i++)
+			for (int i = DEFAULT_BARS; i < GUI_BARS; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=false";
@@ -62,7 +64,7 @@ namespace TDF
 		}
 		else
 		{
-			for (size_t i = 2; i < 4; i++)
+			for (int i = DEFAULT_BARS; i < GUI_BARS; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=true";
