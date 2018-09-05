@@ -1,6 +1,5 @@
 #include <cstdio>
-#include <windows.h>
-
+#include <windows.h>	
 #include <TDF.h>
 #include "Player.h"
 
@@ -24,7 +23,6 @@ bool g_lAlt;
 int g_guiHandled;
 
 Player g_player;
-TDF::AABB g_wall;
 
 void initSDL()
 {
@@ -59,8 +57,6 @@ void loadContent()
 {
 	g_player.init();
 	g_player.m_position = TDF::Vector2D(500, 500);
-
-	g_wall = TDF::AABB(TDF::Vector2D(600, 0), 100, 1000);
 }
 
 void render()
@@ -70,7 +66,6 @@ void render()
 	g_RenderManager->renderClear();
 
 	g_player.render();
-	g_wall.render();
 
 	g_BoidManager->render();
 
@@ -145,11 +140,19 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.m_velocity = TDF::Vector2D(1, 0);
+					g_player.m_velocity = TDF::Vector2D(g_player.m_movementSpeed, 0);
 					break;
 
 				case SDLK_a:
-					g_player.m_velocity = TDF::Vector2D(-1, 0);
+					g_player.m_velocity = TDF::Vector2D(-g_player.m_movementSpeed, 0);
+					break;
+
+				case SDLK_w:
+					g_player.m_velocity = TDF::Vector2D(0, -g_player.m_movementSpeed);
+					break;
+
+				case SDLK_s:
+					g_player.m_velocity = TDF::Vector2D(0, g_player.m_movementSpeed);
 					break;
 
 				case SDLK_RETURN:
@@ -171,11 +174,19 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.m_velocity = TDF::Vector2D(0, 0);
+					g_player.m_velocity.x = 0;
 					break;
 
 				case SDLK_a:
-					g_player.m_velocity = TDF::Vector2D(0, 0);
+					g_player.m_velocity.x = 0;
+					break;
+
+				case SDLK_w:
+					g_player.m_velocity.y = 0;
+					break;
+
+				case SDLK_s:
+					g_player.m_velocity.y = 0;
 					break;
 				}
 			}

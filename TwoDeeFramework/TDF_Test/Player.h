@@ -15,7 +15,13 @@ public:
 
 public:
 	TDF::Texture* m_texture;
+	float m_movementSpeed;
 	TDF::Vector2D m_position;
 	TDF::Vector2D m_velocity;
-	TDF::AABB m_mainCB;
+
+#ifdef _WIN64
+
+#else
+	TwBar* infoBar;
+#endif
 };

@@ -26,12 +26,24 @@ namespace TDF
 		//! Default destructor.
 		~AABB();
 
+		//! Render the box.
 		void render();
 
+		//! The box position.
 		Vector2D m_position;
+
+		//! The box width..
 		float m_width;
+
+		//! The box height.
 		float m_height;
 
+		//! The box velocity.
 		Vector2D m_velocity;
+
+		float left();
+		float right();
+		float bottom();
+		float top();
 	};
 }

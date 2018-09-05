@@ -24,4 +24,24 @@ namespace TDF
 	{
 		RenderManager::GetInstance().renderBox(*this);
 	}
+
+	float AABB::left()
+	{
+		return m_position.x;
+	}
+
+	float AABB::right()
+	{
+		return m_position.x + m_width;
+	}
+
+	float AABB::bottom()
+	{
+		return m_position.y + m_height;
+	}
+
+	float AABB::top()
+	{
+		return m_position.y;
+	}
 }
