@@ -15,15 +15,7 @@ public:
 
 public:
 	TDF::Texture* m_texture;
-	bool m_enable;
 	TDF::Vector2D m_position;
-
-#ifdef _WIN64
-
-#else
-	TwBar* m_steerBar;
-	double vel[3];
-	double des[3];
-	double steer[3];
-#endif
+	TDF::Vector2D m_velocity;
+	TDF::AABB m_mainCB;
 };

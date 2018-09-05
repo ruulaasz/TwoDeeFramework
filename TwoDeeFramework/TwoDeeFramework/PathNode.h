@@ -25,7 +25,6 @@ namespace TDF
 		//! Default destructor.
 		~PathNode();
 
-
 		//! Render the circle.
 		void render();
 

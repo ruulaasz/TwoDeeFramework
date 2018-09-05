@@ -24,17 +24,14 @@ bool g_lAlt;
 int g_guiHandled;
 
 Player g_player;
-
-TDF::Boid* Seeker;
-TDF::Boid* Prey;
-TDF::Boid* Mouse;
+TDF::AABB g_wall;
 
 void initSDL()
 {
 	TDF::SDL_Manager::StartModule();
 	g_SDLManager = TDF::SDL_Manager::GetPointerInstance();
 	g_SDLManager->init();
-	SDL_SetWindowTitle(g_SDLManager->m_window, "Test");
+	g_SDLManager->setWindowTitle("TwoDee");
 
 	TDF::ResourceManager::StartModule();
 	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
@@ -60,41 +57,20 @@ void initTw()
 
 void loadContent()
 {
-	Seeker = new TDF::Boid();
-	Prey = new TDF::Boid();
-	Mouse = new TDF::Boid();
-
 	g_player.init();
+	g_player.m_position = TDF::Vector2D(500, 500);
 
-	Seeker->m_target = Prey;
-	Seeker->m_position = TDF::Vector2D(1000, 500);
-	Seeker->m_behaviors = TDF::BT_WANDER;
-
-	g_BoidManager->m_allBoids.push_back(Seeker);
-
-	Prey->m_position = TDF::Vector2D(1000, 300);
-	Prey->m_target = Mouse;
-	Prey->m_maxVelocity = 4;
-	Prey->m_behaviors = TDF::BT_ARRIVAL;
-	g_BoidManager->m_allBoids.push_back(Prey);
-}
-
-void renderBoids()
-{
-	g_player.m_position = Prey->m_position;
-	g_player.render(Prey->m_renderAngle);
-
-	g_player.m_position = Seeker->m_position;
-	g_player.render(Seeker->m_renderAngle);
+	g_wall = TDF::AABB(TDF::Vector2D(600, 0), 100, 1000);
 }
 
 void render()
 {
-	SDL_SetRenderTarget(g_SDLManager->m_renderer, g_RenderManager->m_renderTargets[TDF::GBUFFER]->m_sdlTexture);
-	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(g_SDLManager->m_renderer);
+	g_RenderManager->setRenderTarget(g_RenderManager->m_renderTargets[TDF::GBUFFER]);
+	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
+	g_RenderManager->renderClear();
 
-	renderBoids();
+	g_player.render();
+	g_wall.render();
 
 	g_BoidManager->render();
 
@@ -104,22 +80,22 @@ void render()
 	g_AnttweakbarManager->render();
 #endif
 
-	SDL_SetRenderTarget(g_SDLManager->m_renderer, NULL);
-	SDL_SetRenderDrawColor(g_SDLManager->m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(g_SDLManager->m_renderer);
+	g_RenderManager->setRenderTarget();
+	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
+	g_RenderManager->renderClear();
 
 	//g_RenderManager->saveTextureAsPNG("test", g_RenderManager->m_renderTargets[TDF::GBUFFER]);
 	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER], 0, 0);
 
-	SDL_RenderPresent(g_SDLManager->m_renderer);
+	g_RenderManager->renderPresent();
 }
 
 void update(float _deltaTime)
 {
 	g_SDLManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
-	Mouse->m_position.x = static_cast<float>(g_SDLManager->m_mousePosX);
-	Mouse->m_position.y = static_cast<float>(g_SDLManager->m_mousePosY);
+
+	g_player.update(_deltaTime);
 }
 
 void handleInputs()
@@ -141,11 +117,11 @@ void handleInputs()
 				switch (g_SDLManager->m_events.window.event)
 				{
 				case SDL_WINDOWEVENT_RESIZED:
-					SDL_GetWindowSize(g_SDLManager->m_window, &g_SDLManager->m_windowWidth, &g_SDLManager->m_windowHeight);
+					g_SDLManager->updateWindowSize();
 #ifdef _WIN64
 
 #else
-					TwWindowSize(g_SDLManager->m_windowWidth, g_SDLManager->m_windowHeight);
+					g_AnttweakbarManager->updateWindowSize();
 #endif
 					break;
 				}
@@ -168,6 +144,14 @@ void handleInputs()
 					g_lAlt = true;
 					break;
 
+				case SDLK_d:
+					g_player.m_velocity = TDF::Vector2D(1, 0);
+					break;
+
+				case SDLK_a:
+					g_player.m_velocity = TDF::Vector2D(-1, 0);
+					break;
+
 				case SDLK_RETURN:
 					if (g_lAlt)
 					{
@@ -184,6 +168,14 @@ void handleInputs()
 				{
 				case SDLK_LALT:
 					g_lAlt = false;
+					break;
+
+				case SDLK_d:
+					g_player.m_velocity = TDF::Vector2D(0, 0);
+					break;
+
+				case SDLK_a:
+					g_player.m_velocity = TDF::Vector2D(0, 0);
 					break;
 				}
 			}

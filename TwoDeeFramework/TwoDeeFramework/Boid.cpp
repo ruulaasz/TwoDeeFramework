@@ -65,11 +65,7 @@ namespace TDF
 	  
 	  lineEnd = m_position + m_velocity * DEBUGLINE_LENGTH;
 
-	  SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 
-							 0xFF,
-							 0, 
-							 0, 
-							 SDL_ALPHA_OPAQUE);
+	  RenderManager::GetInstance().setRenderDrawColor(0xFF, 0, 0);
 
 	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
 						 static_cast<int>(m_position.x),
@@ -79,7 +75,7 @@ namespace TDF
 	  
 	  lineEnd = m_position + m_desiredVelocity * DEBUGLINE_LENGTH;
 
-	  SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	  RenderManager::GetInstance().setRenderDrawColor(0, 0, 0);
 
 	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
 						 static_cast<int>(m_position.x), 
@@ -95,14 +91,14 @@ namespace TDF
 
 	void Boid::renderArrival()
 	{
-		SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
+		RenderManager::GetInstance().setRenderDrawColor(0, 0xFF, 0);
 		RenderManager::GetInstance().renderCircle(m_arrivalRadius, m_position.x, m_position.y);
 		RenderManager::GetInstance().renderCircle(m_stopRadius, m_position.x, m_position.y);
 	}
 
 	void Boid::renderWander()
 	{
-		SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
+		RenderManager::GetInstance().setRenderDrawColor(0, 0xFF, 0);
 
 		RenderManager::GetInstance().renderCircle(m_circleRadius,
 												  m_circleCenter.x + m_position.x, 
@@ -111,7 +107,7 @@ namespace TDF
 
 	void Boid::renderPursuit()
 	{
-		SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer, 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
+		RenderManager::GetInstance().setRenderDrawColor(0, 0xFF, 0);
 		RenderManager::GetInstance().renderCircle(10, m_futurePosition.x, m_futurePosition.y);
 	}
 }

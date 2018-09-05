@@ -62,6 +62,12 @@ namespace TDF
 		*/
 		void resizeWindow(int _w, int _h);
 
+		//! Updates the manager values with the current window size.
+		void updateWindowSize();
+
+		//! Set the title of the window.
+		void setWindowTitle(const char* _title);
+
 	private:
 		//! Initialize SDL 2.0 subsystems.
 		/*!

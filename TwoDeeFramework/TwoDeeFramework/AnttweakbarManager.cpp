@@ -182,6 +182,11 @@ namespace TDF
 		return m_handled;
 	}
 
+	void AnttweakbarManager::updateWindowSize()
+	{
+		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, SDL_Manager::GetInstance().m_windowHeight);
+	}
+
 	void AnttweakbarManager::release()
 	{
 		TwTerminate();

@@ -1,4 +1,6 @@
 #include "RenderManager.h"
+#include "Circle.h"
+#include "AABB.h"
 
 namespace TDF
 {
@@ -67,6 +69,34 @@ namespace TDF
 		}
 	}
 
+	void RenderManager::renderCircle(const Circle & _circle)
+	{
+		renderCircle(_circle.m_radius, _circle.m_center.x, _circle.m_center.x);
+	}
+
+	void RenderManager::renderBox(const AABB & _box)
+	{
+		setRenderDrawColor(0, 0, 0);
+
+		SDL_Rect rect;
+		rect.h = static_cast<int>(_box.m_height);
+		rect.w = static_cast<int>(_box.m_width);
+		rect.x = static_cast<int>(_box.m_position.x);
+		rect.y = static_cast<int>(_box.m_position.y);
+
+		SDL_RenderDrawRect(m_renderer, &rect);
+	}
+
+	void RenderManager::renderBox(const Vector2D & _position, float _width, float _height)
+	{
+		AABB box;
+		box.m_position = _position;
+		box.m_width = _width;
+		box.m_height = _height;
+
+		renderBox(box);
+	}
+
 	void RenderManager::renderTexture(TDF::Texture * _texture, int _x, int _y, float _angle, SDL_RendererFlip _flip)
 	{
 		SDL_Rect quadSrc = { 0, 0, _texture->m_width, _texture->m_height };
@@ -98,5 +128,32 @@ namespace TDF
 		IMG_SavePNG(surface, _name);
 		SDL_FreeSurface(surface);
 		SDL_SetRenderTarget(m_renderer, target);
+	}
+
+	void RenderManager::setRenderDrawColor(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
+	{
+		SDL_SetRenderDrawColor(m_renderer, _r, _g, _b, _a);
+	}
+
+	void RenderManager::setRenderTarget(Texture * _newRenderTarget)
+	{
+		if (!_newRenderTarget)
+		{
+			SDL_SetRenderTarget(m_renderer, NULL);
+		}
+		else
+		{
+			SDL_SetRenderTarget(m_renderer, _newRenderTarget->m_sdlTexture);
+		}
+	}
+
+	void RenderManager::renderClear()
+	{
+		SDL_RenderClear(m_renderer);
+	}
+
+	void RenderManager::renderPresent()
+	{
+		SDL_RenderPresent(m_renderer);
 	}
 }

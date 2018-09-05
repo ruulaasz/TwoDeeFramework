@@ -149,11 +149,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnttweakbarManager.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="BoidManager.h" />
-    <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="RenderManager.h" />
@@ -166,11 +167,12 @@
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnttweakbarManager.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="BoidManager.cpp" />
-    <ClCompile Include="CircleObstacle.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />

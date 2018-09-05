@@ -62,6 +62,9 @@ namespace TDF
 		//! Handle the anttweakbar events.
 		int handleEvent(const void *sdlEvent);
 
+		//! Updates the manager values with the current window size.
+		void updateWindowSize();
+
 		//! Shut down the AntTweakBar subsystems and cleans the memory.
 		/*!
 		\sa ~AnttweakbarManager()

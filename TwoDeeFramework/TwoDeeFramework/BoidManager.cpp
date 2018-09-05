@@ -1,5 +1,5 @@
 #include "BoidManager.h"
-#include<cmath>
+#include <cmath>
 #include <time.h>
 
 namespace TDF
@@ -122,7 +122,7 @@ namespace TDF
 		Vector2D ahead = _me->m_position + normalize(_me->m_velocity) * _me->m_maxSeeAhead;
 		Vector2D ahead2 = _me->m_position + normalize(_me->m_velocity) * _me->m_maxSeeAhead * 0.5;
 
-		CircleObstacle* mostThreatening = findMostThreateningObstacle(_me->m_position, 
+		Circle* mostThreatening = findMostThreateningObstacle(_me->m_position,
 																	   ahead, 
 																	   ahead2);
 
@@ -276,13 +276,14 @@ namespace TDF
 		return force;
 	}
 
-	CircleObstacle* BoidManager::findMostThreateningObstacle(Vector2D _position, Vector2D _ahead, Vector2D _ahead2)
+	Circle* BoidManager::findMostThreateningObstacle(Vector2D _position, Vector2D _ahead, Vector2D _ahead2)
 	{
-		CircleObstacle* mostThreatening = nullptr;
+		Circle* mostThreatening = nullptr;
+		Circle* Obstacle;
 
 		for (size_t i=0;i < m_obstacles.size(); i++)
 		{
-			CircleObstacle* Obstacle = m_obstacles.at(i);
+			Obstacle = m_obstacles.at(i);
 			bool collision = lineIntersectCircle(_ahead, _ahead2, Obstacle);
 
 			if (collision && 
@@ -296,7 +297,7 @@ namespace TDF
 		return mostThreatening;
 	}
 
-	bool BoidManager::lineIntersectCircle(Vector2D _ahead, Vector2D _ahead2, CircleObstacle* _circle)
+	bool BoidManager::lineIntersectCircle(Vector2D _ahead, Vector2D _ahead2, Circle* _circle)
 	{
 		return distanceBetween2Points(_circle->m_center, _ahead) <= 
 									  _circle->m_radius || 

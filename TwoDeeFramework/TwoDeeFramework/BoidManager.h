@@ -4,7 +4,7 @@
 #include "Vector2D.h"
 #include "Boid.h"
 #include "Module.h"
-#include "CircleObstacle.h"
+#include "Circle.h"
 
 namespace TDF
 {
@@ -135,7 +135,7 @@ namespace TDF
 		\param _ahead2 a shorter proyection of the current position.
 		\return the closest obstacle.
 		*/
-		CircleObstacle* findMostThreateningObstacle(Vector2D _position, 
+		Circle* findMostThreateningObstacle(Vector2D _position, 
 													Vector2D _ahead, 
 													Vector2D _ahead2);
 
@@ -146,7 +146,7 @@ namespace TDF
 		\param _circle the circle to check
 		\return if the linea is touching.
 		*/
-		bool lineIntersectCircle(Vector2D _ahead, Vector2D _ahead2, CircleObstacle* _circle);
+		bool lineIntersectCircle(Vector2D _ahead, Vector2D _ahead2, Circle* _circle);
 
 		//! Get the distance between 2 coordenates.
 		/*!
@@ -171,7 +171,7 @@ namespace TDF
 		std::vector<Boid*> m_allBoids;
 
 		//! All obstackes
-		std::vector<TDF::CircleObstacle*> m_obstacles;
+		std::vector<TDF::Circle*> m_obstacles;
 
 		//! Allowed total force.
 		float m_maxTotalForce;

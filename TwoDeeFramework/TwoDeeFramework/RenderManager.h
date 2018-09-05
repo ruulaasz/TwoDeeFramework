@@ -5,6 +5,10 @@
 
 namespace TDF
 {
+	class Circle;
+	class AABB;
+	class Vector2D;
+
 	//!  A enum for a render target usages.
 	enum TargetContent
 	{
@@ -43,10 +47,32 @@ namespace TDF
 		*/
 		void renderCircle(float _r, float _cx, float _cy);
 
+		//! Render a circle
+		/*!
+		\param _circle the circle to render
+		*/
+		void renderCircle(const Circle& _circle);
+
+		//! Render a box
+		/*!
+		\param _box the box to render.
+		*/
+		void renderBox(const AABB& _box);
+
+		//! Render a box
+		/*!
+		\param _position, the position of the box.
+		\param _w, the width of the box.
+		\param _h, the height of the box.
+		*/
+		void renderBox(const Vector2D& _position, float _width, float _height);
+
 		//! Render the texture in a given position.
 		/*!
 		\param _x an integer for the X position.
 		\param _y an integer for the Y position.
+		\param _angle the rotation angle of the texture.
+		\param _flip if the texture is going to be flipped in the given direction.
 		*/
 		void renderTexture(TDF::Texture* _texture, 
 						   int _x, 
@@ -61,6 +87,27 @@ namespace TDF
 		\param _texture the texture to save.
 		*/
 		void saveTextureAsPNG(const char* _name, Texture* _texture);
+
+		//! Set the render color.
+		/*!
+		\param _r, the red chanel.
+		\param _g, the green chanel.
+		\param _b, the blue chanel.
+		\param _a, the alpha chanel.
+		*/
+		void setRenderDrawColor(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a = SDL_ALPHA_OPAQUE);
+
+		//! Set the current render target.
+		/*!
+		\param _newRenderTarget the new render target.
+		*/
+		void setRenderTarget(Texture* _newRenderTarget = nullptr);
+
+		//! clears the current render target.
+		void renderClear();
+
+		//! Present the render into the screen.
+		void renderPresent();
 
 		//! a pointer to the device renderer.
 		SDL_Renderer* m_renderer;

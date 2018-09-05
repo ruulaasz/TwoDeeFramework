@@ -78,6 +78,16 @@ namespace TDF
 									    SDL_RENDERER_PRESENTVSYNC);// SDL_RENDERER_PRESENTVSYNC);
 	}
 
+	void SDL_Manager::updateWindowSize()
+	{
+		SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
+	}
+
+	void SDL_Manager::setWindowTitle(const char * _title)
+	{
+		SDL_SetWindowTitle(m_window, _title);
+	}
+
 	void SDL_Manager::setFullscreen(int _fullscreen)
 	{
 		if (_fullscreen)
