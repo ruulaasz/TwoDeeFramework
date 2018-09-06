@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "SDL_Manager.h"
 #include "RenderManager.h"
+#include "Box2DManager.h"
 
 #ifdef _WIN64
 
@@ -21,3 +22,5 @@
 #include "PathNode.h"
 #include "Boid.h"
 #include "BoidManager.h"
+#include "World.h"
+#include "ContactListener.h"

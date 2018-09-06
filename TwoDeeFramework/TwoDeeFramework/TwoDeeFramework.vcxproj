@@ -73,32 +73,32 @@
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,7 +154,10 @@
     <ClInclude Include="AnttweakbarManager.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="BoidManager.h" />
+    <ClInclude Include="Box2DDraw.h" />
+    <ClInclude Include="Box2DManager.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="ContactListener.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="RenderManager.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="TDF.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
@@ -172,7 +176,10 @@
     <ClCompile Include="AnttweakbarManager.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="BoidManager.cpp" />
+    <ClCompile Include="Box2DDraw.cpp" />
+    <ClCompile Include="Box2DManager.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />
@@ -180,6 +187,7 @@
     <ClCompile Include="SDL_Manager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

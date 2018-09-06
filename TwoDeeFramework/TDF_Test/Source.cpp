@@ -1,14 +1,13 @@
 #include <cstdio>
 #include <windows.h>	
-#include <Box2D.h>
 #include <TDF.h>
-#include "DebugDraw.h"
 #include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
 TDF::BoidManager* g_BoidManager;
 TDF::RenderManager* g_RenderManager;
+TDF::Box2DManager* g_Box2DManager;
 
 #ifdef _WIN64
 
@@ -24,14 +23,8 @@ bool g_quit;
 bool g_lAlt;
 int g_guiHandled;
 
-Player g_player;
-
-b2Vec2 gravity(0.0f, 9.8f); //normal earth gravity, 9.8 m/s/s straight down!
-b2World* myWorld = new b2World(gravity);
-float32 timeStep = 1 / 60.0f;      //the length of time passed to simulate (seconds)
-int32 velocityIterations = 8;   //how strongly to correct velocity
-int32 positionIterations = 3;   //how strongly to correct position
-DebugDraw g_draw;
+TDF::World g_testWorld;
+Player* g_player;
 
 void initManagers()
 {
@@ -59,15 +52,25 @@ void initManagers()
 	g_AnttweakbarManager->hideBars(true);
 #endif
 
-	myWorld->SetAllowSleeping(true);
-	g_draw.SetFlags(b2Draw::e_shapeBit);
-	myWorld->SetDebugDraw(&g_draw);
-	g_draw.init(g_RenderManager->m_renderer);
+	TDF::Box2DManager::StartModule();
+	g_Box2DManager = TDF::Box2DManager::GetPointerInstance();
+	g_Box2DManager->init();
 }
 
 void initContent()
 {
-	g_player.init(myWorld);
+	g_testWorld.init();
+	g_testWorld.m_allActors.push_back(new Player());
+	g_player = reinterpret_cast<Player*>(g_testWorld.m_allActors.back());
+
+	g_testWorld.m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
+
+	g_player->world = g_testWorld.m_physicsWorld;
+
+	for (size_t i = 0; i < g_testWorld.m_allActors.size(); i++)
+	{
+		g_testWorld.m_allActors.at(i)->init();
+	}
 }
 
 void render()
@@ -76,7 +79,7 @@ void render()
 	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
 	g_RenderManager->renderClear();
 
-	g_player.render();
+	g_testWorld.render();
 
 	g_BoidManager->render();
 
@@ -85,8 +88,6 @@ void render()
 #else
 	g_AnttweakbarManager->render();
 #endif
-
-	myWorld->DrawDebugData();
 
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
@@ -103,9 +104,7 @@ void update(float _deltaTime)
 	g_SDLManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
 
-	g_player.update(_deltaTime);
-
-	myWorld->Step(timeStep, velocityIterations, positionIterations);
+	g_testWorld.update(_deltaTime);
 }
 
 void handleInputs()
@@ -155,19 +154,18 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.moveState = MS_RIGHT;
+					g_player->moveState = MS_RIGHT;
 					break;
 
 				case SDLK_a:
-					g_player.moveState = MS_LEFT;
+					g_player->moveState = MS_LEFT;
 					break;
 
 				case SDLK_w:
-					g_player.m_velocity = TDF::Vector2D(0, -g_player.m_movementSpeed);
+					g_player->jump();
 					break;
 
 				case SDLK_s:
-					g_player.m_velocity = TDF::Vector2D(0, g_player.m_movementSpeed);
 					break;
 
 				case SDLK_RETURN:
@@ -189,19 +187,17 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.moveState = MS_STOP;
+					g_player->moveState = MS_STOP;
 					break;
 
 				case SDLK_a:
-					g_player.moveState = MS_STOP;
+					g_player->moveState = MS_STOP;
 					break;
 
 				case SDLK_w:
-					g_player.m_velocity.y = 0;
 					break;
 
 				case SDLK_s:
-					g_player.m_velocity.y = 0;
 					break;
 				}
 			}

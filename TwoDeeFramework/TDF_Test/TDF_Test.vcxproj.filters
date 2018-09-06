@@ -21,7 +21,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="DebugDraw.cpp">
+    <ClCompile Include="Platform.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="Player.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="DebugDraw.h">
+    <ClInclude Include="Platform.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

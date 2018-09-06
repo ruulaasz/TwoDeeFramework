@@ -14,5 +14,13 @@ namespace TDF
 
 		//! Default destructor.
 		~Actor();
+
+		virtual void update(float _deltaTime) = 0;
+		virtual void render() = 0;
+		virtual void init() = 0;
+
+		virtual void onEnterCollision(int _tag) = 0;
+
+		int m_collisionID;
 	};
 }
