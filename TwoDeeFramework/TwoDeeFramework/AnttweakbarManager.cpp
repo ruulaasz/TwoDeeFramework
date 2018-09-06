@@ -191,4 +191,29 @@ namespace TDF
 	{
 		TwTerminate();
 	}
+
+	void AnttweakbarManager::hideBars(bool _hide)
+	{
+		m_hideGUI = _hide;
+		std::string name;
+
+		if (m_hideGUI)
+		{
+			for (int i = DEFAULT_BARS; i < TwGetBarCount(); i++)
+			{
+				name = TwGetBarName(TwGetBarByIndex(i));
+				name = name + " visible=false";
+				TwDefine(name.c_str());
+			}
+		}
+		else
+		{
+			for (int i = DEFAULT_BARS; i < TwGetBarCount(); i++)
+			{
+				name = TwGetBarName(TwGetBarByIndex(i));
+				name = name + " visible=true";
+				TwDefine(name.c_str());
+			}
+		}
+	}
 }

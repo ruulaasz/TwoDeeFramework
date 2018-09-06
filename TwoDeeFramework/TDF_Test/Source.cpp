@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <windows.h>	
+#include <Box2D.h>
 #include <TDF.h>
+#include "DebugDraw.h"
 #include "Player.h"
 
 TDF::SDL_Manager* g_SDLManager;
@@ -16,7 +18,7 @@ TDF::AnttweakbarManager* g_AnttweakbarManager;
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
-float g_deltaTime = 0;
+float g_deltaTime = 0.0f;
 
 bool g_quit;
 bool g_lAlt;
@@ -24,7 +26,14 @@ int g_guiHandled;
 
 Player g_player;
 
-void initSDL()
+b2Vec2 gravity(0.0f, 9.8f); //normal earth gravity, 9.8 m/s/s straight down!
+b2World* myWorld = new b2World(gravity);
+float32 timeStep = 1 / 60.0f;      //the length of time passed to simulate (seconds)
+int32 velocityIterations = 8;   //how strongly to correct velocity
+int32 positionIterations = 3;   //how strongly to correct position
+DebugDraw g_draw;
+
+void initManagers()
 {
 	TDF::SDL_Manager::StartModule();
 	g_SDLManager = TDF::SDL_Manager::GetPointerInstance();
@@ -40,23 +49,25 @@ void initSDL()
 	TDF::RenderManager::StartModule();
 	g_RenderManager = TDF::RenderManager::GetPointerInstance();
 	g_RenderManager->init();
-}
 
 #ifdef _WIN64
 
 #else
-void initTw()
-{
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
 	g_AnttweakbarManager->init();
-}
+	g_AnttweakbarManager->hideBars(true);
 #endif
 
-void loadContent()
+	myWorld->SetAllowSleeping(true);
+	g_draw.SetFlags(b2Draw::e_shapeBit);
+	myWorld->SetDebugDraw(&g_draw);
+	g_draw.init(g_RenderManager->m_renderer);
+}
+
+void initContent()
 {
-	g_player.init();
-	g_player.m_position = TDF::Vector2D(500, 500);
+	g_player.init(myWorld);
 }
 
 void render()
@@ -75,6 +86,8 @@ void render()
 	g_AnttweakbarManager->render();
 #endif
 
+	myWorld->DrawDebugData();
+
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
 	g_RenderManager->renderClear();
@@ -91,6 +104,8 @@ void update(float _deltaTime)
 	g_BoidManager->update(_deltaTime);
 
 	g_player.update(_deltaTime);
+
+	myWorld->Step(timeStep, velocityIterations, positionIterations);
 }
 
 void handleInputs()
@@ -140,11 +155,11 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.m_velocity = TDF::Vector2D(g_player.m_movementSpeed, 0);
+					g_player.moveState = MS_RIGHT;
 					break;
 
 				case SDLK_a:
-					g_player.m_velocity = TDF::Vector2D(-g_player.m_movementSpeed, 0);
+					g_player.moveState = MS_LEFT;
 					break;
 
 				case SDLK_w:
@@ -174,11 +189,11 @@ void handleInputs()
 					break;
 
 				case SDLK_d:
-					g_player.m_velocity.x = 0;
+					g_player.moveState = MS_STOP;
 					break;
 
 				case SDLK_a:
-					g_player.m_velocity.x = 0;
+					g_player.moveState = MS_STOP;
 					break;
 
 				case SDLK_w:
@@ -196,27 +211,23 @@ void handleInputs()
 
 int main()
 {
-	initSDL();
+	initManagers();
 
-#ifdef _WIN64
-
-#else
-	initTw();
-#endif
-
-	loadContent();
+	initContent();
 
 	while (!g_quit)
 	{
 		g_lastTime = g_time;
 		g_time = SDL_GetPerformanceCounter();
 
-		g_deltaTime = (float)((g_time - g_lastTime) * 1000 / SDL_GetPerformanceFrequency());
-		g_deltaTime /= 1000.f;
+		g_deltaTime = (float)((g_time - g_lastTime) * 1000.0f / SDL_GetPerformanceFrequency());
+		g_deltaTime /= 1000.0f;
 
+		g_deltaTime = 1 / 60.0f;
+
+		render();
 		handleInputs();
 		update(g_deltaTime);
-		render();
 	}
 
 #ifdef _WIN64
@@ -226,5 +237,7 @@ int main()
 #endif
 	
 	g_SDLManager->release();
+
+	
 	return 0;
 }

@@ -71,6 +71,8 @@ namespace TDF
 		*/
 		void release();
 
+		void hideBars(bool _hide);
+
 	public:
 		//! If the manager already handled any input.
 		int m_handled;
