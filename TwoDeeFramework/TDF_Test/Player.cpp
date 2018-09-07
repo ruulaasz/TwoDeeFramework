@@ -30,24 +30,13 @@ void Player::update(float _deltaTime)
 {
 	_deltaTime;
 
-	b2Vec2 vel = body->GetLinearVelocity();
-
-	switch (moveState)
-	{
-	case MS_LEFT:  vel.x = -m_movementSpeed; break;
-	case MS_STOP:  vel.x = 0; break;
-	case MS_RIGHT: vel.x = m_movementSpeed; break;
-	}
-
-	body->SetLinearVelocity(vel);
-
-	m_velocity.x = vel.x;
-	m_velocity.y = vel.y;
-
 	if (m_currentJumps >= m_jumpLimit)
 	{
 		m_canJump = false;
 	}
+	 
+	m_velocity.x = body->GetLinearVelocity().x;
+	m_velocity.y = body->GetLinearVelocity().y;
 
 	m_position.x = body->GetPosition().x;
 	m_position.y = body->GetPosition().y;
@@ -126,7 +115,7 @@ void Player::init()
 	polygonShape.SetAsBox(90.0f * SCALE_TO_WORLD, 20.0f * SCALE_TO_WORLD, b2Vec2(-100.0f * SCALE_TO_WORLD, 270.0f * SCALE_TO_WORLD), 0.0f);//right wall
 	platformBody->CreateFixture(&myFixtureDef);
 
-	moveState = MS_STOP;
+	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_id);
 }
 
 void Player::render()
@@ -149,6 +138,54 @@ void Player::onEnterCollision(int _tag)
 		m_currentJumps = 0;
 		m_canJump = true;
 	}
+}
+
+void Player::dispatchMessage(const TDF::InputMessage & _message)
+{
+	switch (_message.m_data.event.type)
+	{
+	default:
+		break;
+
+	case SDL_KEYDOWN:
+		switch (_message.m_data.event.key.keysym.sym)
+		{
+		case SDLK_d:
+			setDirection(*static_cast<int*>(_message.m_data.data));
+			break;
+
+		case SDLK_a:
+			setDirection(*static_cast<int*>(_message.m_data.data));
+			break;
+
+		case SDLK_w:
+			jump();
+			break;
+		}
+		break;
+
+	case SDL_KEYUP:
+		switch (_message.m_data.event.key.keysym.sym)
+		{
+		case SDLK_d:
+			setDirection(*static_cast<int*>(_message.m_data.data));
+			break;
+
+		case SDLK_a:
+			setDirection(*static_cast<int*>(_message.m_data.data));
+			break;
+		}
+		break;
+	}
+}
+
+void Player::setDirection(int _dir)
+{
+	b2Vec2 vel = body->GetLinearVelocity();
+
+	vel.x = m_movementSpeed * _dir;
+
+	body->SetLinearVelocity(vel);
 }
 
 void Player::jump()

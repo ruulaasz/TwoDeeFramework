@@ -2,14 +2,6 @@
 
 #include <TDF.h>
 
-//enumeration of possible input states
-enum MoveState
-{
-	MS_STOP = 0,
-	MS_LEFT,
-	MS_RIGHT
-};
-
 enum CollisionID
 {
 	CI_PLATFORM = 1,
@@ -26,6 +18,9 @@ public:
 	virtual void init();
 	virtual void render();
 	virtual void onEnterCollision(int _tag);
+	virtual void dispatchMessage(const TDF::InputMessage& _message);
+
+	void setDirection(int _dir);
 
 public:
 	TDF::Texture* m_texture;
@@ -37,7 +32,6 @@ public:
 	float m_angle;
 
 	b2Body* body;
-	MoveState moveState;
 	b2World* world;
 	bool m_canJump;
 	int m_jumpLimit;

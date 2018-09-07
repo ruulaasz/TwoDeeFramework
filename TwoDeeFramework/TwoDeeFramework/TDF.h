@@ -24,3 +24,7 @@
 #include "BoidManager.h"
 #include "World.h"
 #include "ContactListener.h"
+#include "InputMessage.h"
+#include "InputManager.h"
+#include "worldManager.h"
+#include "SystemManager.h"

@@ -158,6 +158,8 @@
     <ClInclude Include="Box2DManager.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="ContactListener.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputMessage.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="RenderManager.h" />
@@ -165,11 +167,13 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDL_Manager.h" />
     <ClInclude Include="StringTools.h" />
+    <ClInclude Include="SystemManager.h" />
     <ClInclude Include="TDF.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="worldManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
@@ -181,15 +185,19 @@
     <ClCompile Include="Box2DManager.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ContactListener.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputMessage.cpp" />
     <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
+    <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="worldManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

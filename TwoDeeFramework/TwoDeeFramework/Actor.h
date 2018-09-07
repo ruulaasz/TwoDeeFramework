@@ -1,5 +1,7 @@
 #pragma once
 
+#include "InputMessage.h"
+
 namespace TDF
 {
 	//!  An Actor class.
@@ -18,6 +20,7 @@ namespace TDF
 		virtual void update(float _deltaTime) = 0;
 		virtual void render() = 0;
 		virtual void init() = 0;
+		virtual void dispatchMessage(const InputMessage& _message) = 0;
 
 		virtual void onEnterCollision(int _tag) = 0;
 

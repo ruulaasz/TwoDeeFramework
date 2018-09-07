@@ -20,10 +20,11 @@ namespace TDF
 		//! Default destructor.
 		~Boid();
 
-		virtual void update(float _deltaTime) {};
+		virtual void update(float _deltaTime) { _deltaTime; };
 		virtual void render() {};
 		virtual void init() {};
-		virtual void onEnterCollision(int _tag) {};
+		virtual void onEnterCollision(int _tag) { _tag; };
+		virtual void dispatchMessage(const TDF::InputMessage& _message) { _message; };
 
 		//! render the debug lines.
 		void renderVectors();

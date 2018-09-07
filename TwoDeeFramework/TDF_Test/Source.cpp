@@ -8,6 +8,9 @@ TDF::ResourceManager* g_ResourceManager;
 TDF::BoidManager* g_BoidManager;
 TDF::RenderManager* g_RenderManager;
 TDF::Box2DManager* g_Box2DManager;
+TDF::InputManager* g_InputManager;
+TDF::worldManager* g_WorldManager;
+TDF::SystemManager* g_SystemManager;
 
 #ifdef _WIN64
 
@@ -19,11 +22,9 @@ Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
 float g_deltaTime = 0.0f;
 
-bool g_quit;
-bool g_lAlt;
 int g_guiHandled;
 
-TDF::World g_testWorld;
+TDF::World* g_testWorld;
 Player* g_player;
 
 void initManagers()
@@ -54,22 +55,37 @@ void initManagers()
 	TDF::Box2DManager::StartModule();
 	g_Box2DManager = TDF::Box2DManager::GetPointerInstance();
 	g_Box2DManager->init();
+
+	TDF::InputManager::StartModule();
+	g_InputManager = TDF::InputManager::GetPointerInstance();
+
+	TDF::worldManager::StartModule();
+	g_WorldManager = TDF::worldManager::GetPointerInstance();
+
+	TDF::SystemManager::StartModule();
+	g_SystemManager = TDF::SystemManager::GetPointerInstance();
+
+	g_InputManager->subscribe(TDF::SYSTEM_INPUT, 0);
 }
 
 void initContent()
 {
-	g_testWorld.init();
-	g_testWorld.m_allActors.push_back(new Player());
-	g_player = reinterpret_cast<Player*>(g_testWorld.m_allActors.back());
+	g_testWorld = new TDF::World();
+	g_testWorld->init();
+	g_testWorld->m_allActors.push_back(new Player());
+	g_player = reinterpret_cast<Player*>(g_testWorld->m_allActors.back());
+	g_player->m_id = 2;
 
-	g_testWorld.m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
+	g_testWorld->m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
 
-	g_player->world = g_testWorld.m_physicsWorld;
+	g_player->world = g_testWorld->m_physicsWorld;
 
-	for (size_t i = 0; i < g_testWorld.m_allActors.size(); i++)
+	for (size_t i = 0; i < g_testWorld->m_allActors.size(); i++)
 	{
-		g_testWorld.m_allActors.at(i)->init();
+		g_testWorld->m_allActors.at(i)->init();
 	}
+
+	g_WorldManager->setActiveWorld(g_testWorld);
 
 	g_AnttweakbarManager->hideBars(true);
 }
@@ -80,7 +96,7 @@ void render()
 	g_RenderManager->setRenderDrawColor(0xFF, 0xFF, 0xFF);
 	g_RenderManager->renderClear();
 
-	g_testWorld.render();
+	g_WorldManager->m_activeWorld->render();
 
 	g_BoidManager->render();
 
@@ -102,10 +118,10 @@ void render()
 
 void update(float _deltaTime)
 {
+	g_InputManager->update();
 	g_SDLManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
-
-	g_testWorld.update(_deltaTime);
+	g_WorldManager->m_activeWorld->update(_deltaTime);
 }
 
 void handleInputs()
@@ -122,86 +138,7 @@ void handleInputs()
 		
 		if (!g_guiHandled)
 		{
-			if (g_SDLManager->m_events.type == SDL_WINDOWEVENT)
-			{
-				switch (g_SDLManager->m_events.window.event)
-				{
-				case SDL_WINDOWEVENT_RESIZED:
-					g_SDLManager->updateWindowSize();
-#ifdef _WIN64
-
-#else
-					g_AnttweakbarManager->updateWindowSize();
-#endif
-					break;
-				}
-			}
-
-			if (g_SDLManager->m_events.type == SDL_QUIT)
-			{
-				g_quit = true;
-			}
-
-			if (g_SDLManager->m_events.type == SDL_KEYDOWN)
-			{
-				switch (g_SDLManager->m_events.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					g_quit = true;
-					break;
-
-				case SDLK_LALT:
-					g_lAlt = true;
-					break;
-
-				case SDLK_d:
-					g_player->moveState = MS_RIGHT;
-					break;
-
-				case SDLK_a:
-					g_player->moveState = MS_LEFT;
-					break;
-
-				case SDLK_w:
-					g_player->jump();
-					break;
-
-				case SDLK_s:
-					break;
-
-				case SDLK_RETURN:
-					if (g_lAlt)
-					{
-						g_SDLManager->m_fullscreen ^= 1;
-						g_SDLManager->setFullscreen(g_SDLManager->m_fullscreen);
-					}
-					break;
-				}
-			}
-
-			if (g_SDLManager->m_events.type == SDL_KEYUP)
-			{
-				switch (g_SDLManager->m_events.key.keysym.sym)
-				{
-				case SDLK_LALT:
-					g_lAlt = false;
-					break;
-
-				case SDLK_d:
-					g_player->moveState = MS_STOP;
-					break;
-
-				case SDLK_a:
-					g_player->moveState = MS_STOP;
-					break;
-
-				case SDLK_w:
-					break;
-
-				case SDLK_s:
-					break;
-				}
-			}
+			g_InputManager->pollEvent(g_SDLManager->m_events);
 		}
 	}
 }
@@ -212,7 +149,7 @@ int main()
 
 	initContent();
 
-	while (!g_quit)
+	while (!g_SystemManager->m_quit)
 	{
 		g_lastTime = g_time;
 		g_time = SDL_GetPerformanceCounter();
