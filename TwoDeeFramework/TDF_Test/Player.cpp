@@ -4,6 +4,7 @@
 Player::Player()
 {
 	m_texture = nullptr;
+	m_nameText = nullptr;
 
 #ifdef _WIN64
 
@@ -55,6 +56,10 @@ void Player::update(float _deltaTime)
 void Player::init()
 {
 	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\Untitled.png");
+	m_nameText = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Text>("..\\resources\\fonts\\OptimusPrinceps.ttf");
+
+	//m_nameText->setStyle(TTF_STYLE_BOLD);
+	//m_nameText->resizeText(48);
 
 #ifdef _WIN64
 
@@ -80,6 +85,7 @@ void Player::init()
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
+	myFixtureDef.friction = 0.0f;
 
 	//create dynamic body
 	myBodyDef.position.Set(900.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD);
@@ -126,10 +132,14 @@ void Player::init()
 void Player::render()
 {
 	int renderPosx = static_cast<int>(m_position.x * SCALE_TO_RENDER - m_texture->m_width / 2);
-	int renderPosY = static_cast<int>(m_position.y * SCALE_TO_RENDER - m_texture->m_height / 2);
+	int renderPosy = static_cast<int>(m_position.y * SCALE_TO_RENDER - m_texture->m_height / 2);
 	float renderAngle = m_angle * 57.2958f - 90.0f;
 
-	TDF::RenderManager::GetInstance().renderTexture(m_texture, renderPosx,renderPosY, renderAngle);
+	TDF::RenderManager::GetInstance().renderTexture(m_texture, renderPosx, renderPosy, renderAngle);
+
+	renderPosx -= m_texture->m_width / 2;
+	renderPosy -= m_texture->m_height / 2;
+	TDF::RenderManager::GetInstance().renderText(m_nameText, "This is a box", renderPosx, renderPosy);
 }
 
 void Player::onEnterCollision(int _tag)

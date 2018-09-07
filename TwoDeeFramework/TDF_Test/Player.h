@@ -29,6 +29,7 @@ public:
 
 public:
 	TDF::Texture* m_texture;
+	TDF::Text* m_nameText;
 	float m_movementSpeed;
 	float m_jumpSpeed;
 	TDF::Vector2D m_position;

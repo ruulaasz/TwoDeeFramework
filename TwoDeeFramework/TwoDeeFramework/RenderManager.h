@@ -2,6 +2,7 @@
 
 #include "SDL_Manager.h"
 #include "Texture.h"
+#include "Text.h"
 
 namespace TDF
 {
@@ -74,12 +75,13 @@ namespace TDF
 		\param _angle the rotation angle of the texture.
 		\param _flip if the texture is going to be flipped in the given direction.
 		*/
-		void renderTexture(TDF::Texture* _texture, 
+		void renderTexture(Texture* _texture, 
 						   int _x, 
 						   int _y, 
 						   float _angle = 0, 
 						   SDL_RendererFlip _flip = SDL_FLIP_NONE);
 
+		void renderText(Text* _text, std::string _data, int _x, int _y);
 
 		//! Saves the given texture into a file.
 		/*!

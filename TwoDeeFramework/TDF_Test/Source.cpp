@@ -49,7 +49,6 @@ void initManagers()
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
 	g_AnttweakbarManager->init();
-	g_AnttweakbarManager->hideBars(true);
 #endif
 
 	TDF::Box2DManager::StartModule();
@@ -71,6 +70,8 @@ void initContent()
 	{
 		g_testWorld.m_allActors.at(i)->init();
 	}
+
+	g_AnttweakbarManager->hideBars(true);
 }
 
 void render()
@@ -234,6 +235,5 @@ int main()
 	
 	g_SDLManager->release();
 
-	
 	return 0;
 }

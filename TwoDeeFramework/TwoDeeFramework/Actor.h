@@ -22,5 +22,6 @@ namespace TDF
 		virtual void onEnterCollision(int _tag) = 0;
 
 		int m_collisionID;
+		int m_id;
 	};
 }

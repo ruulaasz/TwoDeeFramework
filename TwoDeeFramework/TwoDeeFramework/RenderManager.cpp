@@ -97,7 +97,7 @@ namespace TDF
 		renderBox(box);
 	}
 
-	void RenderManager::renderTexture(TDF::Texture * _texture, int _x, int _y, float _angle, SDL_RendererFlip _flip)
+	void RenderManager::renderTexture(Texture * _texture, int _x, int _y, float _angle, SDL_RendererFlip _flip)
 	{
 		SDL_Rect quadSrc = { 0, 0, _texture->m_width, _texture->m_height };
 		SDL_Rect quadDst = { _x , _y , _texture->m_width, _texture->m_height };
@@ -109,6 +109,15 @@ namespace TDF
 						 (_angle), 
 						 nullptr, 
 						 _flip);
+	}
+
+	void RenderManager::renderText(Text * _text, std::string _data, int _x, int _y)
+	{
+		SDL_Color textColor = { 0, 0, 0 }; 
+
+		_text->loadFromRenderedText(_data, textColor);
+
+		renderTexture(&_text->m_texture, _x, _y);
 	}
 
 	void RenderManager::saveTextureAsPNG(const char * _name, Texture * _texture)

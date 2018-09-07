@@ -27,10 +27,8 @@ namespace TDF
 		virtual void free() = 0;
 
 		//! Returns the resource name.
-		std::string getName() { return m_name; };
-
-		//! Returns the resource name.
 		void setName(const std::string& _name) { m_name = _name; };
+		void setPath(const std::string& _path) { m_path = _path; };
 
 	protected:
 		//! The name of the resource.

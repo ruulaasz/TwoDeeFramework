@@ -33,6 +33,7 @@ namespace TDF
 		m_window = nullptr;
 		m_renderer = nullptr;
 
+		TTF_Quit();
 		IMG_Quit();
 		SDL_Quit();
 	}
@@ -55,6 +56,11 @@ namespace TDF
 		if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		{
 			printf("SDL_Init AUDIO failed: %s\n", SDL_GetError());
+		}
+
+		if (TTF_Init() == -1)
+		{
+			printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 		}
 	}
 
