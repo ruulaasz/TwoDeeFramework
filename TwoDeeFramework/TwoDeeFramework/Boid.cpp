@@ -51,42 +51,42 @@ namespace TDF
 
 	}
 
-	void Boid::renderVectors()
+	void Boid::render()
 	{
-	  Vector2D lineEnd;
+		Vector2D lineEnd;
 
-	  if (getLength(m_velocity) > 0)
-	  {
-		  m_renderDirection = m_velocity;
-	  }
+		if (getLength(m_velocity) > 0)
+		{
+			m_renderDirection = m_velocity;
+		}
 
-	  m_renderAngle = static_cast<float>(std::atan2(m_renderDirection.x,
-													-m_renderDirection.y));
-	  
-	  lineEnd = m_position + m_velocity * DEBUGLINE_LENGTH;
+		m_renderAngle = static_cast<float>(std::atan2(m_renderDirection.x,
+													 -m_renderDirection.y));
 
-	  RenderManager::GetInstance().setRenderDrawColor(0xFF, 0, 0);
+		lineEnd = m_position + m_velocity * DEBUGLINE_LENGTH;
 
-	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
-						 static_cast<int>(m_position.x),
-						 static_cast<int>(m_position.y),
-						 static_cast<int>(lineEnd.x),
-						 static_cast<int>(lineEnd.y));
-	  
-	  lineEnd = m_position + m_desiredVelocity * DEBUGLINE_LENGTH;
+		RenderManager::GetInstance().setRenderDrawColor(0xFF, 0, 0);
 
-	  RenderManager::GetInstance().setRenderDrawColor(0, 0, 0);
+		SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer,
+													  static_cast<int>(m_position.x),
+													  static_cast<int>(m_position.y),
+													  static_cast<int>(lineEnd.x),
+													  static_cast<int>(lineEnd.y));
 
-	  SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer, 
-						 static_cast<int>(m_position.x), 
-						 static_cast<int>(m_position.y),
-						 static_cast<int>(lineEnd.x),
-						 static_cast<int>(lineEnd.y));
-	  
-	  for (size_t i = 0; i < m_path.size(); i++)
-	  {
-	    m_path.at(i)->render();
-	  }
+		lineEnd = m_position + m_desiredVelocity * DEBUGLINE_LENGTH;
+
+		RenderManager::GetInstance().setRenderDrawColor(0, 0, 0);
+
+		SDL_RenderDrawLine(SDL_Manager::GetInstance().m_renderer,
+													  static_cast<int>(m_position.x),
+													  static_cast<int>(m_position.y),
+													  static_cast<int>(lineEnd.x),
+													  static_cast<int>(lineEnd.y));
+
+		for (size_t i = 0; i < m_path.size(); i++)
+		{
+			m_path.at(i)->render();
+		}
 	}
 
 	void Boid::renderArrival()

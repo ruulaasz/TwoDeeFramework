@@ -56,7 +56,7 @@ namespace TDF
 		*/
 		TwBar* createCustomBar(const char *_barName, AntTweakBarInfo _info);
 
-		//! Renders the bars.
+		//! Render the bars.
 		void render();
 
 		//! Handle the anttweakbar events.
@@ -71,16 +71,17 @@ namespace TDF
 		*/
 		void release();
 
+		//! Hide the gui.
 		void hideBars(bool _hide);
 
 	public:
 		//! If the manager already handled any input.
 		int m_handled;
 
+	private:
 		//! the number of created bars, the manager always starts with 1 bar.
 		int m_barCount;
 
-	private:
 		//! A bar holding the antweakbar manager info.
 		TwBar *m_antwBar;
 

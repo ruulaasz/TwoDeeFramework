@@ -1,27 +1,50 @@
 #pragma once
 
-#include "Box2DManager.h"
 #include <vector>
+#include "Box2DManager.h"
 #include "Actor.h"
 
 namespace TDF
 {
+	//!  A world container class.
 	class World
 	{
 	public:
+		//! Default constructor.
+		/*!
+		Initialize the members of the class.
+		*/
 		World();
+
+		//! Default destructor.
 		~World();
 
-		b2World* m_physicsWorld;
+		//! Updates all the actors.
+		/*!
+		\param _deltaTime the change in time.
+		*/
+		void update(float _deltaTime);
 
+		//! Render all the actors.
+		void render();
+
+		//! Initialize the world.
+		void init();
+
+	public:
+		//! The actors in the world.
 		std::vector<Actor*> m_allActors;
 
-		float32 m_timeStep;      //the length of time passed to simulate (seconds)
-		int32 m_velocityIterations;   //how strongly to correct velocity
-		int32 m_positionIterations;   //how strongly to correct position
+		//! The physiscs of the world.
+		b2World* m_physicsWorld;
 
-		void update(float _deltaTime);
-		void render();
-		void init();
+		//! The length of time passed to simulate (seconds).
+		float32 m_timeStep;     
+
+		//! How strongly to correct velocity.
+		int32 m_velocityIterations; 
+
+		//! How strongly to correct position.
+		int32 m_positionIterations;   
 	};
 }

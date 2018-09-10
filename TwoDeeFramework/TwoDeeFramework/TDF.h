@@ -26,5 +26,5 @@
 #include "ContactListener.h"
 #include "InputMessage.h"
 #include "InputManager.h"
-#include "worldManager.h"
+#include "WorldManager.h"
 #include "SystemManager.h"

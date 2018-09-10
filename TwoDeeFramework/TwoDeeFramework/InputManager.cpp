@@ -46,7 +46,7 @@ namespace TDF
 	{
 		if (_message.m_type != SYSTEM_INPUT)
 		{
-			worldManager::GetInstance().getActor(_id)->dispatchMessage(_message);
+			WorldManager::GetInstance().getActor(_id)->dispatchMessage(_message);
 		}
 		
 		SystemManager::GetInstance().dispatchMessage(_message);
@@ -86,28 +86,14 @@ namespace TDF
 				queueMessage(m_message);
 				break;
 
-			case SDLK_d:
-				m_message.m_type = KEYBOARD_INPUT;
-				m_message.m_data.event = _event;
-				m_message.m_data.data = new int(1);
-				queueMessage(m_message);
-				break;
-
-			case SDLK_a:
-				m_message.m_type = KEYBOARD_INPUT;
-				m_message.m_data.event = _event;
-				m_message.m_data.data = new int(-1);
-				queueMessage(m_message);
-				break;
-
-			case SDLK_w:
-				m_message.m_type = KEYBOARD_INPUT;
-				m_message.m_data.event = _event;
-				queueMessage(m_message);
-				break;
-
 			case SDLK_RETURN:
 				m_message.m_type = SYSTEM_INPUT;
+				m_message.m_data.event = _event;
+				queueMessage(m_message);
+				break;
+
+			default:
+				m_message.m_type = KEYBOARD_INPUT;
 				m_message.m_data.event = _event;
 				queueMessage(m_message);
 				break;
@@ -124,17 +110,9 @@ namespace TDF
 				queueMessage(m_message);
 				break;
 
-			case SDLK_d:
+			default:
 				m_message.m_type = KEYBOARD_INPUT;
 				m_message.m_data.event = _event;
-				m_message.m_data.data = new int(0);
-				queueMessage(m_message);
-				break;
-
-			case SDLK_a:
-				m_message.m_type = KEYBOARD_INPUT;
-				m_message.m_data.event = _event;
-				m_message.m_data.data = new int(0);
 				queueMessage(m_message);
 				break;
 			}

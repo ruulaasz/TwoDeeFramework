@@ -13,18 +13,34 @@
 
 namespace TDF
 {
+	//!  A manager class for box2D library.
 	class Box2DManager : public Module<Box2DManager>
 	{
 	public:
+		//! Default constructor.
+		/*!
+		Initialize the members of the class.
+		*/
 		Box2DManager();
+
+		//! Default destructor.
 		~Box2DManager();
 
+		//! Creates a new world.
+		/*!
+		\param _gravity, The worlds gravity.
+		*/
 		b2World* createWorld(const Vector2D& _gravity = Vector2D(0.0f, 9.8f));
 
-		Box2DDraw m_draw;
-
+		//! Initialize the default worlds.
 		void init();
 
+	private:
+		//! The handle for debug rendering.
+		Box2DDraw m_draw;
+
+	public:
+		//! A map with all created worlds.
 		std::unordered_map<std::string, b2World*>m_allWorlds;
 	};
 }

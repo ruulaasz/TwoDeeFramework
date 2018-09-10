@@ -1,5 +1,5 @@
 #include "Box2DDraw.h"
-#include "SDL_Manager.h"
+#include "RenderManager.h"
 #include "Box2DManager.h"
 
 namespace TDF
@@ -28,7 +28,7 @@ namespace TDF
 		points[i].x = static_cast<int>(vertices[0].x * SCALE_TO_RENDER);
 		points[i].y = static_cast<int>(vertices[0].y * SCALE_TO_RENDER);
 
-		SDL_SetRenderDrawColor(SDL_Manager::GetInstance().m_renderer , static_cast<uint8>(color.r), static_cast<uint8>(color.g), static_cast<uint8>(color.b), SDL_ALPHA_OPAQUE);
+		RenderManager::GetInstance().setRenderDrawColor(static_cast<uint8>(color.r), static_cast<uint8>(color.g), static_cast<uint8>(color.b));
 		SDL_RenderDrawLines(SDL_Manager::GetInstance().m_renderer, points, vertexCount + 1);
 	}
 }

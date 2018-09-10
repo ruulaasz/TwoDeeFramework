@@ -29,6 +29,7 @@ namespace TDF
 		//! Render the circle.
 		void render();
 
+	public:
 		//! The circle position.
 		Vector2D m_center;
 

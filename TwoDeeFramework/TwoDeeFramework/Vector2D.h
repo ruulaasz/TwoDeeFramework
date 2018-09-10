@@ -40,7 +40,10 @@ namespace TDF
 		void reset();
 
 	public:
+		//! The x value.
 		float x;
+
+		//! The y value.
 		float y;
 	};
 

@@ -28,6 +28,8 @@ namespace TDF
 
 		//! Returns the resource name.
 		void setName(const std::string& _name) { m_name = _name; };
+
+		//! Returns the resource file path.
 		void setPath(const std::string& _path) { m_path = _path; };
 
 	protected:

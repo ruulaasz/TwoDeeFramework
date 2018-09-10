@@ -19,6 +19,9 @@ Player::Player()
 	m_canJump = true;
 	m_jumpLimit = 2;
 	m_currentJumps = 0;
+
+	body = nullptr;
+	world = nullptr;
 }
 
 Player::~Player()
@@ -151,11 +154,11 @@ void Player::dispatchMessage(const TDF::InputMessage & _message)
 		switch (_message.m_data.event.key.keysym.sym)
 		{
 		case SDLK_d:
-			setDirection(*static_cast<int*>(_message.m_data.data));
+			setDirection(1);
 			break;
 
 		case SDLK_a:
-			setDirection(*static_cast<int*>(_message.m_data.data));
+			setDirection(-1);
 			break;
 
 		case SDLK_w:
@@ -168,11 +171,11 @@ void Player::dispatchMessage(const TDF::InputMessage & _message)
 		switch (_message.m_data.event.key.keysym.sym)
 		{
 		case SDLK_d:
-			setDirection(*static_cast<int*>(_message.m_data.data));
+			setDirection(0);
 			break;
 
 		case SDLK_a:
-			setDirection(*static_cast<int*>(_message.m_data.data));
+			setDirection(0);
 			break;
 		}
 		break;

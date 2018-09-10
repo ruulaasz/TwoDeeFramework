@@ -20,14 +20,29 @@ namespace TDF
 		//! Default destructor.
 		~Boid();
 
+		//! Update the actor.
+		/*!
+		\param _deltaTime the change of time.
+		*/
 		virtual void update(float _deltaTime) { _deltaTime; };
-		virtual void render() {};
-		virtual void init() {};
-		virtual void onEnterCollision(int _tag) { _tag; };
-		virtual void dispatchMessage(const TDF::InputMessage& _message) { _message; };
 
-		//! render the debug lines.
-		void renderVectors();
+		//! Render the actor.
+		virtual void render();
+
+		//! Initialize the actor.
+		virtual void init() {};
+
+		//! Collision with something.
+		/*!
+		\param _tag the id of the collided object.
+		*/
+		virtual void onEnterCollision(int _tag) { _tag; };
+
+		//! Dispatch a recieved message.
+		/*!
+		\param _message the receieved message.
+		*/
+		virtual void dispatchMessage(const TDF::InputMessage& _message) { _message; };
 
 		//! render the arrival behavior.
 		void renderArrival();
@@ -38,7 +53,8 @@ namespace TDF
 		//! render the pursuit behavior.
 		void renderPursuit();
 
-		//general boid variables
+	public:
+		//! General boid atributes.
 		Vector2D m_position;
 		Vector2D m_velocity;
 		float m_mass;
@@ -50,21 +66,21 @@ namespace TDF
 		int m_behaviors;
 		Vector2D m_renderDirection;
 
-		//seek parameters
+		//! Seek parameters
 		float m_maxSeekForce;
 		float m_seekScalar;
 		
-		//flee parameters
+		//! Flee parameters
 		float m_maxFleeForce;
 		float m_fleeScalar;
 		
-		//arrival parameters
+		//! Arrival parameters
 		float m_maxArrivalForce;
 		float m_arrivalScalar;
 		float m_stopRadius;
 		float m_arrivalRadius;
 		
-		//wander parameters
+		//! Wander parameters
 		float m_maxWanderForce;
 		float m_wanderScalar;
 		Vector2D m_circleCenter;
@@ -72,20 +88,20 @@ namespace TDF
 		float m_circleRadius;
 		float m_wanderAngle;
 		
-		//pursuit & evade parameters
+		//! Pursuit & evade parameters
 		float m_futureProjection;
 		Vector2D m_futurePosition;
 		float m_futureScale;
 
-		//obstacle avoidance parameters
+		//! Obstacle avoidance parameters
 		float m_maxSeeAhead;
 		float m_maxAvoidForce;
 		
-		//followpath parameters
+		//! Followpath parameters
 		bool m_loopPath;
 		std::vector<PathNode*> m_path;
 		
-		//follow the leader parameters
+		//! Follow the leader parameters
 		float m_trailDistance;
 		float m_separationRadius;
 		float m_maxSeparation;

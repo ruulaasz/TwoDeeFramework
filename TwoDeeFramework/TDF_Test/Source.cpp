@@ -9,7 +9,7 @@ TDF::BoidManager* g_BoidManager;
 TDF::RenderManager* g_RenderManager;
 TDF::Box2DManager* g_Box2DManager;
 TDF::InputManager* g_InputManager;
-TDF::worldManager* g_WorldManager;
+TDF::WorldManager* g_WorldManager;
 TDF::SystemManager* g_SystemManager;
 
 #ifdef _WIN64
@@ -59,8 +59,8 @@ void initManagers()
 	TDF::InputManager::StartModule();
 	g_InputManager = TDF::InputManager::GetPointerInstance();
 
-	TDF::worldManager::StartModule();
-	g_WorldManager = TDF::worldManager::GetPointerInstance();
+	TDF::WorldManager::StartModule();
+	g_WorldManager = TDF::WorldManager::GetPointerInstance();
 
 	TDF::SystemManager::StartModule();
 	g_SystemManager = TDF::SystemManager::GetPointerInstance();
@@ -71,12 +71,11 @@ void initManagers()
 void initContent()
 {
 	g_testWorld = new TDF::World();
-	g_testWorld->init();
 	g_testWorld->m_allActors.push_back(new Player());
+	g_testWorld->m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
+
 	g_player = reinterpret_cast<Player*>(g_testWorld->m_allActors.back());
 	g_player->m_id = 2;
-
-	g_testWorld->m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
 
 	g_player->world = g_testWorld->m_physicsWorld;
 

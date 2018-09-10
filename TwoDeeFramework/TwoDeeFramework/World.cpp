@@ -7,6 +7,7 @@ namespace TDF
 		m_timeStep = 1 / 60.0f;
 		m_velocityIterations = 8;
 		m_positionIterations = 3;
+		m_physicsWorld = nullptr;
 	}
 
 	World::~World()

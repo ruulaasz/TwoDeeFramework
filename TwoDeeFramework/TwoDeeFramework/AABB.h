@@ -21,7 +21,7 @@ namespace TDF
 		\param _width the width of the box.
 		\param _height the height of the box.
 		*/
-		AABB(const Vector2D& _vector, float _width, float _height);
+		AABB(const Vector2D& _position, float _width, float _height);
 
 		//! Default destructor.
 		~AABB();
@@ -29,6 +29,7 @@ namespace TDF
 		//! Render the box.
 		void render();
 
+	public:
 		//! The box position.
 		Vector2D m_position;
 
@@ -37,13 +38,5 @@ namespace TDF
 
 		//! The box height.
 		float m_height;
-
-		//! The box velocity.
-		Vector2D m_velocity;
-
-		float left();
-		float right();
-		float bottom();
-		float top();
 	};
 }

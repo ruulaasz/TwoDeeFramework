@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <unordered_map>
-
 #include "Module.h"
 #include "Resource.h"
 #include "StringTools.h"

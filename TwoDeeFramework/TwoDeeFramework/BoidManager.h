@@ -136,8 +136,8 @@ namespace TDF
 		\return the closest obstacle.
 		*/
 		Circle* findMostThreateningObstacle(Vector2D _position, 
-													Vector2D _ahead, 
-													Vector2D _ahead2);
+											Vector2D _ahead, 
+											Vector2D _ahead2);
 
 		//! Finds if a line is touching the circle.
 		/*!

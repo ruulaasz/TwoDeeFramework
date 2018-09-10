@@ -17,14 +17,12 @@ namespace TDF
 	{
 		int id = 0;
 
-		//check if fixture B was a ball
 		void* bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
 		if (bodyUserData)
 		{
 			id = static_cast<Actor*>(bodyUserData)->m_collisionID;
 		}
 			
-		//check if fixture A was a ball
 		bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 		if (bodyUserData)
 		{

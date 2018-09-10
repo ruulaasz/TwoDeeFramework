@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Vector2D.h"
 
 namespace TDF
@@ -28,6 +29,7 @@ namespace TDF
 		//! Render the circle.
 		void render();
 
+	public:
 		//! The node position.
 		Vector2D m_position;
 

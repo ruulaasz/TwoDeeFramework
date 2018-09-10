@@ -84,10 +84,10 @@
     <ClInclude Include="InputMessage.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="worldManager.h">
+    <ClInclude Include="SystemManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="SystemManager.h">
+    <ClInclude Include="WorldManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -152,10 +152,10 @@
     <ClCompile Include="InputMessage.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="worldManager.cpp">
+    <ClCompile Include="SystemManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="SystemManager.cpp">
+    <ClCompile Include="WorldManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

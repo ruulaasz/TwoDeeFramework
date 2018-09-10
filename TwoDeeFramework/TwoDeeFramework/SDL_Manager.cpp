@@ -81,7 +81,7 @@ namespace TDF
 		m_renderer = SDL_CreateRenderer(m_window, -1, 
 									    SDL_RENDERER_ACCELERATED | 
 									    SDL_RENDERER_TARGETTEXTURE | 
-									    SDL_RENDERER_PRESENTVSYNC);// SDL_RENDERER_PRESENTVSYNC);
+									    SDL_RENDERER_PRESENTVSYNC);
 	}
 
 	void SDL_Manager::updateWindowSize()

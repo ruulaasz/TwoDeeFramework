@@ -81,6 +81,13 @@ namespace TDF
 						   float _angle = 0, 
 						   SDL_RendererFlip _flip = SDL_FLIP_NONE);
 
+		//! Render a text.
+		/*!
+		\param _text, A pointer to the text resource.
+		\param _data, the text to display.
+		\param _x, the a position of the text.
+		\param _y, the position of the text.
+		*/
 		void renderText(Text* _text, std::string _data, int _x, int _y);
 
 		//! Saves the given texture into a file.
@@ -111,6 +118,7 @@ namespace TDF
 		//! Present the render into the screen.
 		void renderPresent();
 
+	public:
 		//! a pointer to the device renderer.
 		SDL_Renderer* m_renderer;
 

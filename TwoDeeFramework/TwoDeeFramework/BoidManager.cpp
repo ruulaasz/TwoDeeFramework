@@ -398,7 +398,7 @@ namespace TDF
 		for (size_t i = 0; i < m_allBoids.size(); i++)
 		{
 			Boid* boid = m_allBoids.at(i);
-			boid->renderVectors();
+			boid->render();
 
 			if (boid->m_behaviors & BT_ARRIVAL)
 			{
