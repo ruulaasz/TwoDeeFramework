@@ -49,6 +49,7 @@ void Player::init()
 {
 	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\Untitled.png");
 	m_nameText = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Text>("..\\resources\\fonts\\OptimusPrinceps.ttf");
+	m_jumpSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\test.wav");
 
 	//m_nameText->setStyle(TTF_STYLE_BOLD);
 	//m_nameText->resizeText(48);
@@ -195,6 +196,7 @@ void Player::jump()
 {
 	if (m_canJump)
 	{
+		m_jumpSFX->play(-1);
 		b2Vec2 vel = body->GetLinearVelocity();
 		vel.y = -m_jumpSpeed;
 		body->SetLinearVelocity(vel);

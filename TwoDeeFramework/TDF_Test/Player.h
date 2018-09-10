@@ -39,6 +39,8 @@ public:
 
 	TDF::ContactListener m_contactListener;
 
+	TDF::Sfx* m_jumpSFX;
+
 	void jump();
 
 #ifdef _WIN64

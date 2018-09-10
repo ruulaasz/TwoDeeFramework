@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <windows.h>	
 #include <TDF.h>
 #include "Player.h"
@@ -11,6 +10,7 @@ TDF::Box2DManager* g_Box2DManager;
 TDF::InputManager* g_InputManager;
 TDF::WorldManager* g_WorldManager;
 TDF::SystemManager* g_SystemManager;
+TDF::AudioManager* g_AudioManager;
 
 #ifdef _WIN64
 
@@ -26,6 +26,7 @@ int g_guiHandled;
 
 TDF::World* g_testWorld;
 Player* g_player;
+TDF::Music* g_music;
 
 void initManagers()
 {
@@ -66,6 +67,10 @@ void initManagers()
 	g_SystemManager = TDF::SystemManager::GetPointerInstance();
 
 	g_InputManager->subscribe(TDF::SYSTEM_INPUT, 0);
+
+	TDF::AudioManager::StartModule();
+	g_AudioManager = TDF::AudioManager::GetPointerInstance();
+	g_AudioManager->init();
 }
 
 void initContent()
@@ -86,7 +91,9 @@ void initContent()
 
 	g_WorldManager->setActiveWorld(g_testWorld);
 
-	g_AnttweakbarManager->hideBars(true);
+	//g_AnttweakbarManager->hideBars(true);
+
+	g_music = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("..\\resources\\music\\test.mp3");
 }
 
 void render()
@@ -148,6 +155,8 @@ int main()
 
 	initContent();
 
+	g_music->play();
+
 	while (!g_SystemManager->m_quit)
 	{
 		g_lastTime = g_time;
@@ -170,6 +179,7 @@ int main()
 #endif
 	
 	g_SDLManager->release();
+	g_AudioManager->release();
 
 	return 0;
 }

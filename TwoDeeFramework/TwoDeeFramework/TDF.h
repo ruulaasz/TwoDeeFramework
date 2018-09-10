@@ -28,3 +28,7 @@
 #include "InputManager.h"
 #include "WorldManager.h"
 #include "SystemManager.h"
+
+#include "Sfx.h"
+#include "Music.h"
+#include "AudioManager.h"
