@@ -98,6 +98,9 @@ namespace TDF
 		//! The SDL events.
 		SDL_Event m_events;
 
+		//! A joystick handler.
+		SDL_GameController* m_controller;
+
 		//! The width of the window.
 		int m_windowWidth;
 

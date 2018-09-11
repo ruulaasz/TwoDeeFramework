@@ -54,24 +54,26 @@ namespace TDF
 
 	void InputManager::pollEvent(SDL_Event _event)
 	{
-		if (_event.type == SDL_WINDOWEVENT)
+		switch (_event.type)
 		{
+		default:
+			break;
+
+		case SDL_WINDOWEVENT:
 			switch (_event.window.event)
 			{
 			case SDL_WINDOWEVENT_RESIZED:
 				break;
 			}
-		}
+			break;
 
-		if (_event.type == SDL_QUIT)
-		{
+		case SDL_QUIT:
 			m_message.m_type = SYSTEM_INPUT;
 			m_message.m_data.event = _event;
 			queueMessage(m_message);
-		}
+			break;
 
-		if (_event.type == SDL_KEYDOWN)
-		{
+		case SDL_KEYDOWN:
 			switch (_event.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
@@ -98,10 +100,9 @@ namespace TDF
 				queueMessage(m_message);
 				break;
 			}
-		}
+			break;
 
-		if (_event.type == SDL_KEYUP)
-		{
+		case SDL_KEYUP:
 			switch (_event.key.keysym.sym)
 			{
 			case SDLK_LALT:
@@ -116,6 +117,28 @@ namespace TDF
 				queueMessage(m_message);
 				break;
 			}
+			break;
+
+		case SDL_CONTROLLERAXISMOTION:
+			if (_event.caxis.which == 0)
+			{
+				m_message.m_type = CONTROLLER_INPUT;
+				m_message.m_data.event = _event;
+				queueMessage(m_message);
+			}
+			break;
+
+		case SDL_CONTROLLERBUTTONDOWN:
+				m_message.m_type = CONTROLLER_INPUT;
+				m_message.m_data.event = _event;
+				queueMessage(m_message);
+			break;
+
+		case SDL_CONTROLLERBUTTONUP:
+			m_message.m_type = CONTROLLER_INPUT;
+			m_message.m_data.event = _event;
+			queueMessage(m_message);
+			break;
 		}
 	}
 }

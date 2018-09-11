@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Platform.h"
 
+#define JOYSTICK_DEAD_ZONE 5000
+
 Player::Player()
 {
 	m_texture = nullptr;
@@ -120,6 +122,7 @@ void Player::init()
 	platformBody->CreateFixture(&myFixtureDef);
 
 	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_id);
+	TDF::InputManager::GetInstance().subscribe(TDF::CONTROLLER_INPUT, m_id);
 }
 
 void Player::render()
@@ -176,6 +179,61 @@ void Player::dispatchMessage(const TDF::InputMessage & _message)
 			break;
 
 		case SDLK_a:
+			setDirection(0);
+			break;
+		}
+		break;
+
+	case SDL_CONTROLLERAXISMOTION:
+		if (_message.m_data.event.caxis.axis == 0)
+		{
+			if (_message.m_data.event.caxis.value < -JOYSTICK_DEAD_ZONE)
+			{
+				setDirection(-1);
+			}
+			else if (_message.m_data.event.caxis.value > JOYSTICK_DEAD_ZONE)
+			{
+				setDirection(1);
+			}
+			else
+			{
+				setDirection(0);
+			}
+		}
+		break;
+
+	case SDL_CONTROLLERBUTTONDOWN:
+		switch (_message.m_data.event.cbutton.button)
+		{
+		default:
+			break;
+
+		case SDL_CONTROLLER_BUTTON_A:
+			jump();
+			break;
+
+
+		case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+			setDirection(1);
+			break;
+
+		case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+			setDirection(-1);
+			break;
+		}
+		break;
+
+	case SDL_CONTROLLERBUTTONUP:
+		switch (_message.m_data.event.cbutton.button)
+		{
+		default:
+			break;
+
+		case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+			setDirection(0);
+			break;
+
+		case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 			setDirection(0);
 			break;
 		}

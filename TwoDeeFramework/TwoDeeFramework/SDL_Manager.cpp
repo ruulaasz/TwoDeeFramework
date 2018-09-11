@@ -13,6 +13,7 @@ namespace TDF
 		m_fullscreen = false;
 		m_mousePosX = 0;
 		m_mousePosY = 0;
+		m_controller = nullptr;
 	}
 
 	SDL_Manager::~SDL_Manager()
@@ -32,6 +33,9 @@ namespace TDF
 		SDL_DestroyWindow(m_window);
 		m_window = nullptr;
 		m_renderer = nullptr;
+
+		SDL_GameControllerClose(m_controller); 
+		m_controller = nullptr;
 
 		TTF_Quit();
 		IMG_Quit();
@@ -62,6 +66,11 @@ namespace TDF
 		{
 			printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 		}
+
+		if (SDL_Init(SDL_INIT_GAMECONTROLLER) < 0)
+		{
+			printf("SDL_Init GAMECONTROLLER failed: %s\n", SDL_GetError());
+		}
 	}
 
 	void SDL_Manager::createWindowAndRenderer(const char * _name, int _windowWidth, int _windowHeight)
@@ -82,6 +91,23 @@ namespace TDF
 									    SDL_RENDERER_ACCELERATED | 
 									    SDL_RENDERER_TARGETTEXTURE | 
 									    SDL_RENDERER_PRESENTVSYNC);
+
+		//Check for joysticks 
+		if( SDL_NumJoysticks() < 1 ) 
+		{ 
+			printf( "Warning: No joysticks connected!\n" ); 
+		} 
+		else
+		{ //Load joystick 
+			m_controller = SDL_GameControllerOpen( 0 );
+
+			if(!m_controller)
+			{ 
+				printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+			} 
+		}
+
+		//SDL_GameControllerAddMappingsFromFile("..\\resources\\gamecontrollerdb.txt");
 	}
 
 	void SDL_Manager::updateWindowSize()
