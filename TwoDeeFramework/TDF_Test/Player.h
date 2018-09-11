@@ -22,6 +22,8 @@ public:
 
 	void setDirection(int _dir);
 
+	bool isInDeadZone(int _x, int _y);
+
 public:
 	TDF::Texture* m_texture;
 	TDF::Text* m_nameText;

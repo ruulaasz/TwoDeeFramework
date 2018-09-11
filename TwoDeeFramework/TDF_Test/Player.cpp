@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Platform.h"
 
-#define JOYSTICK_DEAD_ZONE 5000
+#define JOYSTICK_DEAD_ZONE 20000
 
 Player::Player()
 {
@@ -60,13 +60,16 @@ void Player::init()
 
 #else
 	TDF::AntTweakBarInfo info;
-	info.size = " size='200 300' ";
+	info.size = " size='300 300' ";
 	info.position = " position='0 500' ";
 	infoBar = TDF::AnttweakbarManager::GetInstance().createCustomBar(TEXT("Player_info"), info);
 	TwAddVarRO(infoBar, TEXT("position x:"), TW_TYPE_FLOAT, &m_position.x, TEXT(" label='position x:' "));
 	TwAddVarRO(infoBar, TEXT("position y:"), TW_TYPE_FLOAT, &m_position.y, TEXT(" label='position y:' "));
 	TwAddVarRO(infoBar, TEXT("velocity x:"), TW_TYPE_FLOAT, &m_velocity.x, TEXT(" label='velocity x:' "));
 	TwAddVarRO(infoBar, TEXT("velocity y:"), TW_TYPE_FLOAT, &m_velocity.y, TEXT(" label='velocity y:' "));
+	TwAddVarRO(infoBar, TEXT("Current_Jumps:"), TW_TYPE_INT32, &m_currentJumps, TEXT(" Current_Jumps:' "));
+	TwAddVarRO(infoBar, TEXT("Can_jump?:"), TW_TYPE_BOOL32, &m_canJump, TEXT(" label='Can_jump?:' "));
+	TwAddVarRO(infoBar, TEXT("Jump_Limit:"), TW_TYPE_INT32, &m_jumpLimit, TEXT(" label='Jump_Limit:' "));
 #endif
 
 	//body definition
@@ -185,19 +188,22 @@ void Player::dispatchMessage(const TDF::InputMessage & _message)
 		break;
 
 	case SDL_CONTROLLERAXISMOTION:
-		if (_message.m_data.event.caxis.axis == 0)
+		if (true)
 		{
-			if (_message.m_data.event.caxis.value < -JOYSTICK_DEAD_ZONE)
+			if (_message.m_data.event.caxis.axis == 0)
 			{
-				setDirection(-1);
-			}
-			else if (_message.m_data.event.caxis.value > JOYSTICK_DEAD_ZONE)
-			{
-				setDirection(1);
-			}
-			else
-			{
-				setDirection(0);
+				if (_message.m_data.event.caxis.value < -JOYSTICK_DEAD_ZONE)
+				{
+					setDirection(-1);
+				}
+				else if (_message.m_data.event.caxis.value > JOYSTICK_DEAD_ZONE)
+				{
+					setDirection(1);
+				}
+				else
+				{
+					setDirection(0);
+				}
 			}
 		}
 		break;
@@ -250,8 +256,25 @@ void Player::setDirection(int _dir)
 	body->SetLinearVelocity(vel);
 }
 
+bool Player::isInDeadZone(int _x, int _y)
+{
+	TDF::Vector2D zone(_x, _y);
+
+	if (TDF::getLength(zone) < JOYSTICK_DEAD_ZONE)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void Player::jump()
 {
+	if (m_currentJumps >= m_jumpLimit)
+	{
+		m_canJump = false;
+	}
+
 	if (m_canJump)
 	{
 		m_jumpSFX->play(-1);
