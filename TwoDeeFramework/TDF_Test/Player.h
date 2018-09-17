@@ -21,12 +21,10 @@ public:
 	virtual void dispatchMessage(const TDF::InputMessage& _message);
 
 	void setDirection(int _dir);
-
-	bool isInDeadZone(int _x, int _y);
+	void jump();
 
 public:
 	TDF::Texture* m_texture;
-	TDF::Text* m_nameText;
 	float m_movementSpeed;
 	float m_jumpSpeed;
 	TDF::Vector2D m_position;
@@ -43,11 +41,12 @@ public:
 
 	TDF::Sfx* m_jumpSFX;
 
-	void jump();
-
 #ifdef _WIN64
 
 #else
 	TwBar* infoBar;
 #endif
+
+	SDL_Rect m_camera;
+	b2Body* staticBody;
 };

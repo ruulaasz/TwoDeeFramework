@@ -38,7 +38,6 @@ namespace TDF
 				return nullptr;
 			}
 
-
 			std::string name = getNameFromPath(_path);
 
 			T* newResource = searchInLoaded<T>(name);

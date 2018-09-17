@@ -24,9 +24,18 @@ float g_deltaTime = 0.0f;
 
 int g_guiHandled;
 
-TDF::World* g_testWorld;
+TDF::World* g_World;
 Player* g_player;
 TDF::Music* g_music;
+
+TDF::Timer g_timer;
+std::string g_timeText;
+TDF::Text* g_text;
+int g_frames = 0;
+float g_fps;
+
+int g_levelWidth = 3840;
+int g_levelHeight = 2160;
 
 void initManagers()
 {
@@ -75,25 +84,26 @@ void initManagers()
 
 void initContent()
 {
-	g_testWorld = new TDF::World();
-	g_testWorld->m_allActors.push_back(new Player());
-	g_testWorld->m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
+	g_World = new TDF::World();
+	g_World->m_allActors.push_back(new Player());
+	g_World->m_physicsWorld = g_Box2DManager->m_allWorlds["moon"];
 
-	g_player = reinterpret_cast<Player*>(g_testWorld->m_allActors.back());
+	g_player = reinterpret_cast<Player*>(g_World->m_allActors.back());
 	g_player->m_id = 2;
+	g_player->world = g_World->m_physicsWorld;
 
-	g_player->world = g_testWorld->m_physicsWorld;
-
-	for (size_t i = 0; i < g_testWorld->m_allActors.size(); i++)
+	for (size_t i = 0; i < g_World->m_allActors.size(); i++)
 	{
-		g_testWorld->m_allActors.at(i)->init();
+		g_World->m_allActors.at(i)->init();
 	}
 
-	g_WorldManager->setActiveWorld(g_testWorld);
+	g_WorldManager->setActiveWorld(g_World);
 
-	//g_AnttweakbarManager->hideBars(true);
+	g_AnttweakbarManager->hideBars(true);
 
-	g_music = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("..\\resources\\music\\test.mp3");
+	g_music = g_ResourceManager->loadFromFile<TDF::Music>("..\\resources\\music\\test.mp3");
+
+	g_text = g_ResourceManager->loadFromFile<TDF::Text>("..\\resources\\fonts\\OptimusPrinceps.ttf");
 }
 
 void render()
@@ -104,7 +114,10 @@ void render()
 
 	g_WorldManager->m_activeWorld->render();
 
-	g_BoidManager->render();
+	//g_BoidManager->render();
+
+	g_timeText = "FPS: " + std::to_string(g_fps);
+	g_RenderManager->renderText(g_text, g_timeText, 300, 20);
 
 #ifdef _WIN64
 
@@ -151,6 +164,8 @@ void handleInputs()
 
 int main()
 {
+	g_timer.start();
+
 	initManagers();
 
 	initContent();
@@ -167,9 +182,13 @@ int main()
 
 		g_deltaTime = 1 / 60.0f;
 
+		g_fps = g_frames / (g_timer.getTicks() / 1000.f);
+
 		render();
 		handleInputs();
 		update(g_deltaTime);
+
+		g_frames++;
 	}
 
 #ifdef _WIN64
