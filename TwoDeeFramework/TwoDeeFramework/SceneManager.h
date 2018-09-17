@@ -1,23 +1,16 @@
 #pragma once
 
-#include "World.h"
 #include "Module.h"
 #include "Actor.h"
+#include "Scene.h"
 
 namespace TDF
 {
-	//!  A manager class for the created worlds. 
-	class WorldManager : public Module<WorldManager>
+	class SceneManager : public Module<SceneManager>
 	{
 	public:
-		//! Default constructor.
-		/*!
-		Initialize the members of the class.
-		*/
-		WorldManager();
-
-		//! Default destructor.
-		~WorldManager();
+		SceneManager();
+		~SceneManager();
 
 		//! Search an actor by id.
 		/*!
@@ -30,9 +23,14 @@ namespace TDF
 		/*!
 		\param _world, a pointer to the world.
 		*/
-		void setActiveWorld(World* _world);
+		void setActiveScene(Scene* _scene);
+
+		int getID();
 
 	public:
-		World* m_activeWorld;
+		Scene* m_activeScene;
+
+	private:
+		int m_currentID;
 	};
 }

@@ -3,6 +3,7 @@
 #include "Resource.h"
 #include "SDL_Manager.h"
 #include "Texture.h"
+#include "Color.h"
 
 namespace TDF
 {
@@ -43,5 +44,7 @@ namespace TDF
 
 		//! A SDL 2.0 font.
 		TTF_Font* m_font;
+
+		Color m_textColor;
 	};
 }

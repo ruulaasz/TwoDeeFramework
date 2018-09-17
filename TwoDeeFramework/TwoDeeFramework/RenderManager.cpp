@@ -113,7 +113,7 @@ namespace TDF
 
 	void RenderManager::renderText(Text * _text, std::string _data, int _x, int _y)
 	{
-		SDL_Color textColor = { 0, 0, 0 }; 
+		SDL_Color textColor = { _text->m_textColor.r, _text->m_textColor.g, _text->m_textColor.b };
 
 		_text->loadFromRenderedText(_data, textColor);
 

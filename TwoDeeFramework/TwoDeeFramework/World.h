@@ -31,6 +31,8 @@ namespace TDF
 		//! Initialize the world.
 		void init();
 
+		void addActor(Actor* _actor);
+
 	public:
 		//! The actors in the world.
 		std::vector<Actor*> m_allActors;
@@ -38,6 +40,7 @@ namespace TDF
 		//! The physiscs of the world.
 		b2World* m_physicsWorld;
 
+	private:
 		//! The length of time passed to simulate (seconds).
 		float32 m_timeStep;     
 

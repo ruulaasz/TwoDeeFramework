@@ -19,32 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F5973EBF-27C0-49A4-BF05-D19C8123C901}</ProjectGuid>
-    <RootNamespace>TwoDeeFramework</RootNamespace>
+    <ProjectGuid>{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}</ProjectGuid>
+    <RootNamespace>Game_Test</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -69,45 +69,39 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)lib\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <TargetExt>.lib</TargetExt>
-    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SDL_MAIN_HANDLED</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,9 +109,11 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SDL_MAIN_HANDLED</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,11 +123,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SDL_MAIN_HANDLED</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,79 +139,21 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SDL_MAIN_HANDLED</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AABB.h" />
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="AnttweakbarManager.h" />
-    <ClInclude Include="AudioManager.h" />
-    <ClInclude Include="Boid.h" />
-    <ClInclude Include="BoidManager.h" />
-    <ClInclude Include="Box2DDraw.h" />
-    <ClInclude Include="Box2DManager.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="Circle.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="ContactListener.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="InputMessage.h" />
-    <ClInclude Include="Module.h" />
-    <ClInclude Include="Music.h" />
-    <ClInclude Include="PathNode.h" />
-    <ClInclude Include="RenderManager.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SDL_Manager.h" />
-    <ClInclude Include="Sfx.h" />
-    <ClInclude Include="StringTools.h" />
-    <ClInclude Include="SystemManager.h" />
-    <ClInclude Include="TDF.h" />
-    <ClInclude Include="Text.h" />
-    <ClInclude Include="TextButton.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="World.h" />
+    <ClCompile Include="Game_Test.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AABB.cpp" />
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AnttweakbarManager.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
-    <ClCompile Include="Boid.cpp" />
-    <ClCompile Include="BoidManager.cpp" />
-    <ClCompile Include="Box2DDraw.cpp" />
-    <ClCompile Include="Box2DManager.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="ContactListener.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InputMessage.cpp" />
-    <ClCompile Include="Music.cpp" />
-    <ClCompile Include="PathNode.cpp" />
-    <ClCompile Include="RenderManager.cpp" />
-    <ClCompile Include="Resource.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SDL_Manager.cpp" />
-    <ClCompile Include="Sfx.cpp" />
-    <ClCompile Include="SystemManager.cpp" />
-    <ClCompile Include="Text.cpp" />
-    <ClCompile Include="TextButton.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClInclude Include="MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

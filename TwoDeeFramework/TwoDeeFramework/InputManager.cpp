@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "worldManager.h"
+#include "SceneManager.h"
 #include "AnttweakbarManager.h"
 #include "SystemManager.h"
 
@@ -22,8 +22,9 @@ namespace TDF
 
 	void InputManager::subscribe(messageType _type, int _id)
 	{
-		std::pair<messageType, int> newMessage(_type, _id);
+		std::pair<int, messageType> newMessage(_id, _type);
 		m_subscribers.insert(newMessage);
+		printf("%d", m_subscribers.size());
 	}
 
 	void InputManager::update()
@@ -32,9 +33,9 @@ namespace TDF
 		{
 			for (auto it = m_subscribers.begin(); it != m_subscribers.end(); ++it)
 			{
-				if (it->first == m_messageQueue.back().m_type)
+				if (it->second == m_messageQueue.back().m_type)
 				{
-					sendMessage(m_messageQueue.back(), it->second);
+					sendMessage(m_messageQueue.back(), it->first);
 				}
 			}
 
@@ -46,7 +47,12 @@ namespace TDF
 	{
 		if (_message.m_type != SYSTEM_INPUT)
 		{
-			WorldManager::GetInstance().getActor(_id)->dispatchMessage(_message);
+			Actor* actor = SceneManager::GetInstance().getActor(_id);
+
+			if (actor)
+			{
+				actor->dispatchMessage(_message);
+			}
 		}
 		
 		SystemManager::GetInstance().dispatchMessage(_message);
@@ -69,6 +75,12 @@ namespace TDF
 
 		case SDL_QUIT:
 			m_message.m_type = SYSTEM_INPUT;
+			m_message.m_data.event = _event;
+			queueMessage(m_message);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+			m_message.m_type = MOUSE_INPUT;
 			m_message.m_data.event = _event;
 			queueMessage(m_message);
 			break;
@@ -140,5 +152,10 @@ namespace TDF
 			queueMessage(m_message);
 			break;
 		}
+	}
+
+	void InputManager::pushEvent(SDL_Event _event)
+	{
+		pollEvent(_event);
 	}
 }

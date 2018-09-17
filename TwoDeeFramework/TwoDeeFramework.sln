@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TDF_Test", "TDF_Test\TDF_Te
 		{F5973EBF-27C0-49A4-BF05-D19C8123C901} = {F5973EBF-27C0-49A4-BF05-D19C8123C901}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game_Test", "Game_Test\Game_Test.vcxproj", "{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F5973EBF-27C0-49A4-BF05-D19C8123C901} = {F5973EBF-27C0-49A4-BF05-D19C8123C901}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +39,14 @@ Global
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x64.Build.0 = Release|x64
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x86.ActiveCfg = Release|Win32
 		{5E84B647-74A6-4262-A843-790AD367B424}.Release|x86.Build.0 = Release|Win32
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Debug|x64.ActiveCfg = Debug|x64
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Debug|x64.Build.0 = Debug|x64
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Debug|x86.ActiveCfg = Debug|Win32
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Debug|x86.Build.0 = Debug|Win32
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Release|x64.ActiveCfg = Release|x64
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Release|x64.Build.0 = Release|x64
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Release|x86.ActiveCfg = Release|Win32
+		{446A6269-81E5-4C82-A2CF-5999D7E7CCDA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

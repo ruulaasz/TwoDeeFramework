@@ -7,6 +7,7 @@ namespace TDF
 		m_timeStep = 1 / 60.0f;
 		m_velocityIterations = 8;
 		m_positionIterations = 3;
+
 		m_physicsWorld = nullptr;
 	}
 
@@ -38,5 +39,10 @@ namespace TDF
 	void World::init()
 	{
 		m_physicsWorld = Box2DManager::GetInstance().m_allWorlds["earth"];
+	}
+
+	void World::addActor(Actor * _actor)
+	{
+		m_allActors.push_back(_actor);
 	}
 }

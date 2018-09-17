@@ -50,12 +50,14 @@ namespace TDF
 		*/
 		void pollEvent(SDL_Event _event);
 
+		void pushEvent(SDL_Event _event);
+
 	private:
 		//! The messages to attend.
 		std::queue<InputMessage> m_messageQueue;
 
 		//! A map of the subscribers.
-		std::unordered_map<messageType, int> m_subscribers;
+		std::unordered_map<int, messageType> m_subscribers;
 
 		//! A message to fill.
 		InputMessage m_message;
