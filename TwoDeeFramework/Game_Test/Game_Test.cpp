@@ -131,26 +131,8 @@ void handleInputs()
 	}
 }
 
-int main()
+void close()
 {
-	initManagers();
-
-	initContent();
-
-	while (!g_SystemManager->m_quit)
-	{
-		/*g_lastTime = g_time;
-		g_time = SDL_GetPerformanceCounter();
-
-		g_deltaTime = (float)((g_time - g_lastTime) * 1000.0f / SDL_GetPerformanceFrequency());
-		g_deltaTime /= 1000.0f;*/
-
-		g_deltaTime = 1 / 60.0f;
-
-		render();
-		handleInputs();
-		update(g_deltaTime);
-	}
 
 #ifdef _WIN64
 
@@ -160,6 +142,24 @@ int main()
 
 	g_SDLManager->release();
 	g_AudioManager->release();
+}
+
+int main()
+{
+	initManagers();
+
+	initContent();
+
+	while (!g_SystemManager->m_quit)
+	{
+		g_deltaTime = 1 / 60.0f;
+
+		render();
+		handleInputs();
+		update(g_deltaTime);
+	}
+
+	close();
 
 	return 0;
 }

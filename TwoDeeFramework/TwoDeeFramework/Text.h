@@ -30,13 +30,17 @@ namespace TDF
 		virtual void free();
 
 		//Creates image from font string. 
-		void loadFromRenderedText( std::string textureText, SDL_Color textColor );
+		void loadFromRenderedText(std::string textureText, SDL_Color textColor);
 
 		//! Change the text Style.
 		void setStyle(int _style);
 
 		//! Change the text Size.
 		void resizeText(int _size);
+
+		void setColor(Color _color);
+
+		void setText(std::string _text);
 
 	public:
 		//! A SDL 2.0 texture.
@@ -46,5 +50,7 @@ namespace TDF
 		TTF_Font* m_font;
 
 		Color m_textColor;
+		
+		std::string m_text;
 	};
 }

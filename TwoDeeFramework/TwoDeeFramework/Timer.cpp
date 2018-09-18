@@ -75,6 +75,11 @@ namespace TDF
 		return time;
 	}
 
+	float Timer::getSeconds()
+	{
+		return getTicks() / 1000.0f;
+	}
+
 	bool Timer::isStarted()
 	{
 		return m_started;

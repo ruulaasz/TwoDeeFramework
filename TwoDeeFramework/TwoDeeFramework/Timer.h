@@ -16,6 +16,7 @@ namespace TDF
 		void unPause();
 
 		Uint32 getTicks();
+		float getSeconds();
 
 		bool isStarted();
 		bool isPaused();

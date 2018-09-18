@@ -10,6 +10,10 @@ namespace TDF
 		m_pressed = false;
 		m_selected = false;
 		m_renderDebug = true;
+		m_audioPlayed = false;
+
+		m_selection = nullptr;
+		m_activation = nullptr;
 	}
 
 	Button::~Button()
@@ -38,22 +42,32 @@ namespace TDF
 
 	void Button::render()
 	{
+		if (m_selected)
+		{
+			RenderManager::GetInstance().setRenderDrawColor(0, 255, 0);
+
+			if (!m_audioPlayed)
+			{
+				if (m_selection)
+				{
+					m_selection->play(-1);
+					m_audioPlayed = true;
+				}
+			}
+		}
+		else
+		{
+			RenderManager::GetInstance().setRenderDrawColor(255, 255, 255);
+			m_audioPlayed = false;
+		}
+
+		if (m_pressed)
+		{
+			RenderManager::GetInstance().setRenderDrawColor(255, 0, 0);
+		}
+
 		if (m_renderDebug)
 		{
-			if (m_selected)
-			{
-				RenderManager::GetInstance().setRenderDrawColor(0, 255, 0);
-			}
-			else
-			{
-				RenderManager::GetInstance().setRenderDrawColor(255, 255, 255);
-			}
-
-			if (m_pressed)
-			{
-				RenderManager::GetInstance().setRenderDrawColor(255, 0, 0);
-			}
-
 			SDL_RenderDrawRect(SDL_Manager::GetInstance().m_renderer, &m_rect);
 		}
 	}
@@ -77,6 +91,11 @@ namespace TDF
 				if (m_selected)
 				{
 					m_pressed = true;
+
+					if (m_activation)
+					{
+						m_activation->play(-1);
+					}
 				}
 			}
 			break;

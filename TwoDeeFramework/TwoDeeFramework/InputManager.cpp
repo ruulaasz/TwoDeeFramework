@@ -24,7 +24,6 @@ namespace TDF
 	{
 		std::pair<int, messageType> newMessage(_id, _type);
 		m_subscribers.insert(newMessage);
-		printf("%d", m_subscribers.size());
 	}
 
 	void InputManager::update()

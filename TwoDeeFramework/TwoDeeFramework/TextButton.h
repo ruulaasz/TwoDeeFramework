@@ -13,8 +13,9 @@ namespace TDF
 
 		void render();
 
+		void fitText();
+
 	public:
 		Text* m_text;
-		std::string m_string;
 	};
 }

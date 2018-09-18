@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Vector2D.h"
+#include "Sfx.h"
 
 namespace TDF
 {
@@ -37,12 +38,15 @@ namespace TDF
 	
 	public:
 		bool m_selected;
+		bool m_audioPlayed;
 		bool m_pressed;
+		bool m_renderDebug;
 
 		Vector2D m_position;
 		Vector2D m_dimentions;
 
-		bool m_renderDebug;
+		Sfx* m_selection;
+		Sfx* m_activation;
 
 	private:
 		SDL_Rect m_rect;

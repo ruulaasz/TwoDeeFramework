@@ -111,13 +111,31 @@ namespace TDF
 						 _flip);
 	}
 
-	void RenderManager::renderText(Text * _text, std::string _data, int _x, int _y)
+	void RenderManager::renderTextureEx(Texture * _texture, SDL_Rect src, SDL_Rect dst, float _angle, SDL_Point* _center, SDL_RendererFlip _flip)
 	{
-		SDL_Color textColor = { _text->m_textColor.r, _text->m_textColor.g, _text->m_textColor.b };
+		SDL_RenderCopyEx(m_renderer,
+			_texture->m_sdlTexture,
+			&src,
+			&dst,
+			(_angle),
+			_center,
+			_flip);
+	}
 
-		_text->loadFromRenderedText(_data, textColor);
-
+	void RenderManager::renderText(Text * _text, int _x, int _y)
+	{
 		renderTexture(&_text->m_texture, _x, _y);
+	}
+
+	void RenderManager::renderAnimation(Animation * _anim, int _x, int _y, float _angle, float _scale)
+	{
+		Sprite sprite = _anim->m_sprites.at(_anim->m_currentFrame);
+
+		SDL_Rect quadSrc = { sprite.m_atlasPos.x , sprite.m_atlasPos.y, sprite.m_dimentions.x, sprite.m_dimentions.y };
+
+		SDL_Rect quadDst = { _x , _y , sprite.m_dimentions.x * _scale , sprite.m_dimentions.y * _scale };
+
+		renderTextureEx(_anim->m_atlas, quadSrc, quadDst, _angle);
 	}
 
 	void RenderManager::saveTextureAsPNG(const char * _name, Texture * _texture)

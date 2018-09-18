@@ -36,3 +36,4 @@
 #include "Color.h"
 #include "Button.h"
 #include "TextButton.h"
+#include "Animation.h"

@@ -5,6 +5,7 @@ namespace TDF
 	Text::Text()
 	{
 		m_font = nullptr;
+		m_text = "text";
 	}
 
 	Text::~Text()
@@ -71,5 +72,27 @@ namespace TDF
 		TTF_CloseFont(m_font);
 
 		m_font = TTF_OpenFont(m_path.c_str(), _size);
+
+		SDL_Color textColor = { m_textColor.r, m_textColor.g, m_textColor.b };
+
+		loadFromRenderedText(m_text, textColor);
+	}
+
+	void Text::setColor(Color _color)
+	{
+		m_textColor = _color;
+
+		SDL_Color textColor = { m_textColor.r, m_textColor.g, m_textColor.b };
+
+		loadFromRenderedText(m_text, textColor);
+	}
+
+	void Text::setText(std::string _text)
+	{
+		m_text = _text;
+
+		SDL_Color textColor = { m_textColor.r, m_textColor.g, m_textColor.b };
+
+		loadFromRenderedText(m_text, textColor);
 	}
 }

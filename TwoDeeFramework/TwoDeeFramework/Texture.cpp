@@ -12,7 +12,7 @@ namespace TDF
 
 	Texture::~Texture()
 	{
-		
+		free();
 	}
 
 	void Texture::loadFromFile(std::string _path)

@@ -3,6 +3,7 @@
 #include "SDL_Manager.h"
 #include "Texture.h"
 #include "Text.h"
+#include "Animation.h"
 
 namespace TDF
 {
@@ -81,6 +82,20 @@ namespace TDF
 						   float _angle = 0, 
 						   SDL_RendererFlip _flip = SDL_FLIP_NONE);
 
+		//! Render the texture in a given position.
+		/*!
+		\param _x an integer for the X position.
+		\param _y an integer for the Y position.
+		\param _angle the rotation angle of the texture.
+		\param _flip if the texture is going to be flipped in the given direction.
+		*/
+		void renderTextureEx(Texture* _texture,
+							 SDL_Rect src,
+							 SDL_Rect dst,
+							 float _angle = 0,
+							 SDL_Point* _center = nullptr,
+							 SDL_RendererFlip _flip = SDL_FLIP_NONE);
+
 		//! Render a text.
 		/*!
 		\param _text, A pointer to the text resource.
@@ -88,7 +103,9 @@ namespace TDF
 		\param _x, the a position of the text.
 		\param _y, the position of the text.
 		*/
-		void renderText(Text* _text, std::string _data, int _x, int _y);
+		void renderText(Text* _text, int _x, int _y);
+
+		void renderAnimation(Animation* _anim, int _x, int _y, float _angle = 0, float _scale = 1);
 
 		//! Saves the given texture into a file.
 		/*!
