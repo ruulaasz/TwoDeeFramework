@@ -45,8 +45,8 @@ namespace TDF
 		Vector2D m_position;
 		Vector2D m_dimentions;
 
-		Sfx* m_selection;
-		Sfx* m_activation;
+		Sfx* m_selectionSFX;
+		Sfx* m_activationSFX;
 
 	private:
 		SDL_Rect m_rect;

@@ -131,7 +131,7 @@ namespace TDF
 	{
 		Sprite sprite = _anim->m_sprites.at(_anim->m_currentFrame);
 
-		SDL_Rect quadSrc = { sprite.m_atlasPos.x , sprite.m_atlasPos.y, sprite.m_dimentions.x, sprite.m_dimentions.y };
+		SDL_Rect quadSrc = { sprite.m_position.x , sprite.m_position.y, sprite.m_dimentions.x, sprite.m_dimentions.y };
 
 		SDL_Rect quadDst = { _x , _y , sprite.m_dimentions.x * _scale , sprite.m_dimentions.y * _scale };
 

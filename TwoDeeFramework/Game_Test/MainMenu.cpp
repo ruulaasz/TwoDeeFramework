@@ -7,8 +7,9 @@ MainMenu::MainMenu()
 		m_background[i] = nullptr;
 	}
 
-	m_titleTheme = nullptr;
-	m_grassAnimation = nullptr;
+	m_titleMusic = nullptr;
+	m_selectAnim = nullptr;
+	m_grassAnim = nullptr;
 }
 
 MainMenu::~MainMenu()
@@ -30,7 +31,7 @@ void MainMenu::onEnter()
 	
 	//new game button
 	m_newGameB.init();
-	m_newGameB.m_position.x = 870;
+	m_newGameB.m_position.x = 860;
 	m_newGameB.m_position.y = 600;
 
 	//new game button text
@@ -41,10 +42,9 @@ void MainMenu::onEnter()
 	m_newGameB.fitText();
 	m_newGameB.m_renderDebug = true;
 	
-
 	//quit game button
 	m_quitGameB.init();
-	m_quitGameB.m_position.x = 870;
+	m_quitGameB.m_position.x = 910;
 	m_quitGameB.m_position.y = 700;
 
 	//quit game button text
@@ -61,20 +61,25 @@ void MainMenu::onEnter()
 	m_world.addActor(&m_quitGameB);
 
 	//music
-	m_titleTheme = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("..\\resources\\music\\Title.wav");
+	m_titleMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("..\\resources\\music\\Title.wav");
 
 	//button sfx
-	m_newGameB.m_selection = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
-	m_quitGameB.m_selection = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
+	m_newGameB.m_selectionSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
+	m_quitGameB.m_selectionSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
 
-	m_newGameB.m_activation = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_button_confirm.wav");
-	m_quitGameB.m_activation = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_button_confirm.wav");
+	m_newGameB.m_activationSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_button_confirm.wav");
+	m_quitGameB.m_activationSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_button_confirm.wav");
 
-	//test animation
-	m_grassAnimation = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("..\\resources\\animations\\grass.xml");
+	//animations
+	m_selectAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("..\\resources\\animations\\light.xml");
+	m_selectAnim->m_animSpeed = 0.09f;
+	m_selectPosition.y = 200;
+	m_selectAnim->play(true);
 
-	m_titleTheme->play();
-	m_grassAnimation->play(true);
+	m_grassAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("..\\resources\\animations\\grass.xml");
+	m_grassAnim->play(true);
+
+	m_titleMusic->play();
 }
 
 void MainMenu::onExit()
@@ -89,47 +94,21 @@ float lerp(float a, float b, float f)
 
 void MainMenu::update(float _deltaTime)
 {
+	//world update
 	m_world.update(_deltaTime);
 
-	//light effect
-	m_background[2]->setAlpha(m_lightAlpha);
-	m_background[3]->setAlpha(m_lightAlpha);
-	m_grassAnimation->setAlpha(m_lightAlpha);
+	lightEffect(_deltaTime);
 
-	m_lightAlpha = lerp(m_lightAlpha, m_alphaTarget, _deltaTime / 2);
+	checkButtons();
 
-	if (m_lightAlpha <= 20)
-	{
-		m_lightAlpha = 20;
-		m_alphaTarget = 255;
-	}
-
-	if (m_lightAlpha >= 240)
-	{
-		m_lightAlpha = 240;
-		m_alphaTarget = 0;
-	}
-
-	//option selection
-	if (m_newGameB.m_pressed)
-	{
-		reset();
-	}
-
-	if (m_quitGameB.m_pressed)
-	{
-		SDL_Event e;
-		e.type = SDL_QUIT;
-		TDF::InputManager::GetInstance().pushEvent(e);
-	}
-
-	m_grassAnimation->update();
+	//animation
+	m_selectAnim->update();
+	m_grassAnim->update();
 }
 
 void MainMenu::render()
 {
-	//test anim
-	TDF::RenderManager::GetInstance().renderAnimation(m_grassAnimation, 1000, 830);
+	TDF::RenderManager::GetInstance().renderAnimation(m_grassAnim, 980, 850);
 
 	//bench
 	TDF::RenderManager::GetInstance().renderTexture(m_background[3], 850, 850);
@@ -149,6 +128,8 @@ void MainMenu::render()
 
 	//actores de la escena en este caso botones
 	m_world.render();
+
+	TDF::RenderManager::GetInstance().renderAnimation(m_selectAnim, m_selectPosition.x, m_selectPosition.y, 0.f, 0.5f);
 }
 
 void MainMenu::reset()
@@ -161,7 +142,60 @@ void MainMenu::reset()
 	m_quitGameB.m_pressed = false;
 
 	TDF::AudioManager::GetInstance().stopMusic();
-	m_titleTheme->play();
+	m_titleMusic->play();
 
-	m_grassAnimation->play(true);
+	m_selectAnim->play(true);
+	m_grassAnim->play(true);
+}
+
+void MainMenu::checkButtons()
+{
+	if (m_newGameB.m_pressed)
+	{
+		reset();
+	}
+
+	if (m_quitGameB.m_pressed)
+	{
+		SDL_Event e;
+		e.type = SDL_QUIT;
+		TDF::InputManager::GetInstance().pushEvent(e);
+	}
+
+	if (m_newGameB.m_selected)
+	{
+		m_selectPosition.x = 790;
+		m_selectPosition.y = 580;
+	}
+	else if (m_quitGameB.m_selected)
+	{
+		m_selectPosition.x = 830;
+		m_selectPosition.y = 680;
+	}
+	else
+	{
+		m_selectPosition.x = -100;
+		m_selectPosition.y = -100;
+	}
+}
+
+void MainMenu::lightEffect(float _deltaTime)
+{
+	m_background[2]->setAlpha(m_lightAlpha);
+	m_background[3]->setAlpha(m_lightAlpha);
+	m_grassAnim->setAlpha(m_lightAlpha);
+
+	m_lightAlpha = lerp(m_lightAlpha, m_alphaTarget, _deltaTime / 2);
+
+	if (m_lightAlpha <= 20)
+	{
+		m_lightAlpha = 20;
+		m_alphaTarget = 255;
+	}
+
+	if (m_lightAlpha >= 240)
+	{
+		m_lightAlpha = 240;
+		m_alphaTarget = 0;
+	}
 }

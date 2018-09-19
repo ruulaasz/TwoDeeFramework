@@ -10,7 +10,7 @@ namespace TDF
 {
 	struct Sprite
 	{
-		Vector2D m_atlasPos;
+		Vector2D m_position;
 		Vector2D m_dimentions;
 	};
 
@@ -39,8 +39,7 @@ namespace TDF
 
 	public:
 		Texture* m_atlas;
-
-		int m_frameNum;
+		int m_frameCount;
 		float m_animSpeed;
 		int m_currentFrame;
 		Timer m_keyframeTime;

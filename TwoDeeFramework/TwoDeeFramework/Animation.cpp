@@ -13,7 +13,7 @@ namespace TDF
 		m_animSpeed = 0.15f;
 		m_atlas = new Texture();
 		m_currentFrame = 0;
-		m_frameNum = 0;
+		m_frameCount = 0;
 		m_looped = false;
 		m_playing = false;
 	}
@@ -61,8 +61,8 @@ namespace TDF
 		{
 			Sprite s;
 
-			s.m_atlasPos.x = std::atoi(sprite_node->first_attribute("x")->value());
-			s.m_atlasPos.y = std::atoi(sprite_node->first_attribute("y")->value());
+			s.m_position.x = std::atoi(sprite_node->first_attribute("x")->value());
+			s.m_position.y = std::atoi(sprite_node->first_attribute("y")->value());
 
 			s.m_dimentions.x = std::atoi(sprite_node->first_attribute("w")->value());
 			s.m_dimentions.y = std::atoi(sprite_node->first_attribute("h")->value());
@@ -70,7 +70,7 @@ namespace TDF
 			m_sprites.push_back(s);
 		}
 
-		m_frameNum = m_sprites.size();
+		m_frameCount = m_sprites.size();
 	}
 
 	void Animation::free()
@@ -115,7 +115,7 @@ namespace TDF
 				m_keyframeTime.start();
 			}
 
-			if (m_currentFrame >= m_frameNum)
+			if (m_currentFrame >= m_frameCount)
 			{
 				if (m_looped)
 				{

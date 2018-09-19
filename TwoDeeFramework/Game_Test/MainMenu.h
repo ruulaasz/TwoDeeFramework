@@ -17,6 +17,10 @@ public:
 	virtual void render();
 	void reset();
 
+private:
+	void checkButtons();
+	void lightEffect(float _deltaTime);
+
 public:
 	//background textures
 	TDF::Texture* m_background[BACKGROUND_TEXTURES];
@@ -26,10 +30,14 @@ public:
 	TDF::TextButton m_quitGameB;
 
 	//music and sfx
-	TDF::Music* m_titleTheme;
+	TDF::Music* m_titleMusic;
 
-	//test animation
-	TDF::Animation* m_grassAnimation;
+	//select animation
+	TDF::Animation* m_selectAnim;
+	TDF::Vector2D m_selectPosition;
+
+	//grass animation
+	TDF::Animation* m_grassAnim;
 	
 private:
 	//light effect
