@@ -42,115 +42,71 @@ namespace TDF
 		*/
 		void setSfxVolume(Sfx*_sfx, int _volume);
 
-		/**
-		* Stop the reproduction on a channel
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
+		//! Stop the reproduction on a channel.
+		/*!
+		\param _channel the channel number, -1 for all channels.
 		*/
 		void stopChannel(int _channel);
 
-		/**
-		* Stop the reproduction on a channel with a fade out
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
-		* @param _ms
-		* the duration of the fade out
-		*
+		//! Stop the reproduction on a channel with a fade out.
+		/*!
+		\param _channel  the channel number, -1 for all channels.
+		\param _ms the duration of the fade out.
 		*/
 		void stopChannelFadeOut(int _channel, int _ms);
 
-		/**
-		* Pause the reproduction on a channel
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
+		//! Pause the reproduction on a channel.
+		/*!
+		\param _channel the channel number, -1 for all channels.
 		*/
 		void pauseChannel(int _channel);
 
-		/**
-		* Resume the reproduction on a channel
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
+		//! Resume the reproduction on a channel.
+		/*!
+		\param _channel the channel number, -1 for all channels.
 		*/
 		void resumeChannel(int _channel);
 
-		/**
-		* Get the pause status of a channel
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
-		* @return int
-		* 0 if is not paused, 1 if is paused
-		*
+		//! Get the pause status of a channel.
+		/*!
+		\param _channel  the channel number, -1 for all channels.
+		\return if is paused or not.
 		*/
-		int isSfxPaused(int _channel);
+		bool isSfxPaused(int _channel);
 
-		/**
-		* Get if the channel is playing
-		*
-		* @param _channel
-		* the channel number, -1 for all channels
-		*
-		* @return int
-		* 0 if the channel is not playing
-		*
+		//! Get if the channel is playing.
+		/*!
+		\param _channel the channel number, -1 for all channels.
+		\return if is paused or not.
 		*/
-		int isSfxPlaying(int _channel);
+		bool isSfxPlaying(int _channel);
 
-		/**
-		* Set the music volume
-		*
-		* @param _volume
-		* the new volume 0-128
-		*
-		* @return int
-		* if the recieved volume its -1 return the current volume
-		*
+		//! Set the music volume.
+		/*!
+		\param _volume the new volume 0-128.
+		\return if the recieved volume its -1 return the current volume.
 		*/
 		int setMusicVolume(int _volume);
 
-		/**
-		* Stop the reproduction on the music
-		*
-		*/
+		//! Stop the reproduction on the music.
 		void stopMusic();
 
-		/**
-		* Stop the reproduction on music with a fade out
-		*
-		* @param _ms
-		* the duration of the fade out
-		*
+		//! Stop the reproduction on music with a fade out.
+		/*!
+		\param _ms the duration of the fade out.
 		*/
 		void stopMusicFadeOut(int _ms);
 
-		/**
-		* Pause the reproduction on the music
-		*
-		*/
+		//! Pause the reproduction on the music.
 		void pauseMusic();
 
-		/**
-		* Resume the reproduction on the music
-		*
-		*/
+		//! Resume the reproduction on the music.
 		void ResumeMusic();
 
-		/**
-		* Get the pause status of the music
-		*
-		* @return int
-		* 0 if is not paused, 1 if is paused
-		*
+		//! Get the pause status of the music.
+		/*!
+		\return if is paused or not.
 		*/
-		int isMusicPaused();
+		bool isMusicPaused();
 	};
 }

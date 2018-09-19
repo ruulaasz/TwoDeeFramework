@@ -27,28 +27,21 @@ namespace TDF
 		//! A virtual function used to free the resource memory.
 		virtual void free();
 
-		/**
-		* Reproduce the sfx file
-		*
-		* @param _loops
-		* the number of loops, -1 by default(infinite*)
-		*
+		//! Reproduce the sfx file.
+		/*!
+		\param _loops the number of loops, -1 by default(infinite*).
 		*/
 		void play(int _loops = -1);
 
-		/**
-		* Reproduce the sfx file with a fade in effect
-		*
-		* @param _ms
-		* the time to reach max volume.
-		*
-		* @param _loops
-		* the number of loops, -1 by default(infinite*)
-		*
+		//! Reproduce the sfx file with a fade in effect.
+		/*!
+		\param _ms the time to reach max volume.
+		\param _loops the number of loops, -1 by default(infinite*).
 		*/
 		void playFadeIn(int _ms, int _loops = -1);
 
 	public:
+		//! the music file.
 		Mix_Music* m_music;
 	};
 }

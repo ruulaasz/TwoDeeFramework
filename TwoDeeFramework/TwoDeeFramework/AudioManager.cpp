@@ -51,12 +51,12 @@ namespace TDF
 		Mix_Resume(_channel);
 	}
 
-	int AudioManager::isSfxPaused(int _channel)
+	bool AudioManager::isSfxPaused(int _channel)
 	{
 		return Mix_Paused(_channel);
 	}
 
-	int AudioManager::isSfxPlaying(int _channel)
+	bool AudioManager::isSfxPlaying(int _channel)
 	{
 		return Mix_Playing(_channel);
 	}
@@ -86,7 +86,7 @@ namespace TDF
 		Mix_ResumeMusic();
 	}
 
-	int AudioManager::isMusicPaused()
+	bool AudioManager::isMusicPaused()
 	{
 		return Mix_PausedMusic();
 	}

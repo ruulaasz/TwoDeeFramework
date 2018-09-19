@@ -19,7 +19,7 @@ namespace TDF
 
 		if (m_text)
 		{
-			RenderManager::GetInstance().renderText(m_text, m_position.x, m_position.y);
+			RenderManager::GetInstance().renderText(m_text, static_cast<int>(m_position.x), static_cast<int>(m_position.y));
 		}
 	}
 
@@ -27,8 +27,8 @@ namespace TDF
 	{
 		if (m_text)
 		{
-			m_dimentions.y = m_text->m_texture.m_height;
-			m_dimentions.x = m_text->m_texture.m_width;
+			m_dimentions.y = static_cast<float>(m_text->m_texture.m_height);
+			m_dimentions.x = static_cast<float>(m_text->m_texture.m_width);
 		}
 	}
 }

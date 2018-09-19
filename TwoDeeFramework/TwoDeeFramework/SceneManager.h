@@ -6,10 +6,17 @@
 
 namespace TDF
 {
+	//!  A manager class for Scenes.
 	class SceneManager : public Module<SceneManager>
 	{
 	public:
+		//! Default constructor.
+		/*!
+		Initialize the members of the class.
+		*/
 		SceneManager();
+
+		//! Default destructor.
 		~SceneManager();
 
 		//! Search an actor by id.
@@ -25,12 +32,15 @@ namespace TDF
 		*/
 		void setActiveScene(Scene* _scene);
 
+		//! Get the current ID for the next created actor.
 		int getID();
 
 	public:
+		//! The current runing scene.
 		Scene* m_activeScene;
 
 	private:
+		//! The current id.
 		int m_currentID;
 	};
 }

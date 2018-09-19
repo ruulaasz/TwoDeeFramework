@@ -81,7 +81,7 @@ void initContent()
 void render()
 {
 	g_RenderManager->setRenderTarget(g_RenderManager->m_renderTargets[TDF::GBUFFER]);
-	g_RenderManager->setRenderDrawColor(0, 0, 0);
+	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
 	g_RenderManager->renderClear();
 
 	g_SceneManager->m_activeScene->render();
@@ -95,7 +95,7 @@ void render()
 #endif
 
 	g_RenderManager->setRenderTarget();
-	g_RenderManager->setRenderDrawColor(0, 0, 0);
+	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
 	g_RenderManager->renderClear();
 
 	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER], 0, 0);

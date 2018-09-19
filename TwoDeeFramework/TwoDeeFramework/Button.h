@@ -6,10 +6,17 @@
 
 namespace TDF
 {
+	//!  A base clase for a GUI button.
 	class Button : public Actor
 	{
 	public:
+		//! Default constructor.
+		/*!
+		Initialize the members of the class.
+		*/
 		Button();
+
+		//! Default destructor.
 		~Button();
 
 		//! Update the actor.
@@ -37,18 +44,32 @@ namespace TDF
 		virtual void onEnterCollision(int _tag) { _tag; };
 	
 	public:
+		//! If the button is selected.
 		bool m_selected;
-		bool m_audioPlayed;
-		bool m_pressed;
-		bool m_renderDebug;
 
+		//! If the audio of selection already was played.
+		bool m_audioPlayed;
+
+		//! If the button was pressed.
+		bool m_pressed;
+
+		//! If debug render will be active.
+		bool m_renderDebug;
+		
+		//! The position of the button.
 		Vector2D m_position;
+
+		//! the dimentions of the button.
 		Vector2D m_dimentions;
 
+		//! The selection SFX.
 		Sfx* m_selectionSFX;
+
+		//! The pressed SFX.
 		Sfx* m_activationSFX;
 
 	private:
+		//! The box of the button.
 		SDL_Rect m_rect;
 	};
 }

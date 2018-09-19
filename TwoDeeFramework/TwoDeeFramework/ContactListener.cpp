@@ -18,12 +18,14 @@ namespace TDF
 		int id = 0;
 
 		void* bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
+
 		if (bodyUserData)
 		{
 			id = static_cast<Actor*>(bodyUserData)->m_collisionID;
 		}
 			
 		bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
+
 		if (bodyUserData)
 		{
 			static_cast<Actor*>(bodyUserData)->onEnterCollision(id);

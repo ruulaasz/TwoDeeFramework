@@ -2,7 +2,7 @@
 #include "SDL_Manager.h"
 
 #define DEFAULT_BARS 2
-#define GUI_BARS 4
+#define GUI_BARS 2
 
 namespace TDF
 {
@@ -55,7 +55,7 @@ namespace TDF
 
 		if (m_hideGUI)
 		{
-			for (int i = DEFAULT_BARS; i < GUI_BARS; i++)
+			for (int i = DEFAULT_BARS; i <= GUI_BARS; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=false";
@@ -64,7 +64,7 @@ namespace TDF
 		}
 		else
 		{
-			for (int i = DEFAULT_BARS; i < GUI_BARS; i++)
+			for (int i = DEFAULT_BARS; i <= GUI_BARS; i++)
 			{
 				name = TwGetBarName(TwGetBarByIndex(i));
 				name = name + " visible=true";
@@ -76,30 +76,59 @@ namespace TDF
 	void AnttweakbarManager::init()
 	{
 		TwInit(TW_DIRECT3D9, SDL_RenderGetD3D9Device(SDL_Manager::GetInstance().m_renderer));
-		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, SDL_Manager::GetInstance().m_windowHeight);
+		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, 
+					 SDL_Manager::GetInstance().m_windowHeight);
 
 		AntTweakBarInfo info;
 		info.size = " size='200 5' ";
 		info.position = " position='800 0' ";
 		m_guiBar = createCustomBar(TEXT("Hide_GUI"), info);
-		TwAddButton(m_guiBar, TEXT("Toggle all GUI"), hideGUI, NULL, TEXT(" label='Toggle all GUI' "));
-		TwAddButton(m_guiBar, TEXT("Toggle framework GUI"), hideFGUI, NULL, TEXT(" label='Toggle framework GUI' "));
 
-		info.size = " size='250 70' ";
-		info.position = " position='0 0' ";
-		m_antwBar = createCustomBar(TEXT("AntTweakBar_Info"), info);
-		TwAddVarRO(m_antwBar, TEXT("Reading input:"), TW_TYPE_INT32, &m_handled, TEXT(" label='Reading Input:' "));
-		TwAddVarRO(m_antwBar, TEXT("Number of Bars:"), TW_TYPE_INT32, &m_barCount, TEXT(" label='Number of Bars:' "));
+		TwAddButton(m_guiBar, 
+					TEXT("Toggle all GUI"), 
+					hideGUI, 
+					NULL, 
+					TEXT(" label='Toggle all GUI' "));
+
+		TwAddButton(m_guiBar, 
+					TEXT("Toggle framework GUI"), 
+					hideFGUI,
+					NULL,
+					TEXT(" label='Toggle framework GUI' "));
 
 		info.size = " size='250 160' ";
 		info.position = " position='1800 0' ";
 		m_sdlBar = createCustomBar(TEXT("SDLManager_Info"), info);
-		TwAddVarRW(m_sdlBar, TEXT("Window width:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_windowWidth, TEXT(" group=Window label='Window width:' min=100 max=1920 "));
-		TwAddVarRW(m_sdlBar, TEXT("Window height:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_windowHeight, TEXT(" group=Window label='Window height:' min=300 max=1080 "));
-		TwAddVarRO(m_sdlBar, TEXT("Fullscreen:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_fullscreen, TEXT(" group=Window label='Fullscreen:' "));
 
-		TwAddVarRO(m_sdlBar, TEXT("Mouse posX:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_mousePosX, TEXT(" group=Mouse label='Mouse posX:' "));
-		TwAddVarRO(m_sdlBar, TEXT("Mouse posY:"), TW_TYPE_INT32, &SDL_Manager::GetInstance().m_mousePosY, TEXT(" group=Mouse label='Mouse posY:' "));
+		TwAddVarRW(m_sdlBar, 
+				   TEXT("Window width:"), 
+				   TW_TYPE_INT32, 
+				   &SDL_Manager::GetInstance().m_windowWidth, 
+				   TEXT(" group=Window label='Window width:' min=100 max=1920 "));
+
+		TwAddVarRW(m_sdlBar, 
+				   TEXT("Window height:"), 
+				   TW_TYPE_INT32, 
+				   &SDL_Manager::GetInstance().m_windowHeight, 
+				   TEXT(" group=Window label='Window height:' min=300 max=1080 "));
+
+		TwAddVarRO(m_sdlBar, 
+				   TEXT("Fullscreen:"), 
+				   TW_TYPE_BOOL32, 
+				   &SDL_Manager::GetInstance().m_fullscreen, 
+				   TEXT(" group=Window label='Fullscreen:' "));
+
+		TwAddVarRO(m_sdlBar, 
+				   TEXT("Mouse posX:"), 
+				   TW_TYPE_INT32, 
+				   &SDL_Manager::GetInstance().m_mousePosX, 
+				   TEXT(" group=Mouse label='Mouse posX:' "));
+
+		TwAddVarRO(m_sdlBar, 
+				   TEXT("Mouse posY:"), 
+				   TW_TYPE_INT32, 
+				   &SDL_Manager::GetInstance().m_mousePosY, 
+				   TEXT(" group=Mouse label='Mouse posY:' "));
 		
 		TwDefine(" GLOBAL contained=true ");
 		TwDefine(" TW_HELP visible=false ");
@@ -179,12 +208,14 @@ namespace TDF
 	int AnttweakbarManager::handleEvent(const void * sdlEvent)
 	{
 		m_handled = TwEventSDL(sdlEvent, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+
 		return m_handled;
 	}
 
 	void AnttweakbarManager::updateWindowSize()
 	{
-		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, SDL_Manager::GetInstance().m_windowHeight);
+		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, 
+					 SDL_Manager::GetInstance().m_windowHeight);
 	}
 
 	void AnttweakbarManager::release()

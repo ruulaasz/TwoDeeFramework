@@ -80,7 +80,7 @@ namespace TDF
 		m_height = h;
 	}
 
-	void Texture::setAlpha(uint8_t _a)
+	void Texture::setAlpha(Uint8 _a)
 	{
 		SDL_SetTextureAlphaMod(m_sdlTexture, _a);
 	}

@@ -45,7 +45,7 @@ namespace TDF
 		}
 	}
 
-	void Timer::unPause()
+	void Timer::resume()
 	{
 		if (m_started && m_paused)
 		{

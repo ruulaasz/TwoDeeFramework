@@ -44,7 +44,8 @@ namespace TDF
 		else 
 		{ 
 			//Create texture from surface pixels 
-			m_texture.m_sdlTexture = SDL_CreateTextureFromSurface( SDL_Manager::GetInstance().m_renderer, textSurface );
+			m_texture.m_sdlTexture = SDL_CreateTextureFromSurface( SDL_Manager::GetInstance().m_renderer, 
+																   textSurface );
 
 			if(m_texture.m_sdlTexture == NULL )
 			{ 

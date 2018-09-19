@@ -29,28 +29,34 @@ namespace TDF
 		//! A virtual function used to free the font memory.
 		virtual void free();
 
-		//Creates image from font string. 
-		void loadFromRenderedText(std::string textureText, SDL_Color textColor);
-
 		//! Change the text Style.
 		void setStyle(int _style);
 
 		//! Change the text Size.
 		void resizeText(int _size);
 
+		//! Set the text color.
 		void setColor(Color _color);
 
+		//! Set the text to display.
 		void setText(std::string _text);
+
+	private:
+		//Creates image from font string. 
+		void loadFromRenderedText(std::string textureText, SDL_Color textColor);
 
 	public:
 		//! A SDL 2.0 texture.
 		Texture m_texture;
 
+	private:
 		//! A SDL 2.0 font.
 		TTF_Font* m_font;
 
+		//! The color of the text.
 		Color m_textColor;
 		
+		//! The text to display.
 		std::string m_text;
 	};
 }

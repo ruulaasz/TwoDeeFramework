@@ -31,7 +31,7 @@ namespace TDF
 		void createAsRenderTarget();
 
 		//! Changes the texture alpha channel.
-		void setAlpha(uint8_t _a);
+		void setAlpha(Uint8 _a);
 
 	public:
 		//! A SDL 2.0 texture.

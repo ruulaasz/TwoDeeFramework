@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL_Manager.h"
 #include "Texture.h"
 #include "Text.h"
 #include "Animation.h"
@@ -105,6 +104,14 @@ namespace TDF
 		*/
 		void renderText(Text* _text, int _x, int _y);
 
+		//! Render the animation in a given position.
+		/*!
+		\param _anim the animation itself.
+		\param _x an integer for the X position.
+		\param _y an integer for the Y position.
+		\param _angle the rotation angle of the texture.
+		\param _scale to scale the size of the animation frames.
+		*/
 		void renderAnimation(Animation* _anim, int _x, int _y, float _angle = 0, float _scale = 1);
 
 		//! Saves the given texture into a file.
@@ -121,7 +128,7 @@ namespace TDF
 		\param _b, the blue chanel.
 		\param _a, the alpha chanel.
 		*/
-		void setRenderDrawColor(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a = SDL_ALPHA_OPAQUE);
+		void setRenderDrawColor(Color _color);
 
 		//! Set the current render target.
 		/*!

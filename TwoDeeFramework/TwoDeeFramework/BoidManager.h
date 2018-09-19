@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-#include "Vector2D.h"
 #include "Boid.h"
 #include "Module.h"
 #include "Circle.h"

@@ -31,10 +31,10 @@ namespace TDF
 		p.y = SDL_Manager::GetInstance().m_mousePosY;
 
 		//make the rect for collition
-		m_rect.h = m_dimentions.y;
-		m_rect.w = m_dimentions.x;
-		m_rect.x = m_position.x;
-		m_rect.y = m_position.y;
+		m_rect.h = static_cast<int>(m_dimentions.y);
+		m_rect.w = static_cast<int>(m_dimentions.x);
+		m_rect.x = static_cast<int>(m_position.x);
+		m_rect.y = static_cast<int>(m_position.y);
 
 		//check if mouse is in rect
 		m_selected = SDL_PointInRect(&p, &m_rect);
@@ -65,16 +65,16 @@ namespace TDF
 		{
 			if (m_selected)
 			{
-				RenderManager::GetInstance().setRenderDrawColor(0, 255, 0);
+				RenderManager::GetInstance().setRenderDrawColor(Color(0, 255, 0));
 			}
 			else
 			{
-				RenderManager::GetInstance().setRenderDrawColor(255, 255, 255);
+				RenderManager::GetInstance().setRenderDrawColor(Color(255, 255, 255));
 			}
 
 			if (m_pressed)
 			{
-				RenderManager::GetInstance().setRenderDrawColor(255, 0, 0);
+				RenderManager::GetInstance().setRenderDrawColor(Color(255, 0, 0));
 			}
 
 			SDL_RenderDrawRect(SDL_Manager::GetInstance().m_renderer, &m_rect);

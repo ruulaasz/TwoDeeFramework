@@ -2,8 +2,6 @@
 
 #include <queue>
 #include <unordered_map>
-#include "Module.h"
-#include "SDL_Manager.h"
 #include "InputMessage.h"
 
 namespace TDF
@@ -50,6 +48,10 @@ namespace TDF
 		*/
 		void pollEvent(SDL_Event _event);
 
+		//! Post a sdl event in the queue.
+		/*!
+		\param _event the events container.
+		*/
 		void pushEvent(SDL_Event _event);
 
 	private:

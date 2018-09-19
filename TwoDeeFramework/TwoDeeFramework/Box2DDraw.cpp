@@ -28,7 +28,10 @@ namespace TDF
 		points[i].x = static_cast<int>(vertices[0].x * SCALE_TO_RENDER);
 		points[i].y = static_cast<int>(vertices[0].y * SCALE_TO_RENDER);
 
-		RenderManager::GetInstance().setRenderDrawColor(static_cast<uint8>(color.r), static_cast<uint8>(color.g), static_cast<uint8>(color.b));
+		RenderManager::GetInstance().setRenderDrawColor(Color(static_cast<uint8>(color.r), 
+															  static_cast<uint8>(color.g), 
+														      static_cast<uint8>(color.b)));
+
 		SDL_RenderDrawLines(SDL_Manager::GetInstance().m_renderer, points, vertexCount + 1);
 	}
 }

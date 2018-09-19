@@ -10,6 +10,9 @@ MainMenu::MainMenu()
 	m_titleMusic = nullptr;
 	m_selectAnim = nullptr;
 	m_grassAnim = nullptr;
+
+	m_alphaTarget = 0;
+	m_lightAlpha = 0;
 }
 
 MainMenu::~MainMenu()
@@ -72,12 +75,12 @@ void MainMenu::onEnter()
 
 	//animations
 	m_selectAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("..\\resources\\animations\\light.xml");
-	m_selectAnim->m_animSpeed = 0.09f;
+	m_selectAnim->setAnimationSpeed(0.09f);
 	m_selectPosition.y = 200;
-	m_selectAnim->play(true);
+	m_selectAnim->play();
 
 	m_grassAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("..\\resources\\animations\\grass.xml");
-	m_grassAnim->play(true);
+	m_grassAnim->play();
 
 	m_titleMusic->play();
 }
@@ -129,7 +132,11 @@ void MainMenu::render()
 	//actores de la escena en este caso botones
 	m_world.render();
 
-	TDF::RenderManager::GetInstance().renderAnimation(m_selectAnim, m_selectPosition.x, m_selectPosition.y, 0.f, 0.5f);
+	TDF::RenderManager::GetInstance().renderAnimation(m_selectAnim, 
+													  static_cast<int>(m_selectPosition.x),
+													  static_cast<int>(m_selectPosition.y),
+													  0.f, 
+													  0.5f);
 }
 
 void MainMenu::reset()
@@ -144,8 +151,8 @@ void MainMenu::reset()
 	TDF::AudioManager::GetInstance().stopMusic();
 	m_titleMusic->play();
 
-	m_selectAnim->play(true);
-	m_grassAnim->play(true);
+	m_selectAnim->play();
+	m_grassAnim->play();
 }
 
 void MainMenu::checkButtons()

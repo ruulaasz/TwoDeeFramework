@@ -31,6 +31,7 @@ namespace TDF
 		//! Initialize the world.
 		void init();
 
+		//! Adds an actor to the world.
 		void addActor(Actor* _actor);
 
 	public:

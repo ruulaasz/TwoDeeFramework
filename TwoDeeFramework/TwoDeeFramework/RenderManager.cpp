@@ -7,6 +7,11 @@ namespace TDF
 	RenderManager::RenderManager()
 	{
 		m_renderer = nullptr;
+
+		for (size_t i = 0; i < MAX_TARGETS; i++)
+		{
+			m_renderTargets[i] = nullptr;
+		}
 	}
 
 	RenderManager::~RenderManager()
@@ -76,7 +81,7 @@ namespace TDF
 
 	void RenderManager::renderBox(const AABB & _box)
 	{
-		setRenderDrawColor(0, 0, 0);
+		setRenderDrawColor(Color(0,0,0));
 
 		SDL_Rect rect;
 		rect.h = static_cast<int>(_box.m_height);
@@ -97,7 +102,11 @@ namespace TDF
 		renderBox(box);
 	}
 
-	void RenderManager::renderTexture(Texture * _texture, int _x, int _y, float _angle, SDL_RendererFlip _flip)
+	void RenderManager::renderTexture(Texture * _texture, 
+									  int _x, 
+									  int _y, 
+									  float _angle, 
+									  SDL_RendererFlip _flip)
 	{
 		SDL_Rect quadSrc = { 0, 0, _texture->m_width, _texture->m_height };
 		SDL_Rect quadDst = { _x , _y , _texture->m_width, _texture->m_height };
@@ -111,7 +120,12 @@ namespace TDF
 						 _flip);
 	}
 
-	void RenderManager::renderTextureEx(Texture * _texture, SDL_Rect src, SDL_Rect dst, float _angle, SDL_Point* _center, SDL_RendererFlip _flip)
+	void RenderManager::renderTextureEx(Texture * _texture, 
+										SDL_Rect src, 
+										SDL_Rect dst, 
+										float _angle, 
+										SDL_Point* _center, 
+										SDL_RendererFlip _flip)
 	{
 		SDL_RenderCopyEx(m_renderer,
 			_texture->m_sdlTexture,
@@ -127,13 +141,23 @@ namespace TDF
 		renderTexture(&_text->m_texture, _x, _y);
 	}
 
-	void RenderManager::renderAnimation(Animation * _anim, int _x, int _y, float _angle, float _scale)
+	void RenderManager::renderAnimation(Animation * _anim, 
+										int _x, 
+										int _y, 
+										float _angle, 
+										float _scale)
 	{
-		Sprite sprite = _anim->m_sprites.at(_anim->m_currentFrame);
+		Sprite sprite = _anim->getCurrentSprite();
 
-		SDL_Rect quadSrc = { sprite.m_position.x , sprite.m_position.y, sprite.m_dimentions.x, sprite.m_dimentions.y };
+		SDL_Rect quadSrc = { static_cast<int>(sprite.m_position.x),
+							 static_cast<int>(sprite.m_position.y),
+							 static_cast<int>(sprite.m_dimentions.x),
+							 static_cast<int>(sprite.m_dimentions.y) };
 
-		SDL_Rect quadDst = { _x , _y , sprite.m_dimentions.x * _scale , sprite.m_dimentions.y * _scale };
+		SDL_Rect quadDst = { _x, 
+							 _y, 
+							 static_cast<int>(sprite.m_dimentions.x * _scale),
+							 static_cast<int>(sprite.m_dimentions.y * _scale) };
 
 		renderTextureEx(_anim->m_atlas, quadSrc, quadDst, _angle);
 	}
@@ -157,9 +181,9 @@ namespace TDF
 		SDL_SetRenderTarget(m_renderer, target);
 	}
 
-	void RenderManager::setRenderDrawColor(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
+	void RenderManager::setRenderDrawColor(Color _color)
 	{
-		SDL_SetRenderDrawColor(m_renderer, _r, _g, _b, _a);
+		SDL_SetRenderDrawColor(m_renderer, _color.r, _color.g, _color.b, _color.a);
 	}
 
 	void RenderManager::setRenderTarget(Texture * _newRenderTarget)

@@ -5,6 +5,7 @@ namespace TDF
 	Sfx::Sfx()
 	{
 		m_chunk = nullptr;
+		m_currentChannel = 0;
 	}
 
 	Sfx::~Sfx()

@@ -99,7 +99,6 @@ namespace TDF
 
 		if (getLength(_vector) > _max)
 		{
-			result = normalize(_vector);
 			result = escalate(_vector, _max);
 			return result;
 		}
