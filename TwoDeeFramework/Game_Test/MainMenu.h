@@ -2,8 +2,6 @@
 
 #include <TDF.h>
 
-#define BACKGROUND_TEXTURES 8
-
 class MainMenu : public TDF::Scene
 {
 public:
@@ -15,22 +13,16 @@ public:
 
 	virtual void update(float _deltaTime);
 	virtual void render();
-	void reset();
+	virtual void init();
 
 private:
 	void checkButtons();
 	void lightEffect(float _deltaTime);
 
 public:
-	//background textures
-	TDF::Texture* m_background[BACKGROUND_TEXTURES];
-
 	//menu buttons
 	TDF::TextButton m_newGameB;
 	TDF::TextButton m_quitGameB;
-
-	//music and sfx
-	TDF::Music* m_titleMusic;
 
 	//select animation
 	TDF::Animation* m_selectAnim;

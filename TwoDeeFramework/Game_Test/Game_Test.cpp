@@ -1,5 +1,6 @@
 #include <TDF.h>
 #include "MainMenu.h"
+#include "Level_0.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
@@ -24,6 +25,7 @@ float g_deltaTime = 0.0f;
 int g_guiHandled;
 
 MainMenu g_mainMenu;
+Level_0 g_level0;
 
 void initManagers()
 {
@@ -68,14 +70,19 @@ void initManagers()
 	g_AudioManager->init();
 
 	g_InputManager->subscribe(TDF::SYSTEM_INPUT, 0);
-
-	g_AnttweakbarManager->hideBars(true);
 }
 
-void initContent()
+void initScenes()
 {
-	g_mainMenu.onEnter();
-	g_SceneManager->setActiveScene(&g_mainMenu);
+	g_SceneManager->m_allScenes["MainMenu"] = &g_mainMenu;
+	g_SceneManager->m_allScenes["Level0"] = &g_level0;
+
+	for (auto it = g_SceneManager->m_allScenes.begin(); it != g_SceneManager->m_allScenes.end(); ++it)
+	{
+		it->second->init();
+	}
+
+	g_SceneManager->setActiveScene("MainMenu");
 }
 
 void render()
@@ -108,7 +115,6 @@ void update(float _deltaTime)
 	g_InputManager->update();
 	g_SDLManager->update(_deltaTime);
 	g_BoidManager->update(_deltaTime);
-
 	g_SceneManager->m_activeScene->update(_deltaTime);
 }
 
@@ -148,7 +154,9 @@ int main()
 {
 	initManagers();
 
-	initContent();
+	initScenes();
+
+	g_AnttweakbarManager->hideBars(true);
 
 	while (!g_SystemManager->m_quit)
 	{

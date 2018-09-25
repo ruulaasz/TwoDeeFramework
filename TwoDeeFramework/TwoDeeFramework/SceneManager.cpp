@@ -29,9 +29,20 @@ namespace TDF
 		return nullptr;
 	}
 
-	void TDF::SceneManager::setActiveScene(Scene * _scene)
+	void TDF::SceneManager::setActiveScene(std::string _scene)
 	{
-		m_activeScene = _scene;
+		auto it = m_allScenes.find(_scene);
+
+		if (it != m_allScenes.end())
+		{
+			if (m_activeScene)
+			{
+				m_activeScene->onExit();
+			}
+
+			m_activeScene = it->second;
+			m_activeScene->onEnter();
+		}
 	}
 
 	int TDF::SceneManager::getID()
