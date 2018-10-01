@@ -1,6 +1,7 @@
 #pragma once
 
 #include <TDF.h>
+#include "Knight.h"
 
 class Level_0 : public TDF::Scene
 {
@@ -14,5 +15,7 @@ public:
 	virtual void update(float _deltaTime);
 	virtual void render();
 	virtual void init();
+
+	Knight m_player;
 };
 

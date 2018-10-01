@@ -28,7 +28,7 @@ namespace TDF
 		points[i].x = static_cast<int>(vertices[0].x * SCALE_TO_RENDER);
 		points[i].y = static_cast<int>(vertices[0].y * SCALE_TO_RENDER);
 
-		RenderManager::GetInstance().setRenderDrawColor(Color(static_cast<uint8>(color.r), 
+		RenderManager::GetInstance().setRenderDrawColor(Color(static_cast<uint8>(255), 
 															  static_cast<uint8>(color.g), 
 														      static_cast<uint8>(color.b)));
 

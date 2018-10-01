@@ -82,7 +82,7 @@ void initScenes()
 		it->second->init();
 	}
 
-	g_SceneManager->setActiveScene("MainMenu");
+	g_SceneManager->setActiveScene("Level0");
 }
 
 void render()
@@ -104,7 +104,7 @@ void render()
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
 	g_RenderManager->renderClear();
-
+	
 	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER], 0, 0);
 
 	g_RenderManager->renderPresent();

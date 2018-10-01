@@ -28,6 +28,6 @@ namespace TDF
 	{
 		m_allWorlds["earth"] = createWorld();
 		m_allWorlds["moon"] = createWorld(Vector2D(0.0f, 18.5f));
-		m_allWorlds["mars"] = createWorld(Vector2D(0.0f, 3.71f));
+		m_allWorlds["zeroG"] = createWorld(Vector2D(0.0f, 0.0f));
 	}
 }

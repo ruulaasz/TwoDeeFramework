@@ -13,6 +13,12 @@ Level_0::~Level_0()
 void Level_0::onEnter()
 {
 	TDF::Scene::onEnter();
+
+	m_world.m_physicsWorld = TDF::Box2DManager::GetInstance().m_allWorlds["moon"];
+
+	m_player.setWorld(&m_world);
+	m_player.init();
+	m_world.addActor(&m_player);
 }
 
 void Level_0::onExit()
