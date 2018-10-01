@@ -15,7 +15,7 @@ namespace TDF
 		free();
 	}
 
-	void Texture::loadFromFile(std::string _path)
+	void Texture::loadFromFile(string _path)
 	{
 		free();
 
@@ -33,7 +33,7 @@ namespace TDF
 							SDL_TRUE, 
 							SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
-			newTexture = SDL_CreateTextureFromSurface(TDF::SDL_Manager::GetInstance().m_renderer, 
+			newTexture = SDL_CreateTextureFromSurface(SDL_Manager::GetInstance().m_renderer, 
 													  loadedSurface);
 
 			if (newTexture == nullptr)

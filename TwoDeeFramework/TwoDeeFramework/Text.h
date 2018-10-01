@@ -4,6 +4,7 @@
 #include "SDL_Manager.h"
 #include "Texture.h"
 #include "Color.h"
+#include "Font.h"
 
 namespace TDF
 {
@@ -24,10 +25,10 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void loadFromFile(std::string _path);
+		virtual void loadFromFile(string _path);
 
 		//! A virtual function used to free the font memory.
-		virtual void free();
+		virtual void free() {};
 
 		//! Change the text Style.
 		void setStyle(int _style);
@@ -39,24 +40,23 @@ namespace TDF
 		void setColor(Color _color);
 
 		//! Set the text to display.
-		void setText(std::string _text);
+		void setText(string _text);
 
 	private:
 		//Creates image from font string. 
-		void loadFromRenderedText(std::string textureText, SDL_Color textColor);
+		void loadFromRenderedText(string textureText, SDL_Color textColor);
 
 	public:
 		//! A SDL 2.0 texture.
-		Texture m_texture;
+		Shared_Ptr<Texture> m_texture;
 
-	private:
-		//! A SDL 2.0 font.
-		TTF_Font* m_font;
+		//! A font.
+		Shared_Ptr<Font> m_font;
 
 		//! The color of the text.
 		Color m_textColor;
 		
 		//! The text to display.
-		std::string m_text;
+		string m_text;
 	};
 }

@@ -72,14 +72,14 @@ namespace TDF
 		\param _channel  the channel number, -1 for all channels.
 		\return if is paused or not.
 		*/
-		bool isSfxPaused(int _channel);
+		int isSfxPaused(int _channel);
 
 		//! Get if the channel is playing.
 		/*!
 		\param _channel the channel number, -1 for all channels.
 		\return if is paused or not.
 		*/
-		bool isSfxPlaying(int _channel);
+		int isSfxPlaying(int _channel);
 
 		//! Set the music volume.
 		/*!
@@ -107,6 +107,6 @@ namespace TDF
 		/*!
 		\return if is paused or not.
 		*/
-		bool isMusicPaused();
+		int isMusicPaused();
 	};
 }

@@ -98,7 +98,7 @@ namespace TDF
 		\param _path the points to follow.
 		\return the resultant force to move the boid.
 		*/
-		Vector2D followPath(Boid* _me, std::vector<PathNode*> _path);
+		Vector2D followPath(Boid* _me, Vector<PathNode*> _path);
 
 		//! Compute the follow leader behavior
 		/*!
@@ -114,7 +114,7 @@ namespace TDF
 		\param _allBoids the boids to avoid.
 		\return the resultant force to move the boid.
 		*/
-		Vector2D separation(Boid* _me, std::vector<Boid*> _allBoids);
+		Vector2D separation(Boid* _me,Vector<Boid*> _allBoids);
 
 		//! Updates all the boids
 		/*!
@@ -166,10 +166,10 @@ namespace TDF
 
 	public:
 		//! All active boids
-		std::vector<Boid*> m_allBoids;
+		Vector<Boid*> m_allBoids;
 
 		//! All obstackes
-		std::vector<TDF::Circle*> m_obstacles;
+		Vector<Circle*> m_obstacles;
 
 		//! Allowed total force.
 		float m_maxTotalForce;

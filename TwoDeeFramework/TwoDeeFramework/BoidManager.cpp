@@ -144,7 +144,7 @@ namespace TDF
 		return avoidance;
 	}
 
-	Vector2D BoidManager::followPath(Boid * _me, std::vector<PathNode*> _path)
+	Vector2D BoidManager::followPath(Boid * _me, Vector<PathNode*> _path)
 	{
 		float distanceToTarget;
 		Vector2D arrivalForce;
@@ -218,7 +218,7 @@ namespace TDF
 		return force;
 	}
 
-	Vector2D BoidManager::separation(Boid * _me, std::vector<Boid*> _allBoids)
+	Vector2D BoidManager::separation(Boid * _me, Vector<Boid*> _allBoids)
 	{
 		int neighborCount = 0;
 		Boid* boid;
@@ -307,7 +307,7 @@ namespace TDF
 
 	float BoidManager::distanceBetween2Points(Vector2D _a, Vector2D _b)
 	{
-		return std::sqrt((_a.x - _b.x) * (_a.x - _b.x) + (_a.y - _b.y) * (_a.y - _b.y));
+		return sqrt((_a.x - _b.x) * (_a.x - _b.x) + (_a.y - _b.y) * (_a.y - _b.y));
 	}
 
 	bool BoidManager::isLeaderOnSight(Boid* _me, Boid * _leader, Vector2D _ahead)

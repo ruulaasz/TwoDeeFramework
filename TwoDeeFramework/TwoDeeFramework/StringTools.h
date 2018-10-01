@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "StdHeaders.h"
 
 namespace TDF
 {
@@ -8,9 +8,9 @@ namespace TDF
 	/*!
 	return A string with the resource name.
 	*/
-	static std::string getNameFromPath(std::string _path)
+	static string getNameFromPath(string _path)
 	{
-		std::string name;
+		string name;
 
 		size_t i = _path.length();
 		i--;
@@ -25,7 +25,7 @@ namespace TDF
 			name.push_back(_path.at(i));
 		}
 
-		std::reverse(name.begin(), name.end());
+		reverse(name.begin(), name.end());
 
 		i = 0;
 

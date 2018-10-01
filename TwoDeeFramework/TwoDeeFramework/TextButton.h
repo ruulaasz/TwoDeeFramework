@@ -26,6 +26,6 @@ namespace TDF
 
 	public:
 		//! The text to display.
-		Text* m_text;
+		Shared_Ptr<Text> m_text;
 	};
 }

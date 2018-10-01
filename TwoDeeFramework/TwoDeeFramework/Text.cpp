@@ -6,36 +6,26 @@ namespace TDF
 	{
 		m_font = nullptr;
 		m_text = "text";
+		m_texture = Shared_Ptr<Texture>(new Texture);
 	}
 
 	Text::~Text()
 	{
-		TTF_CloseFont(m_font);
+		
 	}
 
-	void Text::loadFromFile(std::string _path)
-	{
-		//Open the font 
-		m_font = TTF_OpenFont(_path.c_str(), 28);
-
-		if(m_font == nullptr )
-		{ 
-			printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );  
-		} 
-	}
-
-	void Text::free()
+	void Text::loadFromFile(string _path)
 	{
 
 	}
 
-	void Text::loadFromRenderedText(std::string textureText, SDL_Color textColor)
+	void Text::loadFromRenderedText(string textureText, SDL_Color textColor)
 	{
 		//Get rid of preexisting 
-		m_texture.free();
+		m_texture.get()->free();
 
 		//Render text surface 
-		SDL_Surface* textSurface = TTF_RenderText_Solid( m_font, textureText.c_str(), textColor ); 
+		SDL_Surface* textSurface = TTF_RenderText_Solid( m_font.get()->m_font, textureText.c_str(), textColor );
 
 		if( textSurface == NULL ) 
 		{
@@ -44,18 +34,18 @@ namespace TDF
 		else 
 		{ 
 			//Create texture from surface pixels 
-			m_texture.m_sdlTexture = SDL_CreateTextureFromSurface( SDL_Manager::GetInstance().m_renderer, 
+			m_texture.get()->m_sdlTexture = SDL_CreateTextureFromSurface( SDL_Manager::GetInstance().m_renderer, 
 																   textSurface );
 
-			if(m_texture.m_sdlTexture == NULL )
+			if(m_texture.get()->m_sdlTexture == NULL )
 			{ 
 				printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() ); 
 			} 
 			else 
 			{ 
 				//Get image dimensions 
-				m_texture.m_width = textSurface->w; 
-				m_texture.m_height = textSurface->h;
+				m_texture.get()->m_width = textSurface->w;
+				m_texture.get()->m_height = textSurface->h;
 			} 
 
 			//Get rid of old surface 
@@ -65,14 +55,14 @@ namespace TDF
 
 	void Text::setStyle(int _style)
 	{
-		TTF_SetFontStyle(m_font, _style);
+		TTF_SetFontStyle(m_font.get()->m_font, _style);
 	}
 
 	void Text::resizeText(int _size)
 	{
-		TTF_CloseFont(m_font);
+		TTF_CloseFont(m_font.get()->m_font);
 
-		m_font = TTF_OpenFont(m_path.c_str(), _size);
+		m_font.get()->m_font = TTF_OpenFont(m_font.get()->m_path.c_str(), _size);
 
 		SDL_Color textColor = { m_textColor.r, m_textColor.g, m_textColor.b };
 
@@ -88,7 +78,7 @@ namespace TDF
 		loadFromRenderedText(m_text, textColor);
 	}
 
-	void Text::setText(std::string _text)
+	void Text::setText(string _text)
 	{
 		m_text = _text;
 

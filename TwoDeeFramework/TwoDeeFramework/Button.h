@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "Vector2D.h"
 #include "Sfx.h"
+#include "StdHeaders.h"
 
 namespace TDF
 {
@@ -63,10 +64,10 @@ namespace TDF
 		Vector2D m_dimentions;
 
 		//! The selection SFX.
-		Sfx* m_selectionSFX;
+		Shared_Ptr<Sfx> m_selectionSFX;
 
 		//! The pressed SFX.
-		Sfx* m_activationSFX;
+		Shared_Ptr<Sfx> m_activationSFX;
 
 	private:
 		//! The box of the button.

@@ -13,7 +13,7 @@ namespace TDF
 
 	}
 
-	Actor * TDF::SceneManager::getActor(int _id)
+	Actor * SceneManager::getActor(int _id)
 	{
 		if (m_activeScene)
 		{
@@ -29,7 +29,7 @@ namespace TDF
 		return nullptr;
 	}
 
-	void TDF::SceneManager::setActiveScene(std::string _scene)
+	void SceneManager::setActiveScene(string _scene)
 	{
 		auto it = m_allScenes.find(_scene);
 
@@ -45,7 +45,7 @@ namespace TDF
 		}
 	}
 
-	int TDF::SceneManager::getID()
+	int SceneManager::getID()
 	{
 		m_currentID++;
 		return m_currentID - 1;

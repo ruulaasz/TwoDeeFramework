@@ -22,7 +22,7 @@ namespace TDF
 
 	void InputManager::subscribe(messageType _type, int _id)
 	{
-		std::pair<int, messageType> newMessage(_id, _type);
+		pair<int, messageType> newMessage(_id, _type);
 		m_subscribers.insert(newMessage);
 	}
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <queue>
-#include <unordered_map>
+#include "StdHeaders.h"
 #include "InputMessage.h"
 
 namespace TDF
@@ -56,10 +55,10 @@ namespace TDF
 
 	private:
 		//! The messages to attend.
-		std::queue<InputMessage> m_messageQueue;
+		Queue<InputMessage> m_messageQueue;
 
 		//! A map of the subscribers.
-		std::unordered_map<int, messageType> m_subscribers;
+		UnorderedMap<int, messageType> m_subscribers;
 
 		//! A message to fill.
 		InputMessage m_message;

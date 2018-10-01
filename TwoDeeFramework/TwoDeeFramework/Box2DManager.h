@@ -2,7 +2,7 @@
 
 #pragma comment(lib, "Box2D.lib")
 
-#include <unordered_map>
+#include "StdHeaders.h"
 #include <Box2D.h>
 #include "Module.h"
 #include "Vector2D.h"
@@ -41,6 +41,6 @@ namespace TDF
 
 	public:
 		//! A map with all created worlds.
-		std::unordered_map<std::string, b2World*>m_allWorlds;
+		UnorderedMap<string, b2World*>m_allWorlds;
 	};
 }

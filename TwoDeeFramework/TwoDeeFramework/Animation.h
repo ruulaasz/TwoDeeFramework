@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
 #include "Texture.h"
 #include "Timer.h"
 #include "Vector2D.h"
+#include "StdHeaders.h"
 
 namespace TDF
 {
@@ -31,7 +31,7 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void loadFromFile(std::string _path);
+		virtual void loadFromFile(string _path);
 
 		//! A virtual function used to free the resource memory.
 		virtual void free();
@@ -80,7 +80,7 @@ namespace TDF
 
 	public:
 		//! The atlas holding all the frames.
-		Texture* m_atlas;
+		Shared_Ptr<Texture> m_atlas;
 
 	private:
 		//! If the animation is playing
@@ -102,6 +102,6 @@ namespace TDF
 		Timer m_keyframeTime;
 
 		//! A vector with all the frames data.
-		std::vector<Sprite> m_sprites;
+		Vector<Sprite> m_sprites;
 	};
 }

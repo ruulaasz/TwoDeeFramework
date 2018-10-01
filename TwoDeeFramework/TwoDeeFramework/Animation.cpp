@@ -1,5 +1,4 @@
 #include "Animation.h"
-#include <fstream>
 #include "rapidxml.hpp"
 #include "StringTools.h"
 #include "RenderManager.h"
@@ -9,7 +8,7 @@ namespace TDF
 	Animation::Animation()
 	{
 		m_animSpeed = 0.15f;
-		m_atlas = new Texture();
+		m_atlas = Shared_Ptr<Texture>(new Texture());
 		m_currentFrame = 0;
 		m_frameCount = 0;
 		m_looped = false;
@@ -21,17 +20,17 @@ namespace TDF
 		
 	}
 
-	void Animation::loadFromFile(std::string _path)
+	void Animation::loadFromFile(string _path)
 	{
 		rapidxml::xml_document<> doc;
 		rapidxml::xml_node<> * root_node;
 
 		//open the file
-		std::ifstream theFile(_path);
+		ifstream theFile(_path);
 
 		//dump the info into a buffer
-		std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), 
-								  std::istreambuf_iterator<char>());
+		Vector<char> buffer((istreambuf_iterator<char>(theFile)), 
+							 istreambuf_iterator<char>());
 
 		buffer.push_back('\0');
 		doc.parse<0>(&buffer[0]);
@@ -40,7 +39,7 @@ namespace TDF
 		root_node = doc.first_node("TextureAtlas");
 
 		//load the atlas
-		std::string imgPath = _path;
+		string imgPath = _path;
 
 		size_t i = imgPath.length();
 		i--;
@@ -65,11 +64,11 @@ namespace TDF
 		{
 			Sprite s;
 
-			s.m_position.x = static_cast<float>(std::atof(sprite_node->first_attribute("x")->value()));
-			s.m_position.y = static_cast<float>(std::atof(sprite_node->first_attribute("y")->value()));
+			s.m_position.x = static_cast<float>(atof(sprite_node->first_attribute("x")->value()));
+			s.m_position.y = static_cast<float>(atof(sprite_node->first_attribute("y")->value()));
 
-			s.m_dimentions.x = static_cast<float>(std::atof(sprite_node->first_attribute("w")->value()));
-			s.m_dimentions.y = static_cast<float>(std::atof(sprite_node->first_attribute("h")->value()));
+			s.m_dimentions.x = static_cast<float>(atof(sprite_node->first_attribute("w")->value()));
+			s.m_dimentions.y = static_cast<float>(atof(sprite_node->first_attribute("h")->value()));
 			
 			m_sprites.push_back(s);
 		}

@@ -25,7 +25,7 @@ namespace TDF
 
 		for (size_t i = 0; i < MAX_TARGETS; i++)
 		{
-			m_renderTargets[i] = new Texture();
+			m_renderTargets[i] = Shared_Ptr<Texture>(new Texture());
 			m_renderTargets[i]->createAsRenderTarget();
 		}
 	}
@@ -102,17 +102,17 @@ namespace TDF
 		renderBox(box);
 	}
 
-	void RenderManager::renderTexture(Texture * _texture, 
+	void RenderManager::renderTexture(Shared_Ptr<Texture> _texture,
 									  int _x, 
 									  int _y, 
 									  float _angle, 
 									  SDL_RendererFlip _flip)
 	{
-		SDL_Rect quadSrc = { 0, 0, _texture->m_width, _texture->m_height };
-		SDL_Rect quadDst = { _x , _y , _texture->m_width, _texture->m_height };
+		SDL_Rect quadSrc = { 0, 0, _texture.get()->m_width, _texture.get()->m_height };
+		SDL_Rect quadDst = { _x , _y , _texture.get()->m_width, _texture.get()->m_height };
 
 		SDL_RenderCopyEx(m_renderer, 
-						 _texture->m_sdlTexture, 
+						 _texture.get()->m_sdlTexture,
 						 &quadSrc, 
 						 &quadDst, 
 						 (_angle), 
@@ -120,7 +120,7 @@ namespace TDF
 						 _flip);
 	}
 
-	void RenderManager::renderTextureEx(Texture * _texture, 
+	void RenderManager::renderTextureEx(Shared_Ptr<Texture> _texture,
 										SDL_Rect src, 
 										SDL_Rect dst, 
 										float _angle, 
@@ -128,7 +128,7 @@ namespace TDF
 										SDL_RendererFlip _flip)
 	{
 		SDL_RenderCopyEx(m_renderer,
-			_texture->m_sdlTexture,
+			_texture.get()->m_sdlTexture,
 			&src,
 			&dst,
 			(_angle),
@@ -136,18 +136,18 @@ namespace TDF
 			_flip);
 	}
 
-	void RenderManager::renderText(Text * _text, int _x, int _y)
+	void RenderManager::renderText(Shared_Ptr<Text> _text, int _x, int _y)
 	{
-		renderTexture(&_text->m_texture, _x, _y);
+		renderTexture(_text.get()->m_texture, _x, _y);
 	}
 
-	void RenderManager::renderAnimation(Animation * _anim, 
+	void RenderManager::renderAnimation(Shared_Ptr<Animation> _anim,
 										int _x, 
 										int _y, 
 										float _angle, 
 										float _scale)
 	{
-		Sprite sprite = _anim->getCurrentSprite();
+		Sprite sprite = _anim.get()->getCurrentSprite();
 
 		SDL_Rect quadSrc = { static_cast<int>(sprite.m_position.x),
 							 static_cast<int>(sprite.m_position.y),
@@ -159,7 +159,7 @@ namespace TDF
 							 static_cast<int>(sprite.m_dimentions.x * _scale),
 							 static_cast<int>(sprite.m_dimentions.y * _scale) };
 
-		renderTextureEx(_anim->m_atlas, quadSrc, quadDst, _angle);
+		renderTextureEx(_anim.get()->m_atlas, quadSrc, quadDst, _angle);
 	}
 
 	void RenderManager::saveTextureAsPNG(const char * _name, Texture * _texture)
@@ -186,7 +186,7 @@ namespace TDF
 		SDL_SetRenderDrawColor(m_renderer, _color.r, _color.g, _color.b, _color.a);
 	}
 
-	void RenderManager::setRenderTarget(Texture * _newRenderTarget)
+	void RenderManager::setRenderTarget(Shared_Ptr<Texture> _newRenderTarget)
 	{
 		if (!_newRenderTarget)
 		{
@@ -194,7 +194,7 @@ namespace TDF
 		}
 		else
 		{
-			SDL_SetRenderTarget(m_renderer, _newRenderTarget->m_sdlTexture);
+			SDL_SetRenderTarget(m_renderer, _newRenderTarget.get()->m_sdlTexture);
 		}
 	}
 

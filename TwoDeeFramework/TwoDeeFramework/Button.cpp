@@ -45,7 +45,7 @@ namespace TDF
 			{
 				if (m_selectionSFX)
 				{
-					m_selectionSFX->play(-1);
+					m_selectionSFX.get()->play(-1);
 				}
 
 
@@ -84,7 +84,7 @@ namespace TDF
 	void Button::init()
 	{
 		m_id = SceneManager::GetInstance().getID();
-		TDF::InputManager::GetInstance().subscribe(TDF::MOUSE_INPUT, m_id);
+		InputManager::GetInstance().subscribe(MOUSE_INPUT, m_id);
 	}
 
 	void Button::dispatchMessage(const InputMessage & _message)
@@ -103,7 +103,7 @@ namespace TDF
 
 					if (m_activationSFX)
 					{
-						m_activationSFX->play(-1);
+						m_activationSFX.get()->play(-1);
 					}
 				}
 			}

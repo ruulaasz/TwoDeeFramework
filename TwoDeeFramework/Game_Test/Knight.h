@@ -19,20 +19,19 @@ public:
 	void setWorld(TDF::World* _world) { m_psysicsWorld = _world->m_physicsWorld; };
 
 public:
-	TDF::Texture* m_texture;
+	std::shared_ptr<TDF::Texture> m_texture;
 	float m_movementSpeed;
 	float m_jumpSpeed;
 	TDF::Vector2D m_position;
 	TDF::Vector2D m_velocity;
 
-	b2Body* body;
 	bool m_canJump;
 	int m_jumpLimit;
 	int m_currentJumps;
 
 	TDF::ContactListener m_contactListener;
 
-	TDF::Sfx* m_jumpSFX;
+	std::shared_ptr<TDF::Sfx> m_jumpSFX;
 	b2Body* m_dynamicBody;
 	b2World* m_psysicsWorld;
 

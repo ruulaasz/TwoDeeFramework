@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <unordered_map>
+#include "StdHeaders.h"
 #include "Module.h"
 #include "Resource.h"
 #include "StringTools.h"
@@ -29,29 +28,31 @@ namespace TDF
 		\param _path the path of the file.
 		\return the loaded resource.
 		*/
-
-		//std::unordered_map<std::string, uint32> m_allResourcesRefs;
-
 		template <class T>
-		T* loadFromFile(std::string _path)
+		Shared_Ptr<T> loadFromFile(string _path)
 		{
+			//check if the path is not empty.
 			if (_path.empty())
 			{
 				///ERROR: direccion vacia o invalida
 				return nullptr;
 			}
 
-			std::string name = getNameFromPath(_path);
+			//get the name of the resource.
+			string name = _path;
 
-			T* newResource = searchInLoaded<T>(name);
+			//search if the resource is already loaded.
+			Shared_Ptr<T> newResource = searchInLoaded<T>(name);
 				
+			//If the resource does not exist.
 			if (!newResource)
-			{//The resource does not exist
+			{
 				//Load it
-				newResource = new T();
-				newResource->setName(name);
+				newResource = Shared_Ptr<T>(new T());
+				newResource->setName(getNameFromPath(_path));
 				newResource->setPath(_path);
 				newResource->loadFromFile(_path);
+
 				if (!newResource)
 				{
 					///ERROR: no se pudo cargar el archivo
@@ -60,35 +61,9 @@ namespace TDF
 			}
 
 			m_allResources[name] = newResource;
-			/*if (m_allResourcesRefs.find(name) != m_allResourcesRefs.end()
-			{
-				m_allResourcesRefs[name]++;
-			}
-			else
-			{
-				m_allResourcesRefs[name] = 1;
-			}*/
-			return reinterpret_cast<T*>(newResource);
+
+			return newResource;
 		}
-
-		/*template<class T>
-		void destroyResource(T* res)
-		{
-			for (auto resource : m_allResources)
-			{
-				if (resource.second == res)
-				{
-					m_allResourcesRefs[resource.first]--;
-					if (m_allResourcesRefs[resource.first] <= 0)
-					{
-						delete m_allResources[resource.first];
-						m_allResources.erase(resource.first);
-					}
-
-					break;
-				}
-			}
-		}*/
 
 		//! a template function, creates an empty resource.
 		/*!
@@ -96,7 +71,7 @@ namespace TDF
 		\return the created resource.
 		*/
 		template <class T>
-		T* createEmpty(std::string _name)
+		T* createEmpty(string _name)
 		{
 			T* newResource = newResource = new T();
 			newResource->setName(_name);
@@ -109,15 +84,15 @@ namespace TDF
 		\return the found resource.
 		*/
 		template <class T>
-		T* searchInLoaded(std::string _name)
+		Shared_Ptr<T> searchInLoaded(string _name)
 		{
 			auto it = m_allResources.find(_name);
 
 			if (it != m_allResources.end())
 			{
-				if (dynamic_cast<T*>(it->second))
+				if (it->second)
 				{
-					return reinterpret_cast<T*>(it->second);
+					return dynamic_pointer_cast<T>(it->second);
 				}
 				else
 				{
@@ -130,8 +105,19 @@ namespace TDF
 			}
 		}
 
+		void printDebug()
+		{
+			printf("\n");
+
+			for (auto resource : m_allResources)
+			{
+				printf("%s", resource.first.c_str());
+				printf("\nNumber of References: %d\n\n", resource.second.use_count() - 1);
+			}
+		}
+
 	public:
 		//! An unordered map containing a resource and its name.
-		std::unordered_map<std::string, Resource*> m_allResources;
+		UnorderedMap<string, Shared_Ptr<Resource>> m_allResources;
 	};
 }

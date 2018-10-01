@@ -2,6 +2,7 @@
 
 #include <SDL_mixer.h>
 #include "Resource.h"
+#include "StdHeaders.h"
 
 namespace TDF
 {
@@ -22,7 +23,7 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void loadFromFile(std::string _path);
+		virtual void loadFromFile(string _path);
 
 		//! A virtual function used to free the resource memory.
 		virtual void free();

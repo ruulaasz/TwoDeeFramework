@@ -19,7 +19,7 @@ namespace TDF
 
 	}
 
-	void TDF::Circle::render()
+	void Circle::render()
 	{
 		RenderManager::GetInstance().setRenderDrawColor(Color(0, 0xFF, 0));
 		RenderManager::GetInstance().renderCircle(m_radius, m_center.x, m_center.y);

@@ -12,12 +12,12 @@ namespace TDF
 		
 	}
 
-	void TDF::Music::loadFromFile(std::string _path)
+	void Music::loadFromFile(string _path)
 	{
 		m_music = Mix_LoadMUS(_path.c_str());
 	}
 
-	void TDF::Music::free()
+	void Music::free()
 	{
 		Mix_FreeMusic(m_music);
 	}

@@ -25,11 +25,11 @@ public:
 	TDF::TextButton m_quitGameB;
 
 	//select animation
-	TDF::Animation* m_selectAnim;
+	std::shared_ptr<TDF::Animation> m_selectAnim;
 	TDF::Vector2D m_selectPosition;
 
 	//grass animation
-	TDF::Animation* m_grassAnim;
+	std::shared_ptr<TDF::Animation> m_grassAnim;
 	
 private:
 	//light effect

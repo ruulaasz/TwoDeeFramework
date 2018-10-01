@@ -102,12 +102,12 @@ void MainMenu::init()
 	m_newGameB.m_position.y = 600;
 
 	//new game button text
-	m_newGameB.m_text = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Text>("..\\resources\\fonts\\Perpetua.ttf");
-	m_newGameB.m_text->resizeText(48);
-	m_newGameB.m_text->setColor(TDF::Color(255, 255, 255));
-	m_newGameB.m_text->setText("New Game");
+	m_newGameB.m_text.get()->m_font = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Font>("..\\resources\\fonts\\Perpetua.ttf");
+	m_newGameB.m_text.get()->resizeText(48);
+	m_newGameB.m_text.get()->setColor(TDF::Color(255, 255, 255));
+	m_newGameB.m_text.get()->setText("New Game");
 	m_newGameB.fitText();
-	m_newGameB.m_renderDebug = false;
+	m_newGameB.m_renderDebug = true;
 
 	//quit game button
 	m_quitGameB.init();
@@ -115,12 +115,11 @@ void MainMenu::init()
 	m_quitGameB.m_position.y = 700;
 
 	//quit game button text
-	m_quitGameB.m_text = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Text>("..\\resources\\fonts\\Perpetua.ttf");
-	m_quitGameB.m_text->resizeText(48);
+	m_quitGameB.m_text.get()->m_font = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Font>("..\\resources\\fonts\\Perpetua.ttf");
 	m_quitGameB.m_text->setColor(TDF::Color(255, 255, 255));
 	m_quitGameB.m_text->setText("Quit");
 	m_quitGameB.fitText();
-	m_quitGameB.m_renderDebug = false;
+	m_quitGameB.m_renderDebug = true;
 
 	//quit world and add actor
 	m_world.addActor(&m_newGameB);
@@ -179,9 +178,9 @@ void MainMenu::checkButtons()
 
 void MainMenu::lightEffect(float _deltaTime)
 {
-	m_background[2]->setAlpha(m_lightAlpha);
-	m_background[3]->setAlpha(m_lightAlpha);
-	m_grassAnim->setAlpha(m_lightAlpha);
+	m_background[2]->setAlpha(static_cast<Uint8>(m_lightAlpha));
+	m_background[3]->setAlpha(static_cast<Uint8>(m_lightAlpha));
+	m_grassAnim->setAlpha(static_cast<Uint8>(m_lightAlpha));
 
 	m_lightAlpha = lerp(m_lightAlpha, m_alphaTarget, _deltaTime / 2);
 

@@ -30,7 +30,7 @@ namespace TDF
 		/*!
 		\param _world, a pointer to the world.
 		*/
-		void setActiveScene(std::string _scene);
+		void setActiveScene(string _scene);
 
 		//! Get the current ID for the next created actor.
 		int getID();
@@ -38,7 +38,7 @@ namespace TDF
 	public:
 		//! The current runing scene.
 		Scene* m_activeScene;
-		std::unordered_map<std::string, Scene*> m_allScenes;
+		UnorderedMap<string, Scene*> m_allScenes;
 
 	private:
 		//! The current id.

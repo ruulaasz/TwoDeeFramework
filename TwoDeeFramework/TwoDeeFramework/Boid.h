@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "StdHeaders.h"
 #include "Actor.h"
 #include "PathNode.h"
 #include "Vector2D.h"
@@ -42,7 +42,7 @@ namespace TDF
 		/*!
 		\param _message the receieved message.
 		*/
-		virtual void dispatchMessage(const TDF::InputMessage& _message) { _message; };
+		virtual void dispatchMessage(const InputMessage& _message) { _message; };
 
 		//! render the arrival behavior.
 		void renderArrival();
@@ -99,7 +99,7 @@ namespace TDF
 		
 		//! Followpath parameters
 		bool m_loopPath;
-		std::vector<PathNode*> m_path;
+		Vector<PathNode*> m_path;
 		
 		//! Follow the leader parameters
 		float m_trailDistance;

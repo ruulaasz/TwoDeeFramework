@@ -41,7 +41,7 @@ namespace TDF
 	public:
 		//! The world of the scene.
 		World m_world;
-		Texture* m_background[8];
-		Music* m_backgroundMusic;
+		Shared_Ptr<Texture> m_background[8];
+		Shared_Ptr<Music> m_backgroundMusic;
 	};
 }

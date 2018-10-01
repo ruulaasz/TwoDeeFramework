@@ -1,5 +1,6 @@
 #include "AnttweakbarManager.h"
 #include "SDL_Manager.h"
+#include "StdHeaders.h"
 
 #define DEFAULT_BARS 2
 #define GUI_BARS 2
@@ -26,7 +27,7 @@ namespace TDF
 	void TW_CALL hideGUI(void *)
 	{
 		m_hideGUI ^= 1;
-		std::string name;
+		string name;
 
 		if (m_hideGUI)
 		{
@@ -51,7 +52,7 @@ namespace TDF
 	void TW_CALL hideFGUI(void *)
 	{
 		m_hideGUI ^= 1;
-		std::string name;
+		string name;
 
 		if (m_hideGUI)
 		{
@@ -138,7 +139,7 @@ namespace TDF
 	{
 		TwBar* newBar = TwNewBar(TEXT(_barName));
 
-		std::string s = _barName;
+		string s = _barName;
 		s += " color='255 128 255' alpha=180 ";
 		TwDefine(s.c_str());
 
@@ -171,7 +172,7 @@ namespace TDF
 	{
 		TwBar* newBar = TwNewBar(TEXT(_barName));
 
-		std::string s = _barName;
+		string s = _barName;
 		s += _info.color;
 		TwDefine(s.c_str());
 
@@ -226,7 +227,7 @@ namespace TDF
 	void AnttweakbarManager::hideBars(bool _hide)
 	{
 		m_hideGUI = _hide;
-		std::string name;
+		string name;
 
 		if (m_hideGUI)
 		{

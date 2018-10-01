@@ -82,7 +82,7 @@ void initScenes()
 		it->second->init();
 	}
 
-	g_SceneManager->setActiveScene("Level0");
+	g_SceneManager->setActiveScene("MainMenu");
 }
 
 void render()
@@ -156,7 +156,9 @@ int main()
 
 	initScenes();
 
-	g_AnttweakbarManager->hideBars(true);
+	g_AnttweakbarManager->hideBars(false);
+
+	g_ResourceManager->printDebug();
 
 	while (!g_SystemManager->m_quit)
 	{

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "StdHeaders.h"
 #include "StringTools.h"
 #include "Module.h"
 #include "SDL_Manager.h"
@@ -35,5 +36,6 @@
 #include "SceneManager.h"
 #include "Color.h"
 #include "Button.h"
+#include "Font.h"
 #include "TextButton.h"
 #include "Animation.h"

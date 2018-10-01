@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Box2DManager.h"
 #include "Actor.h"
 
@@ -36,7 +35,7 @@ namespace TDF
 
 	public:
 		//! The actors in the world.
-		std::vector<Actor*> m_allActors;
+		Vector<Actor*> m_allActors;
 
 		//! The physiscs of the world.
 		b2World* m_physicsWorld;

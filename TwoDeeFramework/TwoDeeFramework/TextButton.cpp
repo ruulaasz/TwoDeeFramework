@@ -5,7 +5,7 @@ namespace TDF
 {
 	TextButton::TextButton()
 	{
-		m_text = nullptr;
+		m_text = Shared_Ptr<Text>(new Text);
 	}
 
 	TextButton::~TextButton()
@@ -27,8 +27,8 @@ namespace TDF
 	{
 		if (m_text)
 		{
-			m_dimentions.y = static_cast<float>(m_text->m_texture.m_height);
-			m_dimentions.x = static_cast<float>(m_text->m_texture.m_width);
+			m_dimentions.y = static_cast<float>(m_text.get()->m_texture.get()->m_height);
+			m_dimentions.x = static_cast<float>(m_text.get()->m_texture.get()->m_width);
 		}
 	}
 }

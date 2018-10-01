@@ -13,7 +13,7 @@ namespace TDF
 
 	}
 
-	void Sfx::loadFromFile(std::string _path)
+	void Sfx::loadFromFile(string _path)
 	{
 		m_chunk = Mix_LoadWAV(_path.c_str());
 	}

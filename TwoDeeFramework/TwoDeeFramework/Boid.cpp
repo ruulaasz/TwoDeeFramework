@@ -60,8 +60,8 @@ namespace TDF
 			m_renderDirection = m_velocity;
 		}
 
-		m_renderAngle = static_cast<float>(std::atan2(m_renderDirection.x,
-													 -m_renderDirection.y));
+		m_renderAngle = static_cast<float>(atan2(m_renderDirection.x,
+										   -m_renderDirection.y));
 
 		lineEnd = m_position + m_velocity * DEBUGLINE_LENGTH;
 

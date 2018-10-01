@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Text.h"
 #include "Animation.h"
+#include "StdHeaders.h"
 
 namespace TDF
 {
@@ -75,7 +76,7 @@ namespace TDF
 		\param _angle the rotation angle of the texture.
 		\param _flip if the texture is going to be flipped in the given direction.
 		*/
-		void renderTexture(Texture* _texture, 
+		void renderTexture(Shared_Ptr<Texture> _texture,
 						   int _x, 
 						   int _y, 
 						   float _angle = 0, 
@@ -88,7 +89,7 @@ namespace TDF
 		\param _angle the rotation angle of the texture.
 		\param _flip if the texture is going to be flipped in the given direction.
 		*/
-		void renderTextureEx(Texture* _texture,
+		void renderTextureEx(Shared_Ptr<Texture> _texture,
 							 SDL_Rect src,
 							 SDL_Rect dst,
 							 float _angle = 0,
@@ -102,7 +103,7 @@ namespace TDF
 		\param _x, the a position of the text.
 		\param _y, the position of the text.
 		*/
-		void renderText(Text* _text, int _x, int _y);
+		void renderText(Shared_Ptr<Text> _text, int _x, int _y);
 
 		//! Render the animation in a given position.
 		/*!
@@ -112,7 +113,7 @@ namespace TDF
 		\param _angle the rotation angle of the texture.
 		\param _scale to scale the size of the animation frames.
 		*/
-		void renderAnimation(Animation* _anim, int _x, int _y, float _angle = 0, float _scale = 1);
+		void renderAnimation(Shared_Ptr<Animation> _anim, int _x, int _y, float _angle = 0, float _scale = 1);
 
 		//! Saves the given texture into a file.
 		/*!
@@ -134,7 +135,7 @@ namespace TDF
 		/*!
 		\param _newRenderTarget the new render target.
 		*/
-		void setRenderTarget(Texture* _newRenderTarget = nullptr);
+		void setRenderTarget(Shared_Ptr<Texture> _newRenderTarget = nullptr);
 
 		//! clears the current render target.
 		void renderClear();
@@ -147,6 +148,6 @@ namespace TDF
 		SDL_Renderer* m_renderer;
 
 		//! the render targets for deferred rendering.
-		Texture* m_renderTargets[MAX_TARGETS];
+		Shared_Ptr<Texture> m_renderTargets[MAX_TARGETS];
 	};
 }

@@ -74,7 +74,7 @@ namespace TDF
 
 	float getLength(const Vector2D& _vector)
 	{
-		return std::sqrt(std::pow(_vector.x, 2) + std::pow(_vector.y, 2));
+		return sqrt(pow(_vector.x, 2) + pow(_vector.y, 2));
 	}
 
 	Vector2D normalize(const Vector2D& _vector)
@@ -123,8 +123,8 @@ namespace TDF
 
 		Vector2D result;
 
-		result.x = std::cos(_angle) * length;
-		result.y = std::sin(_angle) * length;
+		result.x = cos(_angle) * length;
+		result.y = sin(_angle) * length;
 
 		return result;
 	}
