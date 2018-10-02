@@ -43,7 +43,7 @@ namespace TDF
 
 			//search if the resource is already loaded.
 			Shared_Ptr<T> newResource = searchInLoaded<T>(name);
-				
+
 			//If the resource does not exist.
 			if (!newResource)
 			{

@@ -31,7 +31,7 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void loadFromFile(string _path);
+		virtual void loadFromFile(String _path);
 
 		//! A virtual function used to free the resource memory.
 		virtual void free();

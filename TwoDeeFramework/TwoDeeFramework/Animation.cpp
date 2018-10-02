@@ -20,7 +20,7 @@ namespace TDF
 		
 	}
 
-	void Animation::loadFromFile(string _path)
+	void Animation::loadFromFile(String _path)
 	{
 		rapidxml::xml_document<> doc;
 		rapidxml::xml_node<> * root_node;
@@ -29,23 +29,22 @@ namespace TDF
 		ifstream theFile(_path);
 
 		//dump the info into a buffer
-		Vector<char> buffer((istreambuf_iterator<char>(theFile)), 
-							 istreambuf_iterator<char>());
+		String buffer((istreambuf_iterator<char>(theFile)), 
+					   istreambuf_iterator<char>());
 
-		buffer.push_back('\0');
 		doc.parse<0>(&buffer[0]);
 
-		// Find our root node
+		//Find our root node
 		root_node = doc.first_node("TextureAtlas");
 
 		//load the atlas
-		string imgPath = _path;
+		String imgPath = _path;
 
 		size_t i = imgPath.length();
-		i--;
-		for (i; i >= 0; i--)
+		--i;
+		for (i; i >= 0; --i)
 		{
-			if (imgPath.at(i) == 92)
+			if (imgPath.at(i) == '\\')
 			{
 				break;
 			}

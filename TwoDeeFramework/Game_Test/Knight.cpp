@@ -7,11 +7,8 @@ Knight::Knight()
 {
 	m_texture = nullptr;
 
-#ifdef _WIN64
 
-#else
 	infoBar = nullptr;
-#endif
 
 	m_movementSpeed = 5.0f;
 	m_jumpSpeed = 10.0f;
@@ -50,9 +47,7 @@ void Knight::init()
 	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\Untitled.png");
 	m_jumpSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
 
-#ifdef _WIN64
 
-#else
 	TDF::AntTweakBarInfo info;
 	info.size = " size='300 300' ";
 	info.position = " position='0 500' ";
@@ -64,7 +59,6 @@ void Knight::init()
 	TwAddVarRO(infoBar, TEXT("Current_Jumps:"), TW_TYPE_INT32, &m_currentJumps, TEXT(" Current_Jumps:' "));
 	TwAddVarRO(infoBar, TEXT("Can_jump?:"), TW_TYPE_BOOL32, &m_canJump, TEXT(" label='Can_jump?:' "));
 	TwAddVarRO(infoBar, TEXT("Jump_Limit:"), TW_TYPE_INT32, &m_jumpLimit, TEXT(" label='Jump_Limit:' "));
-#endif
 
 	//body definition
 	b2BodyDef myBodyDef;

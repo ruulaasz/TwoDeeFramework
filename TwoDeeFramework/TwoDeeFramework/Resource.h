@@ -21,10 +21,10 @@ namespace TDF
 		/*!
 		\param _path a string with the file path.
 		*/
-		virtual void loadFromFile(string _path) = 0;
+		virtual void loadFromFile(string _path);
 
 		//! A virtual function used to free the resource memory.
-		virtual void free() = 0;
+		virtual void free();
 
 		//! Returns the resource name.
 		void setName(const string& _name) { m_name = _name; };

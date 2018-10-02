@@ -20,6 +20,10 @@ template<typename A>
 using Queue = std::queue<A>;
 
 using std::string;
+using String = std::string;
+
+using WString = std::wstring;
+
 using std::ifstream;
 using std::istreambuf_iterator;
 using std::atof;
@@ -28,4 +32,6 @@ using std::sqrt;
 using std::pow;
 using std::pair;
 using std::dynamic_pointer_cast;
+using std::static_pointer_cast;
 using std::reverse;
+using std::make_shared;

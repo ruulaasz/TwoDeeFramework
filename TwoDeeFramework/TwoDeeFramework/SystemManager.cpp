@@ -49,11 +49,9 @@ namespace TDF
 					SDL_Manager::GetInstance().setFullscreen(SDL_Manager::GetInstance().m_fullscreen);
 					SDL_Manager::GetInstance().updateWindowSize();
 
-#ifdef _WIN64
 
-#else
 					AnttweakbarManager::GetInstance().updateWindowSize();
-#endif
+
 
 				}
 				break;

@@ -35,10 +35,6 @@ public:
 	b2Body* m_dynamicBody;
 	b2World* m_psysicsWorld;
 
-#ifdef _WIN64
-
-#else
 	TwBar* infoBar;
-#endif
 
 };

@@ -7,11 +7,7 @@
 #include "RenderManager.h"
 #include "Box2DManager.h"
 
-#ifdef _WIN64
-
-#else
 #include "AnttweakbarManager.h"
-#endif
 
 #include "Resource.h"
 #include "Texture.h"

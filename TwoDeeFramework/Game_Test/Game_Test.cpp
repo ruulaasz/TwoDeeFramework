@@ -11,12 +11,7 @@ TDF::InputManager* g_InputManager;
 TDF::SceneManager* g_SceneManager;
 TDF::SystemManager* g_SystemManager;
 TDF::AudioManager* g_AudioManager;
-
-#ifdef _WIN64
-
-#else
 TDF::AnttweakbarManager* g_AnttweakbarManager;
-#endif
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
@@ -44,13 +39,9 @@ void initManagers()
 	g_RenderManager = TDF::RenderManager::GetPointerInstance();
 	g_RenderManager->init();
 
-#ifdef _WIN64
-
-#else
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
 	g_AnttweakbarManager->init();
-#endif
 
 	TDF::Box2DManager::StartModule();
 	g_Box2DManager = TDF::Box2DManager::GetPointerInstance();
@@ -95,11 +86,7 @@ void render()
 
 	g_BoidManager->render();
 
-#ifdef _WIN64
-
-#else
 	g_AnttweakbarManager->render();
-#endif
 
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
@@ -122,13 +109,10 @@ void handleInputs()
 {
 	while (SDL_PollEvent(&g_SDLManager->m_events))
 	{
-
-#ifdef _WIN64
 		g_guiHandled = 0;
-#else
+
 		g_AnttweakbarManager->handleEvent(&g_SDLManager->m_events);
 		g_guiHandled = g_AnttweakbarManager->m_handled;
-#endif
 
 		if (!g_guiHandled)
 		{
@@ -139,13 +123,7 @@ void handleInputs()
 
 void close()
 {
-
-#ifdef _WIN64
-
-#else
 	g_AnttweakbarManager->release();
-#endif
-
 	g_SDLManager->release();
 	g_AudioManager->release();
 }
@@ -157,7 +135,7 @@ int main()
 	initScenes();
 
 	g_AnttweakbarManager->hideBars(false);
-
+	
 	g_ResourceManager->printDebug();
 
 	while (!g_SystemManager->m_quit)

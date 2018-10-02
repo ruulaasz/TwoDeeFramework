@@ -72,25 +72,25 @@
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformTarget)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(Configuration)/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformTarget)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(Configuration)/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformTarget)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(Configuration)/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
     <IncludePath>$(DEVLIBS)SDL2/include/;$(DEVLIBS)SDL2_image/include/;$(DEVLIBS)AntTweakBar/include/;$(SolutionDir)TwoDeeFramework;$(DEVLIBS)Box2D/include/;$(DEVLIBS)SDL2_ttf/include/;$(DEVLIBS)SDL2_mixer/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DEVLIBS)SDL2/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_image/lib/$(PlatformTarget)/;$(DEVLIBS)AntTweakBar/lib/$(PlatformTarget)/;$(SolutionDir)lib\TwoDeeFramework\$(PlatformName)\$(Configuration)\;$(DEVLIBS)Box2D/lib/$(Configuration)/$(PlatformTarget)/;$(DEVLIBS)SDL2_ttf/lib/$(PlatformTarget)/;$(DEVLIBS)SDL2_mixer/lib/$(PlatformTarget)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,7 +113,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar64.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,7 +145,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TwoDeeFramework_$(Configuration).lib;AntTweakBar64.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

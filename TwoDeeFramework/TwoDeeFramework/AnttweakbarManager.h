@@ -1,6 +1,10 @@
 #pragma once
 
+#ifdef _WIN64
+#pragma comment(lib, "AntTweakBar64.lib")
+#else
 #pragma comment(lib, "AntTweakBar.lib")
+#endif
 
 #include <windows.h>
 #include <AntTweakBar.h>
