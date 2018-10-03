@@ -21,12 +21,12 @@ namespace TDF
 		int i = 0;
 		for (i; i < vertexCount; i++)
 		{
-			points[i].x = static_cast<int>(vertices[i].x * SCALE_TO_RENDER);
-			points[i].y = static_cast<int>(vertices[i].y * SCALE_TO_RENDER);
+			points[i].x = static_cast<int>(vertices[i].x * SCALE_TO_WORLD);
+			points[i].y = static_cast<int>(vertices[i].y * SCALE_TO_WORLD);
 		}
 
-		points[i].x = static_cast<int>(vertices[0].x * SCALE_TO_RENDER);
-		points[i].y = static_cast<int>(vertices[0].y * SCALE_TO_RENDER);
+		points[i].x = static_cast<int>(vertices[0].x * SCALE_TO_WORLD);
+		points[i].y = static_cast<int>(vertices[0].y * SCALE_TO_WORLD);
 
 		RenderManager::GetInstance().setRenderDrawColor(Color(static_cast<uint8>(255), 
 															  static_cast<uint8>(color.g), 

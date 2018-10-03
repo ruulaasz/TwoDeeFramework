@@ -162,7 +162,7 @@ namespace TDF
 		renderTextureEx(_anim.get()->m_atlas, quadSrc, quadDst, _angle);
 	}
 
-	void RenderManager::saveTextureAsPNG(const char * _name, Texture * _texture)
+	void RenderManager::saveTextureAsPNG(const char * _name, Shared_Ptr<Texture> _texture)
 	{
 		SDL_Texture* target = SDL_GetRenderTarget(m_renderer);
 		SDL_SetRenderTarget(m_renderer, _texture->m_sdlTexture);

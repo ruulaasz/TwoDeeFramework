@@ -66,12 +66,10 @@ void initManagers()
 void initScenes()
 {
 	g_SceneManager->m_allScenes["MainMenu"] = &g_mainMenu;
-	g_SceneManager->m_allScenes["Level0"] = &g_level0;
+	g_SceneManager->m_allScenes["MainMenu"]->init();
 
-	for (auto it = g_SceneManager->m_allScenes.begin(); it != g_SceneManager->m_allScenes.end(); ++it)
-	{
-		it->second->init();
-	}
+	g_SceneManager->m_allScenes["Level0"] = &g_level0;
+	g_SceneManager->m_allScenes["Level0"]->init("moon");
 
 	g_SceneManager->setActiveScene("MainMenu");
 }
@@ -91,8 +89,10 @@ void render()
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
 	g_RenderManager->renderClear();
-	
-	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER], 0, 0);
+
+	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER],0, 0);
+
+	//g_RenderManager->saveTextureAsPNG("test", g_RenderManager->m_renderTargets[TDF::GBUFFER]);
 
 	g_RenderManager->renderPresent();
 }
@@ -134,9 +134,8 @@ int main()
 
 	initScenes();
 
-	g_AnttweakbarManager->hideBars(false);
-	
-	g_ResourceManager->printDebug();
+	//g_AnttweakbarManager->hideBars(true);
+	//g_ResourceManager->printDebug();
 
 	while (!g_SystemManager->m_quit)
 	{

@@ -120,7 +120,7 @@ namespace TDF
 		\param _name the name of the file.
 		\param _texture the texture to save.
 		*/
-		void saveTextureAsPNG(const char* _name, Texture* _texture);
+		void saveTextureAsPNG(const char* _name, Shared_Ptr<Texture> _texture);
 
 		//! Set the render color.
 		/*!

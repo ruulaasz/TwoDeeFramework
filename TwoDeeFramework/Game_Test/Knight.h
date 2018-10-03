@@ -16,13 +16,16 @@ public:
 
 	void setDirection(int _dir);
 	void jump();
-	void setWorld(TDF::World* _world) { m_psysicsWorld = _world->m_physicsWorld; };
 
 public:
 	std::shared_ptr<TDF::Texture> m_texture;
+	std::shared_ptr<TDF::Sfx> m_jumpSFX;
+
 	float m_movementSpeed;
 	float m_jumpSpeed;
-	TDF::Vector2D m_position;
+	TDF::Vector2D m_physicsPosition;
+	TDF::Vector2D m_worldPosition;
+	TDF::Vector2D m_screenPosition;
 	TDF::Vector2D m_velocity;
 
 	bool m_canJump;
@@ -30,11 +33,8 @@ public:
 	int m_currentJumps;
 
 	TDF::ContactListener m_contactListener;
-
-	std::shared_ptr<TDF::Sfx> m_jumpSFX;
 	b2Body* m_dynamicBody;
 	b2World* m_psysicsWorld;
 
 	TwBar* infoBar;
-
 };

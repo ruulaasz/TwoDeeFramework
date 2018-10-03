@@ -14,7 +14,7 @@ public:
 
 	virtual void update(float _deltaTime);
 	virtual void render();
-	virtual void init();
+	virtual void init(String _worldName = "earth");
 
 	Knight m_player;
 };

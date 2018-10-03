@@ -82,9 +82,12 @@ void MainMenu::render()
 	TDF::Scene::render();
 }
 
-void MainMenu::init()
+void MainMenu::init(String _worldName)
 {
-	TDF::Scene::init();
+	m_world.addActor(&m_newGameB);
+	m_world.addActor(&m_quitGameB);
+
+	TDF::Scene::init(_worldName);
 
 	m_lightAlpha = 240;
 	m_alphaTarget = 0;
@@ -97,7 +100,6 @@ void MainMenu::init()
 	m_background[4] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\title.png");
 
 	//new game button
-	m_newGameB.init();
 	m_newGameB.m_position.x = 860;
 	m_newGameB.m_position.y = 600;
 
@@ -110,7 +112,6 @@ void MainMenu::init()
 	m_newGameB.m_renderDebug = true;
 
 	//quit game button
-	m_quitGameB.init();
 	m_quitGameB.m_position.x = 910;
 	m_quitGameB.m_position.y = 700;
 
@@ -120,10 +121,6 @@ void MainMenu::init()
 	m_quitGameB.m_text->setText("Quit");
 	m_quitGameB.fitText();
 	m_quitGameB.m_renderDebug = true;
-
-	//quit world and add actor
-	m_world.addActor(&m_newGameB);
-	m_world.addActor(&m_quitGameB);
 
 	//music
 	m_backgroundMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("..\\resources\\music\\Title.wav");

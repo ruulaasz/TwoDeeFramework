@@ -1,14 +1,11 @@
 #include "World.h"
+#include "SceneManager.h"
 
 namespace TDF
 {
 	World::World()
 	{
-		m_timeStep = 1 / 60.0f;
-		m_velocityIterations = 8;
-		m_positionIterations = 3;
-
-		m_physicsWorld = nullptr;
+		
 	}
 
 	World::~World()
@@ -18,7 +15,7 @@ namespace TDF
 
 	void World::update(float _deltaTime)
 	{
-		m_physicsWorld->Step(m_timeStep, m_velocityIterations, m_positionIterations);
+		m_physics.update();
 
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
@@ -28,21 +25,27 @@ namespace TDF
 
 	void World::render()
 	{
+		m_physics.render();
+
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
 			m_allActors.at(i)->render();
 		}
-
-		m_physicsWorld->DrawDebugData();
 	}
 
-	void World::init()
+	void World::init(String _worldName)
 	{
-		m_physicsWorld = Box2DManager::GetInstance().m_allWorlds["earth"];
+		m_physics.init(_worldName);
+
+		for (size_t i = 0; i < m_allActors.size(); i++)
+		{
+			m_allActors.at(i)->init();
+		}
 	}
 
 	void World::addActor(Actor * _actor)
 	{
+		_actor->m_id = SceneManager::GetInstance().getID();
 		m_allActors.push_back(_actor);
 	}
 }

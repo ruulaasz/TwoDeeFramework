@@ -19,6 +19,7 @@
 #include "PathNode.h"
 #include "Boid.h"
 #include "BoidManager.h"
+#include "PhysicsWorld.h"
 #include "World.h"
 #include "ContactListener.h"
 #include "InputMessage.h"

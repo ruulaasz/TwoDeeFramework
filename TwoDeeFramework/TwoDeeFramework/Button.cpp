@@ -83,7 +83,6 @@ namespace TDF
 
 	void Button::init()
 	{
-		m_id = SceneManager::GetInstance().getID();
 		InputManager::GetInstance().subscribe(MOUSE_INPUT, m_id);
 	}
 

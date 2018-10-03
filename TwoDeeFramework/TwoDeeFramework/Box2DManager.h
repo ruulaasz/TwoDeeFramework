@@ -8,8 +8,8 @@
 #include "Vector2D.h"
 #include "Box2DDraw.h"
 
-#define SCALE_TO_WORLD 0.01f
-#define SCALE_TO_RENDER 100.0f
+#define SCALE_TO_PHYSICS 0.01f
+#define SCALE_TO_WORLD 100.0f
 
 namespace TDF
 {

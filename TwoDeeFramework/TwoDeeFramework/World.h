@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Box2DManager.h"
 #include "Actor.h"
+#include "PhysicsWorld.h"
 
 namespace TDF
 {
@@ -28,7 +28,7 @@ namespace TDF
 		void render();
 
 		//! Initialize the world.
-		void init();
+		void init(String _worldName = "earth");
 
 		//! Adds an actor to the world.
 		void addActor(Actor* _actor);
@@ -37,17 +37,7 @@ namespace TDF
 		//! The actors in the world.
 		Vector<Actor*> m_allActors;
 
-		//! The physiscs of the world.
-		b2World* m_physicsWorld;
-
-	private:
-		//! The length of time passed to simulate (seconds).
-		float32 m_timeStep;     
-
-		//! How strongly to correct velocity.
-		int32 m_velocityIterations; 
-
-		//! How strongly to correct position.
-		int32 m_positionIterations;   
+		//! The physics of the world.
+		PhysicsWorld m_physics;
 	};
 }

@@ -168,6 +168,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="PathNode.h" />
+    <ClInclude Include="PhysicsWorld.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="InputMessage.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PathNode.cpp" />
+    <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

@@ -6,8 +6,6 @@
 Knight::Knight()
 {
 	m_texture = nullptr;
-
-
 	infoBar = nullptr;
 
 	m_movementSpeed = 5.0f;
@@ -38,27 +36,35 @@ void Knight::update(float _deltaTime)
 	m_velocity.x = m_dynamicBody->GetLinearVelocity().x;
 	m_velocity.y = m_dynamicBody->GetLinearVelocity().y;
 
-	m_position.x = m_dynamicBody->GetPosition().x;
-	m_position.y = m_dynamicBody->GetPosition().y;
+	m_physicsPosition.x = m_dynamicBody->GetPosition().x;
+	m_physicsPosition.y = m_dynamicBody->GetPosition().y;
+
+	m_worldPosition = m_physicsPosition * SCALE_TO_WORLD;
 }
 
 void Knight::init()
 {
+	m_psysicsWorld = TDF::Box2DManager::GetInstance().m_allWorlds["moon"];
+
 	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\Untitled.png");
 	m_jumpSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
-
 
 	TDF::AntTweakBarInfo info;
 	info.size = " size='300 300' ";
 	info.position = " position='0 500' ";
 	infoBar = TDF::AnttweakbarManager::GetInstance().createCustomBar(TEXT("Player_info"), info);
-	TwAddVarRO(infoBar, TEXT("position x:"), TW_TYPE_FLOAT, &m_position.x, TEXT(" label='position x:' "));
-	TwAddVarRO(infoBar, TEXT("position y:"), TW_TYPE_FLOAT, &m_position.y, TEXT(" label='position y:' "));
-	TwAddVarRO(infoBar, TEXT("velocity x:"), TW_TYPE_FLOAT, &m_velocity.x, TEXT(" label='velocity x:' "));
-	TwAddVarRO(infoBar, TEXT("velocity y:"), TW_TYPE_FLOAT, &m_velocity.y, TEXT(" label='velocity y:' "));
+
+	TwAddVarRO(infoBar, TEXT("position x:"), TW_TYPE_FLOAT, &m_worldPosition.x, TEXT(" label='position x:' precision=2"));
+	TwAddVarRO(infoBar, TEXT("position y:"), TW_TYPE_FLOAT, &m_worldPosition.y, TEXT(" label='position y:' precision=2"));
+	TwAddVarRO(infoBar, TEXT("velocity x:"), TW_TYPE_FLOAT, &m_velocity.x, TEXT(" label='velocity x:' precision=2"));
+	TwAddVarRO(infoBar, TEXT("velocity y:"), TW_TYPE_FLOAT, &m_velocity.y, TEXT(" label='velocity y:' precision=2"));
 	TwAddVarRO(infoBar, TEXT("Current_Jumps:"), TW_TYPE_INT32, &m_currentJumps, TEXT(" Current_Jumps:' "));
 	TwAddVarRO(infoBar, TEXT("Can_jump?:"), TW_TYPE_BOOL32, &m_canJump, TEXT(" label='Can_jump?:' "));
 	TwAddVarRO(infoBar, TEXT("Jump_Limit:"), TW_TYPE_INT32, &m_jumpLimit, TEXT(" label='Jump_Limit:' "));
+
+	String name = "Player_info";
+	name = name + " visible=false";
+	TwDefine(name.c_str());
 
 	//body definition
 	b2BodyDef myBodyDef;
@@ -66,7 +72,7 @@ void Knight::init()
 
 	//shape definition
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox(m_texture->m_width / 2.0f * SCALE_TO_WORLD, m_texture->m_height / 2.0f * SCALE_TO_WORLD);
+	polygonShape.SetAsBox(m_texture->m_width / 2.0f * SCALE_TO_PHYSICS, m_texture->m_height / 2.0f * SCALE_TO_PHYSICS);
 
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
@@ -74,54 +80,18 @@ void Knight::init()
 	myFixtureDef.friction = 0.0f;
 
 	//create dynamic body
-	myBodyDef.position.Set(900.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD);
+	myBodyDef.position.Set(900.0f * SCALE_TO_PHYSICS, 500.0f * SCALE_TO_PHYSICS);
 	m_dynamicBody = m_psysicsWorld->CreateBody(&myBodyDef);
 	m_psysicsWorld->SetContactListener(&m_contactListener);
 	m_dynamicBody->SetUserData(this);
 	m_dynamicBody->CreateFixture(&myFixtureDef);
 	m_dynamicBody->SetFixedRotation(true);
-
-	m_id = TDF::SceneManager::GetInstance().getID();
-	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_id);
-	TDF::InputManager::GetInstance().subscribe(TDF::CONTROLLER_INPUT, m_id);
-
-	 //PLATFORMS
-	b2Body* staticBody;
-	myBodyDef.type = b2_staticBody;
-	myBodyDef.position.Set(1000.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD);
-	staticBody = m_psysicsWorld->CreateBody(&myBodyDef);
-
-	//add four walls to the static body
-	polygonShape.SetAsBox(2000 * SCALE_TO_WORLD, 50 * SCALE_TO_WORLD, b2Vec2(1000 * SCALE_TO_WORLD, -500 * SCALE_TO_WORLD), 0.0f);//ceiling
-	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(20.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD, b2Vec2(-1000.0f * SCALE_TO_WORLD, 0.0f), 0.0f);//left wall
-	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(20.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD, b2Vec2(1900.0f * SCALE_TO_WORLD, 0.0f), 0.0f);//right wall
-	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(100.0f * SCALE_TO_WORLD, 50.0f * SCALE_TO_WORLD, b2Vec2((-100.0f - m_position.x) * SCALE_TO_WORLD, 300.0f * SCALE_TO_WORLD), 0.0f);//platform
-	staticBody->CreateFixture(&myFixtureDef);
-
-	//a static body
-	myBodyDef.type = b2_staticBody;
-	myBodyDef.position.Set(1000.0f * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD);
-	b2Body* platformBody = m_psysicsWorld->CreateBody(&myBodyDef);
-
-	Platform* platform = new Platform();
-	platform->m_collisionID = CI_PLATFORM;
-
-	platformBody->SetUserData(platform);
-
-	polygonShape.SetAsBox(2000 * SCALE_TO_WORLD, 50 * SCALE_TO_WORLD, b2Vec2(1000 * SCALE_TO_WORLD, 500.0f * SCALE_TO_WORLD), 0.0f);//ground
-	platformBody->CreateFixture(&myFixtureDef);
-
-	polygonShape.SetAsBox(90.0f * SCALE_TO_WORLD, 20.0f * SCALE_TO_WORLD, b2Vec2(-100.0f * SCALE_TO_WORLD, 270.0f * SCALE_TO_WORLD), 0.0f);//platform
-	platformBody->CreateFixture(&myFixtureDef);
 }
 
 void Knight::render()
 {
-	int renderPosx = static_cast<int>(m_position.x * SCALE_TO_RENDER - m_texture->m_width / 2);
-	int renderPosy = static_cast<int>(m_position.y * SCALE_TO_RENDER - m_texture->m_height / 2);
+	int renderPosx = static_cast<int>(m_worldPosition.x - m_texture->m_width / 2);
+	int renderPosy = static_cast<int>(m_worldPosition.y - m_texture->m_height / 2);
 
 	TDF::RenderManager::GetInstance().renderTexture(m_texture, renderPosx, renderPosy);
 }
