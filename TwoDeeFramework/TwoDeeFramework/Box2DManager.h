@@ -7,9 +7,10 @@
 #include "Module.h"
 #include "Vector2D.h"
 #include "Box2DDraw.h"
+#include "PhysicsWorld.h"
 
-#define SCALE_TO_PHYSICS 0.01f
-#define SCALE_TO_WORLD 100.0f
+#define WORLD_TO_PHYSICS 0.01f
+#define PHYSICS_TO_WORLD 100.0f
 
 namespace TDF
 {
@@ -30,10 +31,12 @@ namespace TDF
 		/*!
 		\param _gravity, The worlds gravity.
 		*/
-		b2World* createWorld(const Vector2D& _gravity = Vector2D(0.0f, 9.8f));
+		PhysicsWorld* createWorld(String _name, const Vector2D& _gravity = Vector2D(0.0f, 9.8f));
 
 		//! Initialize the default worlds.
 		void init();
+
+		PhysicsWorld* getWorld(String _name);
 
 	private:
 		//! The handle for debug rendering.
@@ -41,6 +44,6 @@ namespace TDF
 
 	public:
 		//! A map with all created worlds.
-		UnorderedMap<string, b2World*>m_allWorlds;
+		UnorderedMap<string, PhysicsWorld*>m_allWorlds;
 	};
 }

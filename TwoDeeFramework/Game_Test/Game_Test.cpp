@@ -65,11 +65,13 @@ void initManagers()
 
 void initScenes()
 {
+	g_Box2DManager->m_allWorlds["moon"] = g_Box2DManager->createWorld("moon", TDF::Vector2D(0.0f, 18.5f));
+
 	g_SceneManager->m_allScenes["MainMenu"] = &g_mainMenu;
 	g_SceneManager->m_allScenes["MainMenu"]->init();
 
 	g_SceneManager->m_allScenes["Level0"] = &g_level0;
-	g_SceneManager->m_allScenes["Level0"]->init("moon");
+	g_SceneManager->m_allScenes["Level0"]->init(g_Box2DManager->getWorld("moon"));
 
 	g_SceneManager->setActiveScene("MainMenu");
 }
@@ -132,9 +134,10 @@ int main()
 {
 	initManagers();
 
+	g_AnttweakbarManager->hideBars(false);
+
 	initScenes();
 
-	//g_AnttweakbarManager->hideBars(true);
 	//g_ResourceManager->printDebug();
 
 	while (!g_SystemManager->m_quit)

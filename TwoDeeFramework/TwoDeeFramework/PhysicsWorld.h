@@ -1,7 +1,7 @@
 #pragma once
 
 #include "StdHeaders.h"
-#include "Box2DManager.h"
+#include <Box2D.h>
 
 namespace TDF
 {
@@ -9,15 +9,15 @@ namespace TDF
 	{
 	public:
 		PhysicsWorld();
+		PhysicsWorld(b2World* _world);
 		~PhysicsWorld();
 
 		void update();
 		void render();
-		void init(String _worldName = "earth");
-		void init(b2World* _world);
 
 		//! The physiscs of the world.
 		b2World* m_world;
+		String m_name;
 
 	private:
 		//! The length of time passed to simulate (seconds).

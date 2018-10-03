@@ -33,8 +33,8 @@ public:
 	int m_currentJumps;
 
 	TDF::ContactListener m_contactListener;
-	b2Body* m_dynamicBody;
-	b2World* m_psysicsWorld;
+	TDF::DinamicBody m_dynamicBody;
+	std::string m_physicalWorld;
 
 	TwBar* infoBar;
 };

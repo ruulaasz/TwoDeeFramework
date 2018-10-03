@@ -162,6 +162,7 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="ContactListener.h" />
+    <ClInclude Include="DinamicBody.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputMessage.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="ContactListener.cpp" />
+    <ClCompile Include="DinamicBody.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputMessage.cpp" />

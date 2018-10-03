@@ -28,7 +28,7 @@ namespace TDF
 		void render();
 
 		//! Initialize the world.
-		void init(String _worldName = "earth");
+		void init(PhysicsWorld* _physicWorld = nullptr);
 
 		//! Adds an actor to the world.
 		void addActor(Actor* _actor);
@@ -38,6 +38,6 @@ namespace TDF
 		Vector<Actor*> m_allActors;
 
 		//! The physics of the world.
-		PhysicsWorld m_physics;
+		PhysicsWorld* m_physics;
 	};
 }

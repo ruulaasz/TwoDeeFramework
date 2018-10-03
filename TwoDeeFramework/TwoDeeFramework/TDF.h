@@ -6,7 +6,7 @@
 #include "SDL_Manager.h"
 #include "RenderManager.h"
 #include "Box2DManager.h"
-
+#include "DinamicBody.h"
 #include "AnttweakbarManager.h"
 
 #include "Resource.h"

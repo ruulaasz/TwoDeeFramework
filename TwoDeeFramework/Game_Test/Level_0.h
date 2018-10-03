@@ -14,7 +14,7 @@ public:
 
 	virtual void update(float _deltaTime);
 	virtual void render();
-	virtual void init(String _worldName = "earth");
+	virtual void init(TDF::PhysicsWorld* _physicWorld = nullptr);
 
 	Knight m_player;
 };

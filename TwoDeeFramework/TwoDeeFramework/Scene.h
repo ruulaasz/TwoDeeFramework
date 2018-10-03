@@ -36,7 +36,7 @@ namespace TDF
 		virtual void render();
 
 		//! Initialize the scene elements.
-		virtual void init(String _worldName = "earth");
+		virtual void init(PhysicsWorld* _physicWorld = nullptr);
 
 	public:
 		//! The world of the scene.

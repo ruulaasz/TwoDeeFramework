@@ -22,9 +22,11 @@ void MainMenu::onEnter()
 	m_lightAlpha = 240;
 	m_alphaTarget = 0;
 
+	//reset buttons
 	m_newGameB.m_pressed = false;
 	m_quitGameB.m_pressed = false;
 
+	//reset animations
 	m_selectAnim->play();
 	m_grassAnim->play();
 }
@@ -78,16 +80,18 @@ void MainMenu::render()
 													  0.f, 
 													  0.5f);
 
-	//actores de la escena en este caso botones
+	//actores de la escena en este caso los botones
 	TDF::Scene::render();
 }
 
-void MainMenu::init(String _worldName)
+void MainMenu::init(TDF::PhysicsWorld* _physicWorld)
 {
+	//añadimos los actores al mundo
 	m_world.addActor(&m_newGameB);
 	m_world.addActor(&m_quitGameB);
 
-	TDF::Scene::init(_worldName);
+	//se inicializa la escena asignandole un mundo fisico
+	TDF::Scene::init(_physicWorld);
 
 	m_lightAlpha = 240;
 	m_alphaTarget = 0;

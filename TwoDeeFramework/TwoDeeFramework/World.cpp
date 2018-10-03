@@ -1,5 +1,6 @@
 #include "World.h"
 #include "SceneManager.h"
+#include "Box2DManager.h"
 
 namespace TDF
 {
@@ -15,7 +16,10 @@ namespace TDF
 
 	void World::update(float _deltaTime)
 	{
-		m_physics.update();
+		if (m_physics)
+		{
+			m_physics->update();
+		}
 
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
@@ -25,7 +29,10 @@ namespace TDF
 
 	void World::render()
 	{
-		m_physics.render();
+		if (m_physics)
+		{
+			m_physics->render();
+		}
 
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
@@ -33,9 +40,16 @@ namespace TDF
 		}
 	}
 
-	void World::init(String _worldName)
+	void World::init(PhysicsWorld* _physicWorld)
 	{
-		m_physics.init(_worldName);
+		if (_physicWorld)
+		{
+			m_physics = _physicWorld;
+		}
+		else
+		{
+			m_physics = Box2DManager::GetInstance().getWorld("earth");
+		}
 
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{

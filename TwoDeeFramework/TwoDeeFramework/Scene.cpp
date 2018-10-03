@@ -44,8 +44,8 @@ namespace TDF
 		m_world.render();
 	}
 
-	void Scene::init(String _worldName)
+	void Scene::init(PhysicsWorld* _physicWorld)
 	{
-		m_world.init(_worldName);
+		m_world.init(_physicWorld);
 	}
 }
