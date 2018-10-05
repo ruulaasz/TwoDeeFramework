@@ -4,15 +4,15 @@
 
 namespace TDF
 {
-	class DinamicBody
+	class StaticBody
 	{
 	public:
-		DinamicBody();
-		~DinamicBody();
+		StaticBody();
+		~StaticBody();
 
 		void init(const b2BodyDef& _bodyDef, String _world);
 		void addFixture(const b2FixtureDef& _fixtureDef);
 
-		b2Body* m_body;
+		b2Body* m_staticBody;
 	};
 }

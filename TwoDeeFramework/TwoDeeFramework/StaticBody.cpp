@@ -1,0 +1,40 @@
+#include "StaticBody.h"
+
+namespace TDF
+{
+	StaticBody::StaticBody()
+	{
+		m_staticBody = nullptr;
+	}
+
+	StaticBody::~StaticBody()
+	{
+
+	}
+
+	void TDF::StaticBody::init(const b2BodyDef & _bodyDef, String _world)
+	{
+		PhysicsWorld* world = TDF::Box2DManager::GetInstance().getWorld(_world);
+
+		if (world)
+		{
+			m_staticBody = world->m_world->CreateBody(&_bodyDef);
+		}
+		else
+		{
+			printf("failed to get world");
+		}
+	}
+
+	void TDF::StaticBody::addFixture(const b2FixtureDef & _fixtureDef)
+	{
+		if (m_staticBody)
+		{
+			m_staticBody->CreateFixture(&_fixtureDef);
+		}
+		else
+		{
+			printf("Dinamic body is null");
+		}
+	}
+}

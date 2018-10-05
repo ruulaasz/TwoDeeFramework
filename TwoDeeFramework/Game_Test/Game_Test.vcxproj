@@ -152,14 +152,14 @@
     <ClCompile Include="Game_Test.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Level_0.cpp" />
+    <ClCompile Include="Level_1.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Level_0.h" />
+    <ClInclude Include="Level_1.h" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

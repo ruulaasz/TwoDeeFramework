@@ -1,6 +1,7 @@
 #include <TDF.h>
 #include "MainMenu.h"
 #include "Level_0.h"
+#include "Level_1.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
@@ -21,6 +22,7 @@ int g_guiHandled;
 
 MainMenu g_mainMenu;
 Level_0 g_level0;
+Level_1 g_level1;
 
 void initManagers()
 {
@@ -73,7 +75,10 @@ void initScenes()
 	g_SceneManager->m_allScenes["Level0"] = &g_level0;
 	g_SceneManager->m_allScenes["Level0"]->init(g_Box2DManager->getWorld("moon"));
 
-	g_SceneManager->setActiveScene("MainMenu");
+	g_SceneManager->m_allScenes["Level1"] = &g_level1;
+	//g_SceneManager->m_allScenes["Level1"]->init(g_Box2DManager->getWorld("moon"));
+
+	g_SceneManager->setActiveScene("Level0");
 }
 
 void render()

@@ -1,5 +1,4 @@
 #include "Knight.h"
-#include "Platform.h"
 
 #define JOYSTICK_DEAD_ZONE 20000
 
@@ -30,11 +29,11 @@ void Knight::update(float _deltaTime)
 		m_canJump = false;
 	}
 
-	m_velocity.x = m_dynamicBody.m_dynamicBody->GetLinearVelocity().x;
-	m_velocity.y = m_dynamicBody.m_dynamicBody->GetLinearVelocity().y;
+	m_velocity.x = m_dynamicBody.m_body->GetLinearVelocity().x;
+	m_velocity.y = m_dynamicBody.m_body->GetLinearVelocity().y;
 
-	m_physicsPosition.x = m_dynamicBody.m_dynamicBody->GetPosition().x;
-	m_physicsPosition.y = m_dynamicBody.m_dynamicBody->GetPosition().y;
+	m_physicsPosition.x = m_dynamicBody.m_body->GetPosition().x;
+	m_physicsPosition.y = m_dynamicBody.m_body->GetPosition().y;
 
 	m_worldPosition = m_physicsPosition * PHYSICS_TO_WORLD;
 }
@@ -42,8 +41,8 @@ void Knight::update(float _deltaTime)
 void Knight::init()
 {
 	//files loaded
-	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("..\\resources\\textures\\Untitled.png");
-	m_jumpSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("..\\resources\\sfx\\ui_change_selection.wav");
+	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\Untitled.png");
+	m_jumpSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("sfx\\ui_change_selection.wav");
 
 	//anttweak bars init
 	TDF::AntTweakBarInfo info;
@@ -85,8 +84,8 @@ void Knight::init()
 	m_dynamicBody.addFixture(myFixtureDef);
 
 	//body setup
-	m_dynamicBody.m_dynamicBody->SetUserData(this);
-	m_dynamicBody.m_dynamicBody->SetFixedRotation(true);
+	m_dynamicBody.m_body->SetUserData(this);
+	m_dynamicBody.m_body->SetFixedRotation(true);
 }
 
 void Knight::render()
@@ -99,7 +98,7 @@ void Knight::render()
 
 void Knight::onEnterCollision(int _tag)
 {
-	if (_tag == CI_PLATFORM)
+	if (_tag == TDF::CI_PLATFORM)
 	{
 		m_currentJumps = 0;
 		m_canJump = true;
@@ -205,11 +204,11 @@ void Knight::dispatchMessage(const TDF::InputMessage & _message)
 
 void Knight::setDirection(int _dir)
 {
-	b2Vec2 vel = m_dynamicBody.m_dynamicBody->GetLinearVelocity();
+	b2Vec2 vel = m_dynamicBody.m_body->GetLinearVelocity();
 
 	vel.x = m_movementSpeed * _dir;
 
-	m_dynamicBody.m_dynamicBody->SetLinearVelocity(vel);
+	m_dynamicBody.m_body->SetLinearVelocity(vel);
 }
 
 void Knight::jump()
@@ -222,9 +221,9 @@ void Knight::jump()
 	if (m_canJump)
 	{
 		m_jumpSFX->play(-1);
-		b2Vec2 vel = m_dynamicBody.m_dynamicBody->GetLinearVelocity();
+		b2Vec2 vel = m_dynamicBody.m_body->GetLinearVelocity();
 		vel.y = -m_jumpSpeed;
-		m_dynamicBody.m_dynamicBody->SetLinearVelocity(vel);
+		m_dynamicBody.m_body->SetLinearVelocity(vel);
 		m_currentJumps++;
 	}
 }

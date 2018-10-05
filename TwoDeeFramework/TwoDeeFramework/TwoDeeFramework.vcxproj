@@ -170,6 +170,7 @@
     <ClInclude Include="Music.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="PhysicsWorld.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SDL_Manager.h" />
     <ClInclude Include="Sfx.h" />
+    <ClInclude Include="StaticBody.h" />
     <ClInclude Include="StdHeaders.h" />
     <ClInclude Include="StringTools.h" />
     <ClInclude Include="SystemManager.h" />
@@ -209,6 +211,7 @@
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -216,6 +219,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
     <ClCompile Include="Sfx.cpp" />
+    <ClCompile Include="StaticBody.cpp" />
     <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextButton.cpp" />

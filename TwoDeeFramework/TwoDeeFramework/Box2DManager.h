@@ -14,6 +14,12 @@
 
 namespace TDF
 {
+	enum CollisionID
+	{
+		CI_PLATFORM = 1,
+		CI_ENEMY
+	};
+
 	//!  A manager class for box2D library.
 	class Box2DManager : public Module<Box2DManager>
 	{

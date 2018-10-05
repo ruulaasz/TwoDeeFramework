@@ -39,19 +39,19 @@ namespace TDF
 			}
 
 			//get the name of the resource.
-			string name = _path;
+			string path = "..\\resources\\" + _path;
 
 			//search if the resource is already loaded.
-			Shared_Ptr<T> newResource = searchInLoaded<T>(name);
+			Shared_Ptr<T> newResource = searchInLoaded<T>(path);
 
 			//If the resource does not exist.
 			if (!newResource)
 			{
 				//Load it
 				newResource = Shared_Ptr<T>(new T());
-				newResource->setName(getNameFromPath(_path));
-				newResource->setPath(_path);
-				newResource->loadFromFile(_path);
+				newResource->setName(getNameFromPath(path));
+				newResource->setPath(path);
+				newResource->loadFromFile(path);
 
 				if (!newResource)
 				{
@@ -60,7 +60,7 @@ namespace TDF
 				}
 			}
 
-			m_allResources[name] = newResource;
+			m_allResources[path] = newResource;
 
 			return newResource;
 		}
