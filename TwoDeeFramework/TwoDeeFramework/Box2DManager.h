@@ -42,6 +42,11 @@ namespace TDF
 		//! Initialize the default worlds.
 		void init();
 
+		//! Creates a new world.
+		/*!
+		\param _name, The worlds name.
+		\return a pointer to the world.
+		*/
 		PhysicsWorld* getWorld(String _name);
 
 	private:
@@ -50,6 +55,6 @@ namespace TDF
 
 	public:
 		//! A map with all created worlds.
-		UnorderedMap<string, PhysicsWorld*>m_allWorlds;
+		UnorderedMap<string, PhysicsWorld*> m_allWorlds;
 	};
 }

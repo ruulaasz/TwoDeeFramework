@@ -24,6 +24,14 @@ namespace TDF
 		//! Set the dimentions of the button rect to match the size of the text.
 		void fitText();
 
+		//! Updates the elements of the scene.
+		/*!
+		\param _size the size of the text.
+		\param _color the color of the text.
+		\param _text the text to show.
+		*/
+		void init(int _size, Color _color, String _text);
+
 	public:
 		//! The text to display.
 		Shared_Ptr<Text> m_text;

@@ -36,12 +36,16 @@ namespace TDF
 		virtual void render();
 
 		//! Initialize the scene elements.
-		virtual void init(PhysicsWorld* _physicWorld = nullptr);
+		virtual void init();
 
 	public:
 		//! The world of the scene.
 		World m_world;
+
+		//! The background textures.
 		Shared_Ptr<Texture> m_background[8];
+
+		//! The background track.
 		Shared_Ptr<Music> m_backgroundMusic;
 	};
 }

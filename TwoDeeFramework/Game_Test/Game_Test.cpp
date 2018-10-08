@@ -2,10 +2,10 @@
 #include "MainMenu.h"
 #include "Level_0.h"
 #include "Level_1.h"
+#include "Knight.h"
 
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
-TDF::BoidManager* g_BoidManager;
 TDF::RenderManager* g_RenderManager;
 TDF::Box2DManager* g_Box2DManager;
 TDF::InputManager* g_InputManager;
@@ -20,9 +20,10 @@ float g_deltaTime = 0.0f;
 
 int g_guiHandled;
 
-MainMenu g_mainMenu;
-Level_0 g_level0;
-Level_1 g_level1;
+Knight* g_player;
+MainMenu* g_mainMenu;
+Level_0* g_level0;
+Level_1* g_level1;
 
 void initManagers()
 {
@@ -33,9 +34,6 @@ void initManagers()
 
 	TDF::ResourceManager::StartModule();
 	g_ResourceManager = TDF::ResourceManager::GetPointerInstance();
-
-	TDF::BoidManager::StartModule();
-	g_BoidManager = TDF::BoidManager::GetPointerInstance();
 
 	TDF::RenderManager::StartModule();
 	g_RenderManager = TDF::RenderManager::GetPointerInstance();
@@ -61,24 +59,29 @@ void initManagers()
 	TDF::AudioManager::StartModule();
 	g_AudioManager = TDF::AudioManager::GetPointerInstance();
 	g_AudioManager->init();
-
-	g_InputManager->subscribe(TDF::SYSTEM_INPUT, 0);
 }
 
 void initScenes()
 {
-	g_Box2DManager->m_allWorlds["moon"] = g_Box2DManager->createWorld("moon", TDF::Vector2D(0.0f, 18.5f));
+	g_player = new Knight();
+	g_player->init();
 
-	g_SceneManager->m_allScenes["MainMenu"] = &g_mainMenu;
+	g_mainMenu = new MainMenu();
+	g_level0 = new Level_0();
+	g_level1 = new Level_1();
+
+	g_SceneManager->m_allScenes["MainMenu"] = g_mainMenu;
 	g_SceneManager->m_allScenes["MainMenu"]->init();
 
-	g_SceneManager->m_allScenes["Level0"] = &g_level0;
-	g_SceneManager->m_allScenes["Level0"]->init(g_Box2DManager->getWorld("moon"));
+	g_level0->m_player = g_player;
+	g_SceneManager->m_allScenes["Level0"] = g_level0;
+	g_SceneManager->m_allScenes["Level0"]->init();
 
-	g_SceneManager->m_allScenes["Level1"] = &g_level1;
-	//g_SceneManager->m_allScenes["Level1"]->init(g_Box2DManager->getWorld("moon"));
+	g_level1->m_player = g_player;
+	g_SceneManager->m_allScenes["Level1"] = g_level1;
+	g_SceneManager->m_allScenes["Level1"]->init();
 
-	g_SceneManager->setActiveScene("Level0");
+	g_SceneManager->setActiveScene("MainMenu");
 }
 
 void render()
@@ -88,8 +91,6 @@ void render()
 	g_RenderManager->renderClear();
 
 	g_SceneManager->m_activeScene->render();
-
-	g_BoidManager->render();
 
 	g_AnttweakbarManager->render();
 
@@ -108,7 +109,6 @@ void update(float _deltaTime)
 {
 	g_InputManager->update();
 	g_SDLManager->update(_deltaTime);
-	g_BoidManager->update(_deltaTime);
 	g_SceneManager->m_activeScene->update(_deltaTime);
 }
 
@@ -124,6 +124,31 @@ void handleInputs()
 		if (!g_guiHandled)
 		{
 			g_InputManager->pollEvent(g_SDLManager->m_events);
+
+			//temp
+			switch (g_SDLManager->m_events.type)
+			{
+			default:
+				break;
+
+			case SDL_KEYDOWN:
+				switch (g_SDLManager->m_events.key.keysym.sym)
+				{
+				case SDLK_1:
+					g_SceneManager->setActiveScene("MainMenu");
+					break;
+
+				case SDLK_2:
+					g_SceneManager->setActiveScene("Level0");
+					break;
+
+				case SDLK_3:
+					g_SceneManager->setActiveScene("Level1");
+					break;
+				}
+				break;
+			//
+			}
 		}
 	}
 }
@@ -138,8 +163,6 @@ void close()
 int main()
 {
 	initManagers();
-
-	g_AnttweakbarManager->hideBars(false);
 
 	initScenes();
 

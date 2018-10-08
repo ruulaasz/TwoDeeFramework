@@ -106,8 +106,6 @@ namespace TDF
 				printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
 			} 
 		}
-
-		//SDL_GameControllerAddMappingsFromFile("..\\resources\\gamecontrollerdb.txt");
 	}
 
 	void SDL_Manager::updateWindowSize()

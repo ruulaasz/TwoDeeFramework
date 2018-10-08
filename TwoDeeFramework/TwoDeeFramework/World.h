@@ -28,7 +28,7 @@ namespace TDF
 		void render();
 
 		//! Initialize the world.
-		void init(PhysicsWorld* _physicWorld = nullptr);
+		void init();
 
 		//! Adds an actor to the world.
 		void addActor(Actor* _actor);

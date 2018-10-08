@@ -14,6 +14,8 @@ namespace TDF
 
 	void Font::loadFromFile(string _path)
 	{
+		Resource::loadFromFile(_path);
+
 		//Open the font 
 		m_font = TTF_OpenFont(_path.c_str(), 28);
 

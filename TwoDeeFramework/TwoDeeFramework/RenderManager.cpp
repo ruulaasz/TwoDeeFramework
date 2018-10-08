@@ -121,16 +121,16 @@ namespace TDF
 	}
 
 	void RenderManager::renderTextureEx(Shared_Ptr<Texture> _texture,
-										SDL_Rect src, 
-										SDL_Rect dst, 
+										SDL_Rect _src, 
+										SDL_Rect _dst, 
 										float _angle, 
 										SDL_Point* _center, 
 										SDL_RendererFlip _flip)
 	{
 		SDL_RenderCopyEx(m_renderer,
 			_texture.get()->m_sdlTexture,
-			&src,
-			&dst,
+			&_src,
+			&_dst,
 			(_angle),
 			_center,
 			_flip);

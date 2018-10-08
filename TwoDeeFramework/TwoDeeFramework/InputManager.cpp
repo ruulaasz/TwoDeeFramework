@@ -7,7 +7,7 @@ namespace TDF
 {
 	InputManager::InputManager()
 	{
-
+		subscribe(TDF::SYSTEM_INPUT, 0);
 	}
 
 	InputManager::~InputManager()

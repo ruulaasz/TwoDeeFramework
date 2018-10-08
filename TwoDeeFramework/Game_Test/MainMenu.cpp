@@ -56,6 +56,7 @@ void MainMenu::update(float _deltaTime)
 
 void MainMenu::render()
 {
+	//grass
 	TDF::RenderManager::GetInstance().renderAnimation(m_grassAnim, 980, 850);
 
 	//bench
@@ -85,52 +86,39 @@ void MainMenu::render()
 	TDF::Scene::render();
 }
 
-void MainMenu::init(TDF::PhysicsWorld* _physicWorld)
+void MainMenu::init()
 {
-	//añadimos los actores al mundo
+	//creamos mundo fisico
+	TDF::Box2DManager::GetInstance().m_allWorlds["MainMenu"] = TDF::Box2DManager::GetInstance().createWorld("MainMenu");
+
+	//añadimos los actores al mundo virtual
 	m_world.addActor(&m_newGameB);
 	m_world.addActor(&m_quitGameB);
 
+	m_world.m_physics = TDF::Box2DManager::GetInstance().m_allWorlds["MainMenu"];
+
 	//se inicializa la escena asignandole un mundo fisico
-	TDF::Scene::init(_physicWorld);
+	TDF::Scene::init();
 
 	m_lightAlpha = 240;
 	m_alphaTarget = 0;
 
-	//background
+	//load assets
+	//Textures
 	m_background[0] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\abyss_wall.png");
 	m_background[1] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\mainmenu_background_0.png");
 	m_background[2] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\lighthouse_light.png");
 	m_background[3] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\bone_bench_lit.png");
 	m_background[4] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\title.png");
 
-	//new game button
-	m_newGameB.m_position.x = 860;
-	m_newGameB.m_position.y = 600;
-
-	//new game button text
+	//fonts
 	m_newGameB.m_text.get()->m_font = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Font>("fonts\\Perpetua.ttf");
-	m_newGameB.m_text.get()->resizeText(48);
-	m_newGameB.m_text.get()->setColor(TDF::Color(255, 255, 255));
-	m_newGameB.m_text.get()->setText("New Game");
-	m_newGameB.fitText();
-	m_newGameB.m_renderDebug = true;
-
-	//quit game button
-	m_quitGameB.m_position.x = 910;
-	m_quitGameB.m_position.y = 700;
-
-	//quit game button text
 	m_quitGameB.m_text.get()->m_font = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Font>("fonts\\Perpetua.ttf");
-	m_quitGameB.m_text->setColor(TDF::Color(255, 255, 255));
-	m_quitGameB.m_text->setText("Quit");
-	m_quitGameB.fitText();
-	m_quitGameB.m_renderDebug = true;
 
 	//music
 	m_backgroundMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("music\\Title.wav");
 
-	//button sfx
+	//sfx
 	m_newGameB.m_selectionSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("sfx\\ui_change_selection.wav");
 	m_quitGameB.m_selectionSFX = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Sfx>("sfx\\ui_change_selection.wav");
 
@@ -139,12 +127,22 @@ void MainMenu::init(TDF::PhysicsWorld* _physicWorld)
 
 	//animations
 	m_selectAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\light.xml");
+	m_grassAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\grass.xml");
+
+	//new game button
+	m_newGameB.m_position.x = 860;
+	m_newGameB.m_position.y = 600;
+	m_newGameB.init(48, TDF::Color(255, 255, 255), "New Game");
+	m_newGameB.m_renderDebug = true;
+
+	//quit game button
+	m_quitGameB.m_position.x = 910;
+	m_quitGameB.m_position.y = 700;
+	m_quitGameB.init(48, TDF::Color(255, 255, 255), "Quit");
+	m_quitGameB.m_renderDebug = true;
+
 	m_selectAnim->setAnimationSpeed(0.09f);
 	m_selectPosition.y = 200;
-	m_selectAnim->play();
-
-	m_grassAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\grass.xml");
-	m_grassAnim->play();
 }
 
 void MainMenu::checkButtons()

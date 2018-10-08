@@ -1,4 +1,5 @@
 #include "Level_1.h"
+#include "Knight.h"
 
 Level_1::Level_1()
 {
@@ -17,11 +18,20 @@ void Level_1::onEnter()
 	String name = "Player_info";
 	name = name + " visible=true";
 	TwDefine(name.c_str());
+
+	m_player->enterScene("Level1");
+	m_player->m_dynamicBody.setPosition(TDF::Vector2D(900, 500));
 }
 
 void Level_1::onExit()
 {
 	TDF::Scene::onExit();
+
+	String name = "Player_info";
+	name = name + " visible=false";
+	TwDefine(name.c_str());
+
+	m_world.m_physics->destroyBody(&m_player->m_dynamicBody);
 }
 
 void Level_1::update(float _deltaTime)
@@ -34,25 +44,23 @@ void Level_1::render()
 	TDF::Scene::render();
 }
 
-void Level_1::init(TDF::PhysicsWorld * _physicWorld)
+void Level_1::init()
 {
-	m_world.addActor(&m_player);
-	m_world.addActor(&m_platform);
+	//creamos mundo fisico
+	TDF::Box2DManager::GetInstance().m_allWorlds["Level1"] = TDF::Box2DManager::GetInstance().createWorld("Level1", TDF::Vector2D(0, 18));
+	m_world.m_physics = TDF::Box2DManager::GetInstance().m_allWorlds["Level1"];
 
-	TDF::Scene::init(_physicWorld);
+	TDF::Scene::init();
+	m_world.addActor(m_player);
 
-	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_player.m_id);
-	TDF::InputManager::GetInstance().subscribe(TDF::CONTROLLER_INPUT, m_player.m_id);
+	m_backgroundMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("music\\green_path_atmos_loop.wav");
 
-	m_world.m_physics->m_world->SetContactListener(&m_player.m_contactListener);
-
-	m_backgroundMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("music\\Dirtmouth.wav");
-
-	m_backgroundMusic.get()->play();
-
-	std::string s = "moon";
-	SDL_Rect r = SDL_Rect{ 900,800,100,100 };
+	//floor1
+	std::string s = "Level1";
+	SDL_Rect r = SDL_Rect{ 960, 950, 300, 50 };
 	int c = TDF::CI_PLATFORM;
+	TDF::Platform* p = new TDF::Platform();
 
-	m_platform.init(s, r, c);
+	p->init(s, r, c);
+	m_world.addActor(p);
 }

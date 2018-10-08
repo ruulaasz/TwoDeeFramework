@@ -16,6 +16,7 @@ public:
 
 	void setDirection(int _dir);
 	void jump();
+	void enterScene(std::string _sceneName);
 
 public:
 	std::shared_ptr<TDF::Texture> m_texture;
@@ -23,6 +24,7 @@ public:
 
 	float m_movementSpeed;
 	float m_jumpSpeed;
+
 	TDF::Vector2D m_physicsPosition;
 	TDF::Vector2D m_worldPosition;
 	TDF::Vector2D m_screenPosition;
@@ -33,8 +35,7 @@ public:
 	int m_currentJumps;
 
 	TDF::ContactListener m_contactListener;
-	TDF::DinamicBody m_dynamicBody;
-	std::string m_physicalWorld;
+	TDF::DynamicBody m_dynamicBody;
 
 	TwBar* infoBar;
 };

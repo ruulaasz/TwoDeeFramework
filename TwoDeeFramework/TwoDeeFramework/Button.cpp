@@ -48,8 +48,6 @@ namespace TDF
 					m_selectionSFX.get()->play(-1);
 				}
 
-
-
 				m_audioPlayed = true;
 			}
 		}

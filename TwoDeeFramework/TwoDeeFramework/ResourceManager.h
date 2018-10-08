@@ -49,8 +49,6 @@ namespace TDF
 			{
 				//Load it
 				newResource = Shared_Ptr<T>(new T());
-				newResource->setName(getNameFromPath(path));
-				newResource->setPath(path);
 				newResource->loadFromFile(path);
 
 				if (!newResource)

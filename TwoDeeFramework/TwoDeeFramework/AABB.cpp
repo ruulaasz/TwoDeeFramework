@@ -5,7 +5,8 @@ namespace TDF
 {
 	AABB::AABB()
 	{
-
+		m_width = 0;
+		m_height = 0;
 	}
 
 	AABB::AABB(const Vector2D & _position, float _width, float _height)

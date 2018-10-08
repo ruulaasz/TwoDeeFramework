@@ -86,9 +86,6 @@ namespace TDF
 		//! the number of created bars, the manager always starts with 1 bar.
 		int m_barCount;
 
-		//! A bar holding the antweakbar manager info.
-		TwBar *m_antwBar;
-
 		//! A bar holding the SDL manager info.
 		TwBar *m_sdlBar;
 

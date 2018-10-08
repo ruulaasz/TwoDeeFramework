@@ -37,12 +37,6 @@ namespace TDF
 		\param _message the receieved message.
 		*/
 		virtual void dispatchMessage(const InputMessage& _message);
-
-		//! Collision with something.
-		/*!
-		\param _tag the id of the collided object.
-		*/
-		virtual void onEnterCollision(int _tag) { _tag; };
 	
 	public:
 		//! If the button is selected.

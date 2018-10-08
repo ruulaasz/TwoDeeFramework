@@ -22,7 +22,7 @@ namespace TDF
 	{
 		if (m_backgroundMusic)
 		{
-			m_backgroundMusic->playFadeIn(1000);
+			m_backgroundMusic->playFadeIn(500);
 		}
 	}
 
@@ -44,8 +44,8 @@ namespace TDF
 		m_world.render();
 	}
 
-	void Scene::init(PhysicsWorld* _physicWorld)
+	void Scene::init()
 	{
-		m_world.init(_physicWorld);
+		m_world.init();
 	}
 }

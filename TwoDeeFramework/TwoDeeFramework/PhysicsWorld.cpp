@@ -1,4 +1,6 @@
 #include "PhysicsWorld.h"
+#include "DynamicBody.h"
+#include "StaticBody.h"
 
 namespace TDF
 {
@@ -33,5 +35,20 @@ namespace TDF
 	void PhysicsWorld::render()
 	{
 		m_world->DrawDebugData();
+	}
+
+	void PhysicsWorld::destroyBody(DynamicBody* _body)
+	{
+		m_world->DestroyBody(_body->m_body);
+	}
+
+	void PhysicsWorld::destroyBody(StaticBody* _body)
+	{
+		m_world->DestroyBody(_body->m_body);
+	}
+
+	b2Body* PhysicsWorld::createBody(const b2BodyDef * _def)
+	{
+		return m_world->CreateBody(_def);
 	}
 }

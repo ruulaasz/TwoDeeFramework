@@ -7,6 +7,7 @@
 
 namespace TDF
 {
+	//Forward declarations
 	class Circle;
 	class AABB;
 	class Vector2D;
@@ -71,6 +72,7 @@ namespace TDF
 
 		//! Render the texture in a given position.
 		/*!
+		\param _texture a pointer to the texture.
 		\param _x an integer for the X position.
 		\param _y an integer for the Y position.
 		\param _angle the rotation angle of the texture.
@@ -84,14 +86,16 @@ namespace TDF
 
 		//! Render the texture in a given position.
 		/*!
-		\param _x an integer for the X position.
-		\param _y an integer for the Y position.
+		\param _texture a pointer to the texture.
+		\param _src the source rect.
+		\param _dst the destination rect.
 		\param _angle the rotation angle of the texture.
+		\param _center the center of rotation.
 		\param _flip if the texture is going to be flipped in the given direction.
 		*/
 		void renderTextureEx(Shared_Ptr<Texture> _texture,
-							 SDL_Rect src,
-							 SDL_Rect dst,
+							 SDL_Rect _src,
+							 SDL_Rect _dst,
 							 float _angle = 0,
 							 SDL_Point* _center = nullptr,
 							 SDL_RendererFlip _flip = SDL_FLIP_NONE);

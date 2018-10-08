@@ -14,7 +14,6 @@ namespace TDF
 		m_handled = 0;
 		m_barCount = 0;
 
-		m_antwBar = nullptr;
 		m_sdlBar = nullptr;
 		m_guiBar = nullptr;
 	}
@@ -76,10 +75,13 @@ namespace TDF
 
 	void AnttweakbarManager::init()
 	{
+		//init library
 		TwInit(TW_DIRECT3D9, SDL_RenderGetD3D9Device(SDL_Manager::GetInstance().m_renderer));
+
 		TwWindowSize(SDL_Manager::GetInstance().m_windowWidth, 
 					 SDL_Manager::GetInstance().m_windowHeight);
 
+		//hide gui bar
 		AntTweakBarInfo info;
 		info.size = " size='200 5' ";
 		info.position = " position='800 0' ";
@@ -97,6 +99,7 @@ namespace TDF
 					NULL,
 					TEXT(" label='Toggle framework GUI' "));
 
+		//SDLmanager bar
 		info.size = " size='250 160' ";
 		info.position = " position='1800 0' ";
 		m_sdlBar = createCustomBar(TEXT("SDLManager_Info"), info);
@@ -139,6 +142,7 @@ namespace TDF
 	{
 		TwBar* newBar = TwNewBar(TEXT(_barName));
 
+		//default values
 		string s = _barName;
 		s += " color='255 128 255' alpha=180 ";
 		TwDefine(s.c_str());

@@ -40,13 +40,9 @@ namespace TDF
 		}
 	}
 
-	void World::init(PhysicsWorld* _physicWorld)
+	void World::init()
 	{
-		if (_physicWorld)
-		{
-			m_physics = _physicWorld;
-		}
-		else
+		if(!m_physics)
 		{
 			m_physics = Box2DManager::GetInstance().getWorld("earth");
 		}
@@ -59,7 +55,6 @@ namespace TDF
 
 	void World::addActor(Actor * _actor)
 	{
-		_actor->m_id = SceneManager::GetInstance().getID();
 		m_allActors.push_back(_actor);
 	}
 }

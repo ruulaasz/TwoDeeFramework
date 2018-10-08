@@ -4,7 +4,7 @@ namespace TDF
 {
 	StaticBody::StaticBody()
 	{
-		m_staticBody = nullptr;
+		m_body = nullptr;
 	}
 
 	StaticBody::~StaticBody()
@@ -18,7 +18,7 @@ namespace TDF
 
 		if (world)
 		{
-			m_staticBody = world->m_world->CreateBody(&_bodyDef);
+			m_body = world->m_world->CreateBody(&_bodyDef);
 		}
 		else
 		{
@@ -28,13 +28,13 @@ namespace TDF
 
 	void TDF::StaticBody::addFixture(const b2FixtureDef & _fixtureDef)
 	{
-		if (m_staticBody)
+		if (m_body)
 		{
-			m_staticBody->CreateFixture(&_fixtureDef);
+			m_body->CreateFixture(&_fixtureDef);
 		}
 		else
 		{
-			printf("Dinamic body is null");
+			printf("Static body is null");
 		}
 	}
 }

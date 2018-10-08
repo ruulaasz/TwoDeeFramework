@@ -38,6 +38,8 @@ namespace TDF
 	public:
 		//! The current runing scene.
 		Scene* m_activeScene;
+
+		//! A map with all loaded scenes.
 		UnorderedMap<string, Scene*> m_allScenes;
 
 	private:

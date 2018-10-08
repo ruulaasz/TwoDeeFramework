@@ -6,10 +6,17 @@
 
 namespace TDF
 {
+	//!  A True Type Font
 	class Font : public Resource
 	{
 	public:
+		//! Default constructor.
+		/*!
+		Initialize the members of the class.
+		*/
 		Font();
+
+		//! Default destructor.
 		~Font();
 
 		//! A virtual function used to load the Font.

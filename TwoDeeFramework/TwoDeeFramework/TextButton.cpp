@@ -23,6 +23,17 @@ namespace TDF
 		}
 	}
 
+	void TextButton::init(int _size, Color _color, String _text)
+	{
+		if (m_text)
+		{
+			m_text.get()->resizeText(_size);
+			m_text.get()->setColor(_color);
+			m_text.get()->setText(_text);
+			fitText();
+		}
+	}
+
 	void TextButton::fitText()
 	{
 		if (m_text)

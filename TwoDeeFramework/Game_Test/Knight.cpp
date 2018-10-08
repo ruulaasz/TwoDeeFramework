@@ -29,11 +29,9 @@ void Knight::update(float _deltaTime)
 		m_canJump = false;
 	}
 
-	m_velocity.x = m_dynamicBody.m_body->GetLinearVelocity().x;
-	m_velocity.y = m_dynamicBody.m_body->GetLinearVelocity().y;
+	m_velocity = m_dynamicBody.getLinearVelocity();
 
-	m_physicsPosition.x = m_dynamicBody.m_body->GetPosition().x;
-	m_physicsPosition.y = m_dynamicBody.m_body->GetPosition().y;
+	m_physicsPosition = m_dynamicBody.getPosition();
 
 	m_worldPosition = m_physicsPosition * PHYSICS_TO_WORLD;
 }
@@ -47,7 +45,6 @@ void Knight::init()
 	//anttweak bars init
 	TDF::AntTweakBarInfo info;
 	info.size = " size='300 300' ";
-	info.position = " position='0 500' ";
 	infoBar = TDF::AnttweakbarManager::GetInstance().createCustomBar(TEXT("Player_info"), info);
 
 	TwAddVarRO(infoBar, TEXT("position x:"), TW_TYPE_FLOAT, &m_worldPosition.x, TEXT(" label='position x:' precision=2"));
@@ -62,30 +59,8 @@ void Knight::init()
 	name = name + " visible=false";
 	TwDefine(name.c_str());
 
-	//physics world
-	m_physicalWorld = "moon";
-
-	//body definition
-	b2BodyDef myBodyDef;
-	myBodyDef.type = b2_dynamicBody;
-	myBodyDef.position.Set(900.0f * WORLD_TO_PHYSICS, 500.0f * WORLD_TO_PHYSICS);
-
-	m_dynamicBody.init(myBodyDef, m_physicalWorld);
-
-	//shape definition
-	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox(m_texture->m_width / 2.0f * WORLD_TO_PHYSICS, m_texture->m_height / 2.0f * WORLD_TO_PHYSICS);
-
-	//add fixture
-	b2FixtureDef myFixtureDef;
-	myFixtureDef.shape = &polygonShape;
-	myFixtureDef.density = 1;
-	myFixtureDef.friction = 0.0f;
-	m_dynamicBody.addFixture(myFixtureDef);
-
-	//body setup
-	m_dynamicBody.m_body->SetUserData(this);
-	m_dynamicBody.m_body->SetFixedRotation(true);
+	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_id);
+	TDF::InputManager::GetInstance().subscribe(TDF::CONTROLLER_INPUT, m_id);
 }
 
 void Knight::render()
@@ -204,11 +179,11 @@ void Knight::dispatchMessage(const TDF::InputMessage & _message)
 
 void Knight::setDirection(int _dir)
 {
-	b2Vec2 vel = m_dynamicBody.m_body->GetLinearVelocity();
+	TDF::Vector2D vel = m_dynamicBody.getLinearVelocity();
 
 	vel.x = m_movementSpeed * _dir;
 
-	m_dynamicBody.m_body->SetLinearVelocity(vel);
+	m_dynamicBody.setLinearVelocity(vel);
 }
 
 void Knight::jump()
@@ -221,9 +196,37 @@ void Knight::jump()
 	if (m_canJump)
 	{
 		m_jumpSFX->play(-1);
-		b2Vec2 vel = m_dynamicBody.m_body->GetLinearVelocity();
+
+		TDF::Vector2D vel = m_dynamicBody.getLinearVelocity();
 		vel.y = -m_jumpSpeed;
-		m_dynamicBody.m_body->SetLinearVelocity(vel);
+		m_dynamicBody.setLinearVelocity(vel);
+
 		m_currentJumps++;
 	}
+}
+
+void Knight::enterScene(std::string _sceneName)
+{
+	//body definition
+	b2BodyDef myBodyDef;
+	myBodyDef.type = b2_dynamicBody;
+
+	m_dynamicBody.init(myBodyDef, _sceneName);
+
+	//shape definition
+	b2PolygonShape polygonShape;
+	polygonShape.SetAsBox(m_texture->m_width / 2.0f * WORLD_TO_PHYSICS, m_texture->m_height / 2.0f * WORLD_TO_PHYSICS);
+
+	//add fixture
+	b2FixtureDef myFixtureDef;
+	myFixtureDef.shape = &polygonShape;
+	myFixtureDef.density = 1;
+	myFixtureDef.friction = 0.0f;
+	m_dynamicBody.addFixture(myFixtureDef);
+
+	//body setup
+	m_dynamicBody.setUserData(this);
+	m_dynamicBody.setFixedRotation(true);
+
+	TDF::Box2DManager::GetInstance().m_allWorlds[_sceneName]->m_world->SetContactListener(&m_contactListener);
 }
