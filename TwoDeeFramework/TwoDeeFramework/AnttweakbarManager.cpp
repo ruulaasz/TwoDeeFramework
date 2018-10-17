@@ -1,9 +1,10 @@
 #include "AnttweakbarManager.h"
 #include "SDL_Manager.h"
 #include "StdHeaders.h"
+#include "CameraManager.h"
 
 #define DEFAULT_BARS 2
-#define GUI_BARS 2
+#define GUI_BARS 3
 
 namespace TDF
 {
@@ -12,10 +13,10 @@ namespace TDF
 	AnttweakbarManager::AnttweakbarManager()
 	{
 		m_handled = 0;
-		m_barCount = 0;
 
 		m_sdlBar = nullptr;
 		m_guiBar = nullptr;
+		m_cameraBar = nullptr;
 	}
 
 	AnttweakbarManager::~AnttweakbarManager()
@@ -133,6 +134,41 @@ namespace TDF
 				   TW_TYPE_INT32, 
 				   &SDL_Manager::GetInstance().m_mousePosY, 
 				   TEXT(" group=Mouse label='Mouse posY:' "));
+
+		//Cameramanager bar
+		info.size = " size='250 160' ";
+		info.position = " position='0 0' ";
+		m_cameraBar = createCustomBar(TEXT("Camera_Info"), info);
+
+		TwAddVarRO(m_cameraBar,
+			TEXT("Camera width:"),
+			TW_TYPE_FLOAT,
+			&CameraManager::GetInstance().m_camera.m_areaBox.m_width,
+			TEXT(" group=Camera label='Camera width:' "));
+
+		TwAddVarRO(m_cameraBar,
+			TEXT("Camera height:"),
+			TW_TYPE_FLOAT,
+			&CameraManager::GetInstance().m_camera.m_areaBox.m_height,
+			TEXT(" group=Camera label='Camera height:' "));
+
+		TwAddVarRO(m_cameraBar,
+			TEXT("Camera posX:"),
+			TW_TYPE_FLOAT,
+			&CameraManager::GetInstance().m_camera.m_areaBox.m_position.x,
+			TEXT(" group=Camera label='Camera posX:' "));
+
+		TwAddVarRO(m_cameraBar,
+			TEXT("Mouse posY:"),
+			TW_TYPE_FLOAT,
+			&CameraManager::GetInstance().m_camera.m_areaBox.m_position.y,
+			TEXT(" group=Camera label='Mouse posY:' "));
+
+		TwAddVarRO(m_cameraBar,
+			TEXT("Actors on camera:"),
+			TW_TYPE_INT32,
+			&CameraManager::GetInstance().m_actorsOnScreen,
+			TEXT(" group=World label='Actors on camera:' "));
 		
 		TwDefine(" GLOBAL contained=true ");
 		TwDefine(" TW_HELP visible=false ");
@@ -167,8 +203,6 @@ namespace TDF
 		s += " refresh=0.01 ";
 		TwDefine(s.c_str());
 
-		m_barCount = TwGetBarCount();
-
 		return  newBar;
 	}
 
@@ -199,8 +233,6 @@ namespace TDF
 		s = _barName;
 		s += _info.refresh;
 		TwDefine(s.c_str());
-
-		m_barCount = TwGetBarCount();
 
 		return  newBar;
 	}

@@ -33,7 +33,7 @@ namespace TDF
 		//! The box position.
 		Vector2D m_position;
 
-		//! The box width..
+		//! The box width.
 		float m_width;
 
 		//! The box height.

@@ -79,9 +79,9 @@ namespace TDF
 		renderCircle(_circle.m_radius, _circle.m_center.x, _circle.m_center.x);
 	}
 
-	void RenderManager::renderBox(const AABB & _box)
+	void RenderManager::renderBox(const AABB & _box, Color _color)
 	{
-		setRenderDrawColor(Color(0,0,0));
+		setRenderDrawColor(_color);
 
 		SDL_Rect rect;
 		rect.h = static_cast<int>(_box.m_height);

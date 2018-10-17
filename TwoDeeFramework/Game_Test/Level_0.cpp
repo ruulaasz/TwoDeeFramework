@@ -3,7 +3,7 @@
 
 Level_0::Level_0()
 {
-
+	m_player = nullptr;
 }
 
 Level_0::~Level_0()
@@ -57,12 +57,13 @@ void Level_0::init()
 
 	//floor1
 	std::string s = "Level0";
-	SDL_Rect r = SDL_Rect{ 960, 950, 1000, 50 };
+	SDL_Rect r = SDL_Rect{ 2000, 950, 2000, 50 };
 	int c = TDF::CI_PLATFORM;
 	TDF::Platform* p = new TDF::Platform();
-
 	p->init(s, r, c);
 	m_world.addActor(p);
+
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
 
 	//bump1
 	r = SDL_Rect{ 900, 800, 100, 100 };
@@ -71,6 +72,8 @@ void Level_0::init()
 	p->init(s, r, c);
 	m_world.addActor(p);
 
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
+
 	//bump1 recharge
 	r = SDL_Rect{ 900, 705, 95, 5 };
 	c = TDF::CI_PLATFORM;
@@ -78,10 +81,23 @@ void Level_0::init()
 	p->init(s, r, c);
 	m_world.addActor(p);
 
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
+
 	//wall1
 	r = SDL_Rect{ 50, 540, 50, 540 };
 	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
+
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
+
+	//wall2
+	r = SDL_Rect{ 3000, 540, 50, 540 };
+	c = 0;
+	p = new TDF::Platform();
+	p->init(s, r, c);
+	m_world.addActor(p);
+
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
 }

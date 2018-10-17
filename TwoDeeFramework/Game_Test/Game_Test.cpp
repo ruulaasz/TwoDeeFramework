@@ -13,6 +13,7 @@ TDF::SceneManager* g_SceneManager;
 TDF::SystemManager* g_SystemManager;
 TDF::AudioManager* g_AudioManager;
 TDF::AnttweakbarManager* g_AnttweakbarManager;
+TDF::CameraManager* g_CameraManager;
 
 Uint64 g_time = SDL_GetPerformanceCounter();
 Uint64 g_lastTime = 0;
@@ -38,6 +39,9 @@ void initManagers()
 	TDF::RenderManager::StartModule();
 	g_RenderManager = TDF::RenderManager::GetPointerInstance();
 	g_RenderManager->init();
+
+	TDF::CameraManager::StartModule();
+	g_CameraManager = TDF::CameraManager::GetPointerInstance();
 
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
@@ -81,7 +85,7 @@ void initScenes()
 	g_SceneManager->m_allScenes["Level1"] = g_level1;
 	g_SceneManager->m_allScenes["Level1"]->init();
 
-	g_SceneManager->setActiveScene("MainMenu");
+	g_SceneManager->setActiveScene("Level0");
 }
 
 void render()
@@ -95,12 +99,12 @@ void render()
 	g_AnttweakbarManager->render();
 
 	g_RenderManager->setRenderTarget();
-	g_RenderManager->setRenderDrawColor(TDF::Color(0, 0, 0));
+	g_RenderManager->setRenderDrawColor(TDF::Color(255, 255, 255));
 	g_RenderManager->renderClear();
 
 	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER],0, 0);
 
-	//g_RenderManager->saveTextureAsPNG("test", g_RenderManager->m_renderTargets[TDF::GBUFFER]);
+	//g_RenderManager->saveTextureAsPNG("test.png", g_RenderManager->m_renderTargets[TDF::GBUFFER]);
 
 	g_RenderManager->renderPresent();
 }

@@ -2,9 +2,12 @@
 
 #include "Actor.h"
 #include "StaticBody.h"
+#include "StdHeaders.h"
 
 namespace TDF
 {
+	class Texture;
+
 	//!  A 2d platform
 	class Platform : public Actor
 	{
@@ -26,11 +29,17 @@ namespace TDF
 		*/
 		void init(String _world, SDL_Rect _dimentions, int _collitionID);
 
+		//! Render the platform.
+		virtual void render();
+
 	public:
 		//! The body of the platform.
 		StaticBody m_body;
 
-		//! The position of the platform in the world.
-		Vector2D m_worldPosition;
+		//! The dimentions of the platform.
+		Vector2D m_dimentions;
+
+		//! The texture of the platform.
+		Shared_Ptr<Texture> m_texture;
 	};
 }

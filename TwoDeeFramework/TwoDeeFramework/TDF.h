@@ -37,3 +37,5 @@
 #include "Font.h"
 #include "TextButton.h"
 #include "Animation.h"
+#include "Camera2D.h"
+#include "CameraManager.h"

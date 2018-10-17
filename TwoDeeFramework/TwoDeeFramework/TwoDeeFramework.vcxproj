@@ -159,6 +159,8 @@
     <ClInclude Include="Box2DDraw.h" />
     <ClInclude Include="Box2DManager.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Camera2D.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="ContactListener.h" />
@@ -201,6 +203,8 @@
     <ClCompile Include="Box2DDraw.cpp" />
     <ClCompile Include="Box2DManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera2D.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="ContactListener.cpp" />

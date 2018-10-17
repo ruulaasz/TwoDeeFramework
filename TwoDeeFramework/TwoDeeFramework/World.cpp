@@ -6,7 +6,7 @@ namespace TDF
 {
 	World::World()
 	{
-		
+		m_physics = nullptr;
 	}
 
 	World::~World()
@@ -29,14 +29,17 @@ namespace TDF
 
 	void World::render()
 	{
-		if (m_physics)
-		{
-			m_physics->render();
-		}
-
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
-			m_allActors.at(i)->render();
+			if (m_allActors.at(i)->m_rendereable)
+			{
+				m_allActors.at(i)->render();
+			}
+		}
+
+		if (m_physics)
+		{
+			//m_physics->render();
 		}
 	}
 

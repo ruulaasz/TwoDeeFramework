@@ -67,8 +67,8 @@ namespace TDF
 
 	void Texture::createAsRenderTarget()
 	{
-		int w = SDL_Manager::GetInstance().m_windowWidth;
-		int h = SDL_Manager::GetInstance().m_windowHeight;
+		int w = SDL_Manager::GetInstance().m_windowWidth * 2;
+		int h = SDL_Manager::GetInstance().m_windowHeight * 2;
 
 		m_sdlTexture = SDL_CreateTexture(SDL_Manager::GetInstance().m_renderer, 
 										 SDL_PIXELFORMAT_RGBA8888,

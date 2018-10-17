@@ -60,7 +60,7 @@ namespace TDF
 		/*!
 		\param _box the box to render.
 		*/
-		void renderBox(const AABB& _box);
+		void renderBox(const AABB& _box, Color _color = Color(255,0,0));
 
 		//! Render a box
 		/*!

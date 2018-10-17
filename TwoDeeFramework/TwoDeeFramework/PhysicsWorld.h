@@ -23,7 +23,7 @@ namespace TDF
 		/*!
 		\param _world a pointer to a box2d world.
 		*/
-		PhysicsWorld(b2World* _world);
+		explicit PhysicsWorld(b2World* _world);
 
 		//! Default destructor.
 		~PhysicsWorld();

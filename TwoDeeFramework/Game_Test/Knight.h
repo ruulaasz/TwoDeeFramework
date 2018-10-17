@@ -25,9 +25,6 @@ public:
 	float m_movementSpeed;
 	float m_jumpSpeed;
 
-	TDF::Vector2D m_physicsPosition;
-	TDF::Vector2D m_worldPosition;
-	TDF::Vector2D m_screenPosition;
 	TDF::Vector2D m_velocity;
 
 	bool m_canJump;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "InputMessage.h"
+#include "Vector2D.h"
+#include "AABB.h"
 
 namespace TDF
 {
@@ -47,5 +49,16 @@ namespace TDF
 
 		//! The actor id.
 		int m_id;
+
+		//! The position in the world.
+		Vector2D m_worldPosition;
+
+		//! The position in the screen.
+		Vector2D m_screenPosition;
+
+		//! The bounding box of the actor.
+		AABB m_boundingBox;
+
+		bool m_rendereable;
 	};
 }

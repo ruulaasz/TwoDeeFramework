@@ -55,7 +55,7 @@ namespace TDF
 			printf("SDL_Init VIDEO failed: %s\n", SDL_GetError());
 		}
 
-		IMG_Init(IMG_INIT_PNG);
+		IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
 		if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		{

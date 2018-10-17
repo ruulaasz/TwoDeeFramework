@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "AudioManager.h"
+#include "CameraManager.h"
 
 namespace TDF
 {
@@ -37,6 +38,8 @@ namespace TDF
 	void Scene::update(float _deltaTime)
 	{
 		m_world.update(_deltaTime);
+
+		CameraManager::GetInstance().checkWorld(&m_world);
 	}
 
 	void Scene::render()

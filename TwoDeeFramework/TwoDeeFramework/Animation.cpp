@@ -72,7 +72,7 @@ namespace TDF
 			m_sprites.push_back(s);
 		}
 
-		m_frameCount = m_sprites.size();
+		m_frameCount = static_cast<int>(m_sprites.size());
 	}
 
 	void Animation::free()

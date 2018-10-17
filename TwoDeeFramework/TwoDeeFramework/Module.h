@@ -12,7 +12,7 @@ namespace TDF
 	protected:
 		static _type*& instance() 
 		{
-			static _type* instance = NULL;
+			static _type* instance = nullptr;
 			return instance;
 		}
 

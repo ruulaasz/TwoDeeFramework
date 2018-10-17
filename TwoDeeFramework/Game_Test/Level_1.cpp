@@ -3,7 +3,7 @@
 
 Level_1::Level_1()
 {
-
+	m_player = nullptr;
 }
 
 Level_1::~Level_1()
@@ -60,6 +60,8 @@ void Level_1::init()
 	SDL_Rect r = SDL_Rect{ 960, 950, 300, 50 };
 	int c = TDF::CI_PLATFORM;
 	TDF::Platform* p = new TDF::Platform();
+
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.jpg");
 
 	p->init(s, r, c);
 	m_world.addActor(p);

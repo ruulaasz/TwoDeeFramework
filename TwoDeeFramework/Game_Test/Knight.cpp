@@ -31,9 +31,13 @@ void Knight::update(float _deltaTime)
 
 	m_velocity = m_dynamicBody.getLinearVelocity();
 
-	m_physicsPosition = m_dynamicBody.getPosition();
+	m_worldPosition = m_dynamicBody.getPosition() * PHYSICS_TO_WORLD;
 
-	m_worldPosition = m_physicsPosition * PHYSICS_TO_WORLD;
+	m_boundingBox.m_position.x = m_worldPosition.x - m_texture->m_width / 2.0f;
+	m_boundingBox.m_position.y = m_worldPosition.y - m_texture->m_height / 2.0f;
+
+	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = m_worldPosition.x - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_width / 2);
+	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = m_worldPosition.y - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_height / 2);
 }
 
 void Knight::init()
@@ -45,6 +49,7 @@ void Knight::init()
 	//anttweak bars init
 	TDF::AntTweakBarInfo info;
 	info.size = " size='300 300' ";
+	info.position = " position='0 700' ";
 	infoBar = TDF::AnttweakbarManager::GetInstance().createCustomBar(TEXT("Player_info"), info);
 
 	TwAddVarRO(infoBar, TEXT("position x:"), TW_TYPE_FLOAT, &m_worldPosition.x, TEXT(" label='position x:' precision=2"));
@@ -65,10 +70,16 @@ void Knight::init()
 
 void Knight::render()
 {
-	int renderPosx = static_cast<int>(m_worldPosition.x - m_texture->m_width / 2);
-	int renderPosy = static_cast<int>(m_worldPosition.y - m_texture->m_height / 2);
+	int renderPosx = static_cast<int>(m_screenPosition.x - m_texture->m_width / 2);
+	int renderPosy = static_cast<int>(m_screenPosition.y - m_texture->m_height / 2);
 
 	TDF::RenderManager::GetInstance().renderTexture(m_texture, renderPosx, renderPosy);
+
+	TDF::AABB renderBox = m_boundingBox;
+	renderBox.m_position.x = renderPosx;
+	renderBox.m_position.y = renderPosy;
+
+	TDF::RenderManager::GetInstance().renderBox(renderBox);
 }
 
 void Knight::onEnterCollision(int _tag)
@@ -216,6 +227,9 @@ void Knight::enterScene(std::string _sceneName)
 	//shape definition
 	b2PolygonShape polygonShape;
 	polygonShape.SetAsBox(m_texture->m_width / 2.0f * WORLD_TO_PHYSICS, m_texture->m_height / 2.0f * WORLD_TO_PHYSICS);
+
+	m_boundingBox.m_width = m_texture->m_width;
+	m_boundingBox.m_height = m_texture->m_height;
 
 	//add fixture
 	b2FixtureDef myFixtureDef;
