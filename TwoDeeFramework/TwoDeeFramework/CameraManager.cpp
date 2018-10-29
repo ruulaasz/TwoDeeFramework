@@ -1,6 +1,6 @@
 #include "CameraManager.h"
 #include "World.h"
-#include "SDL_Manager.h"
+#include "RenderManager.h"
 
 namespace TDF
 {
@@ -25,21 +25,30 @@ namespace TDF
 			{
 				_world->m_allActors.at(i)->m_screenPosition = _world->m_allActors.at(i)->m_worldPosition - m_camera.m_areaBox.m_position;
 				_world->m_allActors.at(i)->m_rendereable = true;
-				m_actorsOnScreen++;
+				++m_actorsOnScreen;
+			}
+			else
+			{
+				_world->m_allActors.at(i)->m_rendereable = false;
 			}
 		}
 	}
 
 	bool CameraManager::checkCollision(Actor * _actor)
 	{
-		if (m_camera.m_areaBox.m_position.x + m_camera.m_areaBox.m_width >= _actor->m_boundingBox.m_position.x &&    // r1 right edge past r2 left
-			m_camera.m_areaBox.m_position.x <= _actor->m_boundingBox.m_position.x + _actor->m_boundingBox.m_width &&    // r1 left edge past r2 right
+		if (m_camera.m_areaBox.m_position.x + m_camera.m_areaBox.m_width >= _actor->m_boundingBox.m_position.x &&		// r1 right edge past r2 left
+			m_camera.m_areaBox.m_position.x <= _actor->m_boundingBox.m_position.x + _actor->m_boundingBox.m_width &&   // r1 left edge past r2 right
 			m_camera.m_areaBox.m_position.y + m_camera.m_areaBox.m_height >= _actor->m_boundingBox.m_position.y &&    // r1 top edge past r2 bottom
-			m_camera.m_areaBox.m_position.y <= _actor->m_boundingBox.m_position.y + _actor->m_boundingBox.m_height) // r1 bottom edge past r2 top
+			m_camera.m_areaBox.m_position.y <= _actor->m_boundingBox.m_position.y + _actor->m_boundingBox.m_height)	 // r1 bottom edge past r2 top
 		{    
 			return true;
 		}
 
 		return false;
+	}
+
+	void CameraManager::renderCamera()
+	{
+		//RenderManager::GetInstance().renderBox(m_camera.m_areaBox);
 	}
 }

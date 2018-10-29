@@ -29,6 +29,8 @@ void MainMenu::onEnter()
 	//reset animations
 	m_selectAnim->play();
 	m_grassAnim->play();
+
+	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.reset();
 }
 
 void MainMenu::onExit()
@@ -60,20 +62,20 @@ void MainMenu::render()
 	TDF::RenderManager::GetInstance().renderAnimation(m_grassAnim, 980, 850);
 
 	//bench
-	TDF::RenderManager::GetInstance().renderTexture(m_background[3], 850, 850);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[3].m_texture, 850, 850);
 	
 	//light
-	TDF::RenderManager::GetInstance().renderTexture(m_background[2], 0, 500);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[2].m_texture, 0, 500);
 
 	//title
-	TDF::RenderManager::GetInstance().renderTexture(m_background[4], 560, 150);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[4].m_texture, 560, 150);
 
 	//background
-	TDF::RenderManager::GetInstance().renderTexture(m_background[1], 175, 0);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[1].m_texture, 175, 0);
 
 	//pillars
-	TDF::RenderManager::GetInstance().renderTexture(m_background[0], -380, 0);
-	TDF::RenderManager::GetInstance().renderTexture(m_background[0], 1720, 0);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[0].m_texture, -380, 0);
+	TDF::RenderManager::GetInstance().renderTexture(m_background[0].m_texture, 1720, 0);
 
 	//button select light
 	TDF::RenderManager::GetInstance().renderAnimation(m_selectAnim, 
@@ -105,11 +107,11 @@ void MainMenu::init()
 
 	//load assets
 	//Textures
-	m_background[0] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\abyss_wall.png");
-	m_background[1] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\mainmenu_background_0.png");
-	m_background[2] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\lighthouse_light.png");
-	m_background[3] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\bone_bench_lit.png");
-	m_background[4] = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\title.png");
+	m_background[0].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\abyss_wall.png");
+	m_background[1].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\mainmenu_background_0.png");
+	m_background[2].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\lighthouse_light.png");
+	m_background[3].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\bone_bench_lit.png");
+	m_background[4].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\title.png");
 
 	//fonts
 	m_newGameB.m_text.get()->m_font = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Font>("fonts\\Perpetua.ttf");
@@ -149,7 +151,7 @@ void MainMenu::checkButtons()
 {
 	if (m_newGameB.m_pressed)
 	{
-		TDF::SceneManager::GetInstance().setActiveScene("Level0");
+		TDF::SceneManager::GetInstance().setActiveScene("LevelEvo");
 	}
 
 	if (m_quitGameB.m_pressed)
@@ -178,8 +180,8 @@ void MainMenu::checkButtons()
 
 void MainMenu::lightEffect(float _deltaTime)
 {
-	m_background[2]->setAlpha(static_cast<Uint8>(m_lightAlpha));
-	m_background[3]->setAlpha(static_cast<Uint8>(m_lightAlpha));
+	m_background[2].m_texture->setAlpha(static_cast<Uint8>(m_lightAlpha));
+	m_background[3].m_texture->setAlpha(static_cast<Uint8>(m_lightAlpha));
 	m_grassAnim->setAlpha(static_cast<Uint8>(m_lightAlpha));
 
 	m_lightAlpha = lerp(m_lightAlpha, m_alphaTarget, _deltaTime / 2);

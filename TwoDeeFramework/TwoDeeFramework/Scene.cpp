@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "AudioManager.h"
 #include "CameraManager.h"
+#include "RenderManager.h"
 
 namespace TDF
 {
@@ -8,7 +9,7 @@ namespace TDF
 	{
 		for (size_t i = 0; i < BACKGROUND_TEXTURES; i++)
 		{
-			m_background[i] = nullptr;
+			m_background[i].m_texture = nullptr;
 		}
 
 		m_backgroundMusic = nullptr;

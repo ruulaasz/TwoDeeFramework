@@ -47,7 +47,7 @@ void Level_1::render()
 void Level_1::init()
 {
 	//creamos mundo fisico
-	TDF::Box2DManager::GetInstance().m_allWorlds["Level1"] = TDF::Box2DManager::GetInstance().createWorld("Level1", TDF::Vector2D(0, 18));
+	TDF::Box2DManager::GetInstance().m_allWorlds["Level1"] = TDF::Box2DManager::GetInstance().createWorld("Level1", TDF::Vector2D(0, 25));
 	m_world.m_physics = TDF::Box2DManager::GetInstance().m_allWorlds["Level1"];
 
 	TDF::Scene::init();

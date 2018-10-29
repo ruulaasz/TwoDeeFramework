@@ -18,6 +18,8 @@ namespace TDF
 
 		bool checkCollision(Actor* _actor);
 
+		void renderCamera();
+
 		Camera2D m_camera;
 
 		int m_actorsOnScreen;

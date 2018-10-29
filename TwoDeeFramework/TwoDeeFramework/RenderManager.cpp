@@ -145,7 +145,9 @@ namespace TDF
 										int _x, 
 										int _y, 
 										float _angle, 
-										float _scale)
+										float _scale, 
+										SDL_Point* _center,
+										SDL_RendererFlip _flip)
 	{
 		Sprite sprite = _anim.get()->getCurrentSprite();
 
@@ -159,7 +161,7 @@ namespace TDF
 							 static_cast<int>(sprite.m_dimentions.x * _scale),
 							 static_cast<int>(sprite.m_dimentions.y * _scale) };
 
-		renderTextureEx(_anim.get()->m_atlas, quadSrc, quadDst, _angle);
+		renderTextureEx(_anim.get()->m_atlas, quadSrc, quadDst, _angle, _center, _flip);
 	}
 
 	void RenderManager::saveTextureAsPNG(const char * _name, Shared_Ptr<Texture> _texture)

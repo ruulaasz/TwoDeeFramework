@@ -149,17 +149,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EvoCube.cpp" />
+    <ClCompile Include="Fin.cpp" />
     <ClCompile Include="Game_Test.cpp" />
+    <ClCompile Include="Jaws.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="LevelEvo.cpp" />
     <ClCompile Include="Level_0.cpp" />
     <ClCompile Include="Level_1.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Tail.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EvoCube.h" />
+    <ClInclude Include="Fin.h" />
+    <ClInclude Include="Jaws.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="LevelEvo.h" />
     <ClInclude Include="Level_0.h" />
     <ClInclude Include="Level_1.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Tail.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

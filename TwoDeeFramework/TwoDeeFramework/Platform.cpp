@@ -56,12 +56,15 @@ namespace TDF
 
 	void Platform::render()
 	{
-		SDL_Rect quadSrc = { 0, 0, m_texture.get()->m_width, m_texture.get()->m_height };
-		SDL_Rect quadDst = { m_screenPosition.x , m_screenPosition.y , m_dimentions.x, m_dimentions.y };
+		if (m_texture)
+		{
+			SDL_Rect quadSrc = { 0, 0, m_texture.get()->m_width, m_texture.get()->m_height };
+			SDL_Rect quadDst = { m_screenPosition.x , m_screenPosition.y , m_dimentions.x, m_dimentions.y };
 
-		RenderManager::GetInstance().renderTextureEx(m_texture, quadSrc, quadDst);
+			RenderManager::GetInstance().renderTextureEx(m_texture, quadSrc, quadDst);
+		}
 
-		TDF::AABB renderBox = m_boundingBox;
+		AABB renderBox = m_boundingBox;
 		renderBox.m_position = m_screenPosition;
 
 		RenderManager::GetInstance().renderBox(renderBox);

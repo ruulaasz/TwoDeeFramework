@@ -117,7 +117,10 @@ namespace TDF
 		\param _angle the rotation angle of the texture.
 		\param _scale to scale the size of the animation frames.
 		*/
-		void renderAnimation(Shared_Ptr<Animation> _anim, int _x, int _y, float _angle = 0, float _scale = 1);
+		void renderAnimation(Shared_Ptr<Animation> _anim, int _x, int _y, float _angle = 0, 
+													float _scale = 1,
+													SDL_Point* _center = nullptr,
+													SDL_RendererFlip _flip = SDL_FLIP_NONE);
 
 		//! Saves the given texture into a file.
 		/*!

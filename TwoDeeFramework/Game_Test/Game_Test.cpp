@@ -4,6 +4,9 @@
 #include "Level_1.h"
 #include "Knight.h"
 
+#include "LevelEvo.h"
+#include "EvoCube.h"
+
 TDF::SDL_Manager* g_SDLManager;
 TDF::ResourceManager* g_ResourceManager;
 TDF::RenderManager* g_RenderManager;
@@ -21,10 +24,12 @@ float g_deltaTime = 0.0f;
 
 int g_guiHandled;
 
-Knight* g_player;
+EvoCube* g_player;
 MainMenu* g_mainMenu;
-Level_0* g_level0;
-Level_1* g_level1;
+LevelEvo* g_levelEvo;
+
+//Level_0* g_level0;
+//Level_1* g_level1;
 
 void initManagers()
 {
@@ -67,25 +72,26 @@ void initManagers()
 
 void initScenes()
 {
-	g_player = new Knight();
+	g_player = new EvoCube();
 	g_player->init();
 
 	g_mainMenu = new MainMenu();
-	g_level0 = new Level_0();
-	g_level1 = new Level_1();
+	//g_level0 = new Level_0();
+	//g_level1 = new Level_1();
+	g_levelEvo = new LevelEvo();
 
 	g_SceneManager->m_allScenes["MainMenu"] = g_mainMenu;
 	g_SceneManager->m_allScenes["MainMenu"]->init();
 
-	g_level0->m_player = g_player;
-	g_SceneManager->m_allScenes["Level0"] = g_level0;
-	g_SceneManager->m_allScenes["Level0"]->init();
+	g_levelEvo->m_player = g_player;
+	g_SceneManager->m_allScenes["LevelEvo"] = g_levelEvo;
+	g_SceneManager->m_allScenes["LevelEvo"]->init();
 
-	g_level1->m_player = g_player;
+	/*g_level1->m_player = g_player;
 	g_SceneManager->m_allScenes["Level1"] = g_level1;
-	g_SceneManager->m_allScenes["Level1"]->init();
+	g_SceneManager->m_allScenes["Level1"]->init();*/
 
-	g_SceneManager->setActiveScene("Level0");
+	g_SceneManager->setActiveScene("MainMenu");
 }
 
 void render()
@@ -101,6 +107,11 @@ void render()
 	g_RenderManager->setRenderTarget();
 	g_RenderManager->setRenderDrawColor(TDF::Color(255, 255, 255));
 	g_RenderManager->renderClear();
+
+	//SDL_Rect quadSrc = { 0, 0, g_RenderManager->m_renderTargets[TDF::GBUFFER].get()->m_width, g_RenderManager->m_renderTargets[TDF::GBUFFER].get()->m_height };
+	//SDL_Rect quadDst = { 0, 0, g_SDLManager->m_windowWidth, g_SDLManager->m_windowHeight };
+
+	//g_RenderManager->renderTextureEx(g_RenderManager->m_renderTargets[TDF::GBUFFER], quadSrc, quadDst);
 
 	g_RenderManager->renderTexture(g_RenderManager->m_renderTargets[TDF::GBUFFER],0, 0);
 

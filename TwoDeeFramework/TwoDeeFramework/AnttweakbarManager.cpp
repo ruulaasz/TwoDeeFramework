@@ -159,10 +159,10 @@ namespace TDF
 			TEXT(" group=Camera label='Camera posX:' "));
 
 		TwAddVarRO(m_cameraBar,
-			TEXT("Mouse posY:"),
+			TEXT("Camera posY:"),
 			TW_TYPE_FLOAT,
 			&CameraManager::GetInstance().m_camera.m_areaBox.m_position.y,
-			TEXT(" group=Camera label='Mouse posY:' "));
+			TEXT(" group=Camera label='Camera posY:' "));
 
 		TwAddVarRO(m_cameraBar,
 			TEXT("Actors on camera:"),

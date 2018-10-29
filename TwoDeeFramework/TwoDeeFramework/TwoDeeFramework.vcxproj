@@ -154,6 +154,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnttweakbarManager.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="BoidManager.h" />
     <ClInclude Include="Box2DDraw.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnttweakbarManager.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="BoidManager.cpp" />
     <ClCompile Include="Box2DDraw.cpp" />

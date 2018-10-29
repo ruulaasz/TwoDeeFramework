@@ -2,6 +2,7 @@
 
 #include "World.h"
 #include "Music.h"
+#include "Background.h"
 
 #define BACKGROUND_TEXTURES 8
 
@@ -43,7 +44,7 @@ namespace TDF
 		World m_world;
 
 		//! The background textures.
-		Shared_Ptr<Texture> m_background[8];
+		Background m_background[8];
 
 		//! The background track.
 		Shared_Ptr<Music> m_backgroundMusic;

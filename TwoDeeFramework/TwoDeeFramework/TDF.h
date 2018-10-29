@@ -39,3 +39,4 @@
 #include "Animation.h"
 #include "Camera2D.h"
 #include "CameraManager.h"
+#include "Background.h"
