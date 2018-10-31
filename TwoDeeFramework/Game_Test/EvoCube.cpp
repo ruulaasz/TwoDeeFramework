@@ -2,15 +2,12 @@
 
 EvoCube::EvoCube()
 {
-	m_texture = nullptr;
 	infoBar = nullptr;
 
-	m_tail = nullptr;
 	m_jaws = nullptr;
-	m_fin = nullptr;
-	m_grassAnim = nullptr;
+	m_bodyAnim = nullptr;
 
-	m_movementSpeed = 5.0f;
+	m_movementSpeed = 2.0f;
 }
 
 EvoCube::~EvoCube()
@@ -24,54 +21,37 @@ void EvoCube::update(float _deltaTime)
 
 	m_velocity = m_dynamicBody.getLinearVelocity();
 
-	m_worldPosition = m_dynamicBody.getPosition() * PHYSICS_TO_WORLD;
+	m_worldPosition = (m_dynamicBody.getPosition() * PHYSICS_TO_WORLD);
 
-	m_boundingBox.m_position.x = m_worldPosition.x - m_texture->m_width / 2.0f;
-	m_boundingBox.m_position.y = m_worldPosition.y - m_texture->m_height / 2.0f;
+	m_boundingBox.m_position.x = m_worldPosition.x;
+	m_boundingBox.m_position.y = m_worldPosition.y;
 
+	updateCamera();
 
-	//BODY PARTS
-	m_tail->m_worldPosition = m_worldPosition + m_tail->m_offset;
-	m_tail->update(_deltaTime);
+	m_bodyAnim->update();
 
-	m_jaws->m_worldPosition = m_worldPosition + m_jaws->m_offset;
-	m_jaws->update(_deltaTime);
-
-	m_fin->m_worldPosition = m_worldPosition + m_fin->m_offset;
-	m_fin->update(_deltaTime);
-
-	//CAMERA TODO Where?
-	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = m_worldPosition.x - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_width / 2);
-	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = m_worldPosition.y - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_height / 2);
-
-	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x < 0)
-	{
-		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = 0;
-	}
-
-	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x > 1920)
-	{
-		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = 1920;
-	}
-
-	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y < 0)
-	{
-		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = 0;
-	}
-
-	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y > 1000)
-	{
-		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = 1000;
-	}
-
-	m_grassAnim->update();
+	updateBodyParts(_deltaTime);
 }
+
+void EvoCube::updateBodyParts(float _deltaTime)
+{
+	if (m_flipped)
+	{
+		m_jaws->m_worldPosition.x = m_worldPosition.x - m_bodyAnim->getSprite().m_dimentions.x * 4 - 10;
+		m_jaws->m_worldPosition.y = m_worldPosition.y - m_bodyAnim->getSprite().m_dimentions.y * 2;
+	}
+	else
+	{
+		m_jaws->m_worldPosition.x = m_worldPosition.x + m_bodyAnim->getCurrentSprite().m_dimentions.x * 2 - 10;
+		m_jaws->m_worldPosition.y = m_worldPosition.y - m_bodyAnim->getCurrentSprite().m_dimentions.y * 2;
+	}
+
+	m_jaws->update(_deltaTime);
+}
+
 
 void EvoCube::init()
 {
-	//files loaded
-	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\Untitled.png");
-
 	//anttweak bars init
 	TDF::AntTweakBarInfo info;
 	info.size = " size='300 300' ";
@@ -82,6 +62,7 @@ void EvoCube::init()
 	TwAddVarRO(infoBar, TEXT("position y:"), TW_TYPE_FLOAT, &m_worldPosition.y, TEXT(" label='position y:' precision=2"));
 	TwAddVarRO(infoBar, TEXT("velocity x:"), TW_TYPE_FLOAT, &m_velocity.x, TEXT(" label='velocity x:' precision=2"));
 	TwAddVarRO(infoBar, TEXT("velocity y:"), TW_TYPE_FLOAT, &m_velocity.y, TEXT(" label='velocity y:' precision=2"));
+	TwAddVarRW(infoBar, TEXT("movementSpeed:"), TW_TYPE_FLOAT, &m_movementSpeed, TEXT(" group='Stats' label='movementSpeed:' step=0.1"));
 
 	String name = "Cube_info";
 	name = name + " visible=false";
@@ -90,38 +71,39 @@ void EvoCube::init()
 	TDF::InputManager::GetInstance().subscribe(TDF::KEYBOARD_INPUT, m_id);
 	TDF::InputManager::GetInstance().subscribe(TDF::CONTROLLER_INPUT, m_id);
 
-	m_tail = new Tail();
-	m_tail->init();
-
 	m_jaws = new Jaws();
 	m_jaws->init();
 
-	m_fin = new Fin();
-	m_fin->init();
+	m_bodyAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\body.xml");
+	m_bodyAnim->setAnimationSpeed(0.25f);
 
-	m_grassAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\body.xml");
+	m_boundingBox.m_width = m_bodyAnim->getSprite(0).m_dimentions.x * 4;
+	m_boundingBox.m_height = m_bodyAnim->getSprite(0).m_dimentions.y * 4;
 }
 
 void EvoCube::render()
 {
-	int renderPosx = static_cast<int>(m_screenPosition.x - m_texture->m_width / 2);
-	int renderPosy = static_cast<int>(m_screenPosition.y - m_texture->m_height / 2);
+	m_renderPos.x = static_cast<int>(m_screenPosition.x) - m_bodyAnim->getSprite(0).m_dimentions.x * 4 / 2;
+	m_renderPos.y = static_cast<int>(m_screenPosition.y) - m_bodyAnim->getSprite(0).m_dimentions.y * 4 / 2;
 
-	TDF::RenderManager::GetInstance().renderTexture(m_texture, renderPosx, renderPosy);
-
-	TDF::AABB renderBox = m_boundingBox;
-	renderBox.m_position.x = renderPosx;
-	renderBox.m_position.y = renderPosy;
-
-	TDF::RenderManager::GetInstance().renderBox(renderBox);
+	m_jaws->render();
 
 	if (m_flipped)
 	{
-		TDF::RenderManager::GetInstance().renderAnimation(m_grassAnim, renderPosx, renderPosy, 0, 4, nullptr, SDL_FLIP_HORIZONTAL);
+		TDF::RenderManager::GetInstance().renderAnimation(m_bodyAnim, m_renderPos.x, m_renderPos.y, 0, 4, nullptr, SDL_FLIP_HORIZONTAL);
 	}
 	else
 	{
-		TDF::RenderManager::GetInstance().renderAnimation(m_grassAnim, renderPosx, renderPosy, 0, 4, nullptr, SDL_FLIP_NONE);
+		TDF::RenderManager::GetInstance().renderAnimation(m_bodyAnim, m_renderPos.x, m_renderPos.y, 0, 4, nullptr, SDL_FLIP_NONE);
+	}
+
+	if (TDF::SystemManager::GetInstance().m_renderDebug)
+	{
+		TDF::AABB renderBox = m_boundingBox;
+		renderBox.m_position.x = m_screenPosition.x - m_boundingBox.m_width / 2;
+		renderBox.m_position.y = m_screenPosition.y - m_boundingBox.m_height / 2;
+
+		TDF::RenderManager::GetInstance().renderBox(renderBox);
 	}
 }
 
@@ -158,6 +140,10 @@ void EvoCube::dispatchMessage(const TDF::InputMessage & _message)
 		case SDLK_s:
 			setDirection(D_DOWN);
 			break;
+
+		case SDLK_e:
+			m_jaws->m_jawsAnim->play(0);
+			break;
 		}
 		break;
 
@@ -191,47 +177,55 @@ void EvoCube::setDirection(int _dir)
 	switch (_dir)
 	{
 	case D_RIGHT:
-		vel.x = m_movementSpeed + m_tail->m_speedMod + m_fin->m_speedMod;
-		if (!m_grassAnim->isPlaying())
+		vel.x = m_movementSpeed;
+
+		if (!m_bodyAnim->isPlaying())
 		{
-			m_grassAnim->play();
+			m_bodyAnim->play();
 		}
+
 		m_flipped = false;
+		m_jaws->m_flipped = false;
 		break;
 
 	case D_LEFT:
-		vel.x = (m_movementSpeed + m_tail->m_speedMod + m_fin->m_speedMod) * -1;
-		if (!m_grassAnim->isPlaying())
+		vel.x = m_movementSpeed * -1;
+
+		if (!m_bodyAnim->isPlaying())
 		{
-			m_grassAnim->play();
+			m_bodyAnim->play();
 		}
+
 		m_flipped = true;
+		m_jaws->m_flipped = true;
 		break;
 
 	case D_UP:
-		vel.y = (m_movementSpeed + m_tail->m_speedMod + m_fin->m_speedMod) * -1;
-		if (!m_grassAnim->isPlaying())
+		vel.y = m_movementSpeed * -1;
+
+		if (!m_bodyAnim->isPlaying())
 		{
-			m_grassAnim->play();
+			m_bodyAnim->play();
 		}
 		break;
 
 	case D_DOWN:
-		vel.y = m_movementSpeed + m_tail->m_speedMod + m_fin->m_speedMod;
-		if (!m_grassAnim->isPlaying())
+		vel.y = m_movementSpeed;
+
+		if (!m_bodyAnim->isPlaying())
 		{
-			m_grassAnim->play();
+			m_bodyAnim->play();
 		}
 		break;
 
 	case D_STOPX:
 		vel.x = 0;
-		m_grassAnim->stop();
+		m_bodyAnim->stop();
 		break;
 
 	case D_STOPY:
 		vel.y = 0;
-		m_grassAnim->stop();
+		m_bodyAnim->stop();
 		break;
 	}
 
@@ -248,10 +242,10 @@ void EvoCube::enterScene(std::string _sceneName)
 
 	//shape definition
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox(m_texture->m_width / 2.0f * WORLD_TO_PHYSICS, m_texture->m_height / 2.0f * WORLD_TO_PHYSICS);
-
-	m_boundingBox.m_width = m_texture->m_width;
-	m_boundingBox.m_height = m_texture->m_height;
+	float boxw, boxh;
+	boxw = (m_bodyAnim->getSprite(0).m_dimentions.x * 3) * WORLD_TO_PHYSICS;
+	boxh = (m_bodyAnim->getCurrentSprite().m_dimentions.y * 2) * WORLD_TO_PHYSICS;
+	polygonShape.SetAsBox(boxw * .9, boxh * .9);
 
 	//add fixture
 	b2FixtureDef myFixtureDef;
@@ -265,4 +259,31 @@ void EvoCube::enterScene(std::string _sceneName)
 	m_dynamicBody.setFixedRotation(true);
 
 	TDF::Box2DManager::GetInstance().m_allWorlds[_sceneName]->m_world->SetContactListener(&m_contactListener);
+}
+
+void EvoCube::updateCamera()
+{
+	//CAMERA TODO Where?
+	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = m_worldPosition.x - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_width / 2);
+	TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = m_worldPosition.y - (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_height / 2);
+
+	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x < 0)
+	{
+		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = 0;
+	}
+
+	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x > 1920)
+	{
+		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.x = 1920;
+	}
+
+	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y < 0)
+	{
+		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = 0;
+	}
+
+	if (TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y > 1000)
+	{
+		TDF::CameraManager::GetInstance().m_camera.m_areaBox.m_position.y = 1000;
+	}
 }

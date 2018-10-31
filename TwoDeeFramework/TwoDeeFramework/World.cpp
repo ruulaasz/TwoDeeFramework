@@ -1,6 +1,7 @@
 #include "World.h"
 #include "SceneManager.h"
 #include "Box2DManager.h"
+#include "RenderManager.h"
 
 namespace TDF
 {

@@ -1,6 +1,7 @@
 #include "SDL_Manager.h"
 #include <cstdio>
 #include "Texture.h"
+#include "CameraManager.h"
 
 namespace TDF
 {
@@ -46,6 +47,9 @@ namespace TDF
 	{
 		_deltaTime;
 		SDL_GetMouseState(&m_mousePosX, &m_mousePosY);
+
+		m_mouseWorldPosX = m_mousePosX + CameraManager::GetInstance().m_camera.m_areaBox.m_position.x;
+		m_mouseWorldPosY = m_mousePosY + CameraManager::GetInstance().m_camera.m_areaBox.m_position.y;
 	}
 
 	void SDL_Manager::initSubSystems()

@@ -2,9 +2,7 @@
 
 #include <TDF.h>
 
-#include "Tail.h"
 #include "Jaws.h"
-#include "Fin.h"
 
 enum DIRECTIONS
 {
@@ -31,10 +29,10 @@ public:
 
 	void setDirection(int _dir);
 	void enterScene(std::string _sceneName);
+	void updateCamera();
+	void updateBodyParts(float _deltaTime);
 
 public:
-	std::shared_ptr<TDF::Texture> m_texture;
-
 	float m_movementSpeed;
 
 	TDF::Vector2D m_velocity;
@@ -44,10 +42,11 @@ public:
 
 	TwBar* infoBar;
 
-	Tail* m_tail;
 	Jaws* m_jaws;
-	Fin* m_fin;
 
-	std::shared_ptr<TDF::Animation> m_grassAnim;
+	std::shared_ptr<TDF::Animation> m_bodyAnim;
 	bool m_flipped;
+
+private:
+	TDF::Vector2D m_renderPos;
 };

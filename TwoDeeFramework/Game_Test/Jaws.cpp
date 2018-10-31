@@ -2,9 +2,6 @@
 
 Jaws::Jaws()
 {
-	m_offset.x = 25;
-	m_offset.y = -25;
-
 	m_damageMod = 1;
 }
 
@@ -15,27 +12,39 @@ Jaws::~Jaws()
 
 void Jaws::render()
 {
-	TDF::RenderManager::GetInstance().renderTexture(m_texture, m_screenPosition.x, m_screenPosition.y);
+	if (m_flipped)
+	{
+		TDF::RenderManager::GetInstance().renderAnimation(m_jawsAnim, m_screenPosition.x + 5, m_screenPosition.y, 0, 4, nullptr, SDL_FLIP_HORIZONTAL);
+	}
+	else
+	{
+		TDF::RenderManager::GetInstance().renderAnimation(m_jawsAnim, m_screenPosition.x, m_screenPosition.y, 0, 4, nullptr, SDL_FLIP_NONE);
+	}
 
-	TDF::AABB renderBox = m_boundingBox;
-	renderBox.m_position.x = m_screenPosition.x;
-	renderBox.m_position.y = m_screenPosition.y;
+	if (TDF::SystemManager::GetInstance().m_renderDebug)
+	{
+		TDF::AABB renderBox = m_boundingBox;
+		renderBox.m_position.x = m_screenPosition.x;
+		renderBox.m_position.y = m_screenPosition.y;
 
-	TDF::RenderManager::GetInstance().renderBox(renderBox);
+		TDF::RenderManager::GetInstance().renderBox(renderBox);
+	}
 }
 
 void Jaws::init()
 {
-	m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\jaws.png");
+	m_jawsAnim = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Animation>("animations\\jaws.xml");
 
-	m_boundingBox.m_width = m_texture->m_width;
-	m_boundingBox.m_height = m_texture->m_height;
+	m_boundingBox.m_width = m_jawsAnim->getCurrentSprite().m_dimentions.x * 4;
+	m_boundingBox.m_height = m_jawsAnim->getCurrentSprite().m_dimentions.y * 4;
 }
 
 void Jaws::update(float _deltaTime)
 {
 	_deltaTime;
 
-	m_boundingBox.m_position.x = m_worldPosition.x - m_texture->m_width / 2.0f;
-	m_boundingBox.m_position.y = m_worldPosition.y - m_texture->m_height / 2.0f;
+	m_jawsAnim->update();
+
+	m_boundingBox.m_position.x = m_worldPosition.x - m_jawsAnim->getCurrentSprite().m_dimentions.x * 4;
+	m_boundingBox.m_position.y = m_worldPosition.y - m_jawsAnim->getCurrentSprite().m_dimentions.y * 4;
 }

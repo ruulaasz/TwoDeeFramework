@@ -7,6 +7,7 @@ namespace TDF
 	{
 		m_quit = false;
 		m_altPressed = false;
+		m_renderDebug = true;
 	}
 
 	SystemManager::~SystemManager()

@@ -1,5 +1,6 @@
 #include "Platform.h"
 #include "RenderManager.h"
+#include "SystemManager.h"
 
 namespace TDF
 {
@@ -62,11 +63,14 @@ namespace TDF
 			SDL_Rect quadDst = { m_screenPosition.x , m_screenPosition.y , m_dimentions.x, m_dimentions.y };
 
 			RenderManager::GetInstance().renderTextureEx(m_texture, quadSrc, quadDst);
+
+			if (TDF::SystemManager::GetInstance().m_renderDebug)
+			{
+				AABB renderBox = m_boundingBox;
+				renderBox.m_position = m_screenPosition;
+
+				RenderManager::GetInstance().renderBox(renderBox);
+			}
 		}
-
-		AABB renderBox = m_boundingBox;
-		renderBox.m_position = m_screenPosition;
-
-		RenderManager::GetInstance().renderBox(renderBox);
 	}
 }

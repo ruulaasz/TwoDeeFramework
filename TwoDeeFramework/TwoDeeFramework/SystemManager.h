@@ -29,5 +29,7 @@ namespace TDF
 
 		//! A flag to know if the alt key is beign pressed.
 		bool m_altPressed;
+
+		bool m_renderDebug;
 	};
 }

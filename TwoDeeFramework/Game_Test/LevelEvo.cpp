@@ -19,7 +19,7 @@ void LevelEvo::onEnter()
 	TwDefine(name.c_str());
 
 	m_player->enterScene("LevelEvo");
-	m_player->m_dynamicBody.setPosition(TDF::Vector2D(300, 500));
+	m_player->m_dynamicBody.setPosition(TDF::Vector2D(350, 500));
 }
 
 void LevelEvo::onExit()
@@ -51,7 +51,6 @@ void LevelEvo::init()
 
 	TDF::Scene::init();
 	
-
 	m_backgroundMusic = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Music>("music\\Dirtmouth.wav");
 
 	m_background[0].m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\levelEvo_background.jpg");
@@ -62,68 +61,61 @@ void LevelEvo::init()
 	m_world.addActor(&m_background[0]);
 
 	m_world.addActor(m_player);
-	m_world.addActor(m_player->m_tail);
+	//m_world.addActor(m_player->m_tail);
 	m_world.addActor(m_player->m_jaws);
-	m_world.addActor(m_player->m_fin);
+	//m_world.addActor(m_player->m_fin);
 
 	//floor
 	std::string s = "LevelEvo";
 	SDL_Rect r = SDL_Rect{ 2000, 2000, 2000, 100 };
-	int c = TDF::CI_PLATFORM;
+	int c = 0;
 	TDF::Platform* p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	//ceiling
 	r = SDL_Rect{ 2000, 0, 1925, 150 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	//left wall
 	r = SDL_Rect{ 25, 2000, 100, 2000 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	//right wall
 	r = SDL_Rect{ 3900, 2000, 100, 2000 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
+	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	r = SDL_Rect{ 1900, 1800, 700, 250 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
-
 	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	r = SDL_Rect{ 1375, 1300, 175, 250 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
-
 	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	r = SDL_Rect{ 2250, 1400, 350, 150 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
-
 	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 
 	r = SDL_Rect{ 2300, 950, 250, 300 };
-	c = 0;
 	p = new TDF::Platform();
 	p->init(s, r, c);
 	m_world.addActor(p);
-
 	p->m_texture = TDF::ResourceManager::GetInstance().loadFromFile<TDF::Texture>("textures\\platform_default.png");
 }

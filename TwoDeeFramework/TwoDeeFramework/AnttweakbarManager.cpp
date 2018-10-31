@@ -2,6 +2,7 @@
 #include "SDL_Manager.h"
 #include "StdHeaders.h"
 #include "CameraManager.h"
+#include "SystemManager.h"
 
 #define DEFAULT_BARS 2
 #define GUI_BARS 3
@@ -84,7 +85,7 @@ namespace TDF
 
 		//hide gui bar
 		AntTweakBarInfo info;
-		info.size = " size='200 5' ";
+		info.size = " size='300 100' ";
 		info.position = " position='800 0' ";
 		m_guiBar = createCustomBar(TEXT("Hide_GUI"), info);
 
@@ -100,8 +101,14 @@ namespace TDF
 					NULL,
 					TEXT(" label='Toggle framework GUI' "));
 
+		TwAddVarRW(m_guiBar,
+			TEXT("render Debug:"),
+			TW_TYPE_BOOL32,
+			&SystemManager::GetInstance().m_renderDebug,
+			TEXT(" group=Render label='render debug:' "));
+
 		//SDLmanager bar
-		info.size = " size='250 160' ";
+		info.size = " size='280 260' ";
 		info.position = " position='1800 0' ";
 		m_sdlBar = createCustomBar(TEXT("SDLManager_Info"), info);
 
@@ -124,16 +131,28 @@ namespace TDF
 				   TEXT(" group=Window label='Fullscreen:' "));
 
 		TwAddVarRO(m_sdlBar, 
-				   TEXT("Mouse posX:"), 
+				   TEXT("Mouse Screen PosX:"), 
 				   TW_TYPE_INT32, 
 				   &SDL_Manager::GetInstance().m_mousePosX, 
-				   TEXT(" group=Mouse label='Mouse posX:' "));
+				   TEXT(" group=Mouse label='Mouse Screen posX:' "));
 
 		TwAddVarRO(m_sdlBar, 
-				   TEXT("Mouse posY:"), 
+				   TEXT("Mouse Screen PosY:"), 
 				   TW_TYPE_INT32, 
 				   &SDL_Manager::GetInstance().m_mousePosY, 
-				   TEXT(" group=Mouse label='Mouse posY:' "));
+				   TEXT(" group=Mouse label='Mouse Screen posY:' "));
+
+		TwAddVarRO(m_sdlBar,
+			TEXT("Mouse World posX:"),
+			TW_TYPE_INT32,
+			&SDL_Manager::GetInstance().m_mouseWorldPosX,
+			TEXT(" group=Mouse label='Mouse World posX:' "));
+
+		TwAddVarRO(m_sdlBar,
+			TEXT("Mouse World posY:"),
+			TW_TYPE_INT32,
+			&SDL_Manager::GetInstance().m_mouseWorldPosY,
+			TEXT(" group=Mouse label='Mouse World posY:' "));
 
 		//Cameramanager bar
 		info.size = " size='250 160' ";

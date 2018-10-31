@@ -104,6 +104,7 @@ namespace TDF
 	{
 		m_playing = false;
 		m_looped = false;
+		m_currentFrame = 0;
 		m_keyframeTime.stop();
 	}
 
@@ -136,6 +137,20 @@ namespace TDF
 		if (m_atlas)
 		{
 			return m_sprites.at(m_currentFrame);
+		}
+
+		return Sprite();
+	}
+
+	Sprite Animation::getSprite(int _index)
+	{
+		if (_index >= m_sprites.size())
+		{
+			return m_sprites.back();
+		}
+		else if (_index >= 0)
+		{
+			return m_sprites.at(_index);
 		}
 
 		return Sprite();

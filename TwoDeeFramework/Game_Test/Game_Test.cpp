@@ -48,6 +48,9 @@ void initManagers()
 	TDF::CameraManager::StartModule();
 	g_CameraManager = TDF::CameraManager::GetPointerInstance();
 
+	TDF::SystemManager::StartModule();
+	g_SystemManager = TDF::SystemManager::GetPointerInstance();
+
 	TDF::AnttweakbarManager::StartModule();
 	g_AnttweakbarManager = TDF::AnttweakbarManager::GetPointerInstance();
 	g_AnttweakbarManager->init();
@@ -61,9 +64,6 @@ void initManagers()
 
 	TDF::SceneManager::StartModule();
 	g_SceneManager = TDF::SceneManager::GetPointerInstance();
-
-	TDF::SystemManager::StartModule();
-	g_SystemManager = TDF::SystemManager::GetPointerInstance();
 
 	TDF::AudioManager::StartModule();
 	g_AudioManager = TDF::AudioManager::GetPointerInstance();
@@ -91,7 +91,7 @@ void initScenes()
 	g_SceneManager->m_allScenes["Level1"] = g_level1;
 	g_SceneManager->m_allScenes["Level1"]->init();*/
 
-	g_SceneManager->setActiveScene("MainMenu");
+	g_SceneManager->setActiveScene("LevelEvo");
 }
 
 void render()

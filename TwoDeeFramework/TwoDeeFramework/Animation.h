@@ -72,6 +72,8 @@ namespace TDF
 		*/
 		Sprite getCurrentSprite();
 
+		Sprite getSprite(int _index = 0);
+
 		//! Set the speed of the animation.
 		/*!
 		\param _speed the new animation speed value.

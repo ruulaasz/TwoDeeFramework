@@ -115,5 +115,11 @@ namespace TDF
 
 		//! The Y position of the mouse.
 		int m_mousePosY;
+
+		//! The X position of the mouse.
+		int m_mouseWorldPosX;
+
+		//! The Y position of the mouse.
+		int m_mouseWorldPosY;
 	};
 }

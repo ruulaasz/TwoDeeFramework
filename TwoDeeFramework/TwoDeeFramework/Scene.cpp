@@ -24,7 +24,7 @@ namespace TDF
 	{
 		if (m_backgroundMusic)
 		{
-			m_backgroundMusic->playFadeIn(500);
+			//m_backgroundMusic->playFadeIn(500);
 		}
 	}
 

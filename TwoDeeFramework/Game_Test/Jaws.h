@@ -13,9 +13,6 @@ public:
 	virtual void update(float _deltaTime);
 
 	float m_damageMod;
-
-	TDF::Vector2D m_offset;
-
-	std::shared_ptr<TDF::Texture> m_texture;
+	std::shared_ptr<TDF::Animation> m_jawsAnim;
+	bool m_flipped;
 };
-
